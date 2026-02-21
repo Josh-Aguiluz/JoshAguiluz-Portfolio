@@ -1,5 +1,6 @@
 import React from 'react';
 import { Database, Server, Code2, Zap } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function AboutPage() {
   const techStack = [
@@ -109,9 +110,14 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
             {techStack.map((tech, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="sticker-card bg-white dark:bg-[#252220] p-8 border-4 border-[#A47A2D] dark:border-[#A47A2D] hover:scale-105 transition-transform relative overflow-hidden group"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, boxShadow: '0 15px 30px -10px rgba(82, 29, 7, 0.3)' }}
+                className="sticker-card bg-white dark:bg-[#252220] p-8 border-4 border-[#A47A2D] dark:border-[#A47A2D] transition-all relative overflow-hidden group"
               >
                 {/* Watermark Icon */}
                 <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-5 dark:opacity-10 transition-transform group-hover:scale-110 duration-500 rotate-12 text-[#521D07] dark:text-[#E2E8F0]">
@@ -133,7 +139,7 @@ export default function AboutPage() {
                     </p>
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -148,9 +154,14 @@ export default function AboutPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {softSkills.map((skill, index) => (
-              <div
+              <motion.div
                 key={index}
-                className="sticker-card bg-[#F5EBD9] dark:bg-[#252220] p-8 center-content border-4 border-[#A47A2D] dark:border-[#A47A2D] hover:scale-105 transition-transform relative overflow-hidden"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true }}
+                whileHover={{ y: -5, boxShadow: '0 15px 30px -10px rgba(82, 29, 7, 0.3)' }}
+                className="sticker-card bg-[#F5EBD9] dark:bg-[#252220] p-8 center-content border-4 border-[#A47A2D] dark:border-[#A47A2D] transition-all relative overflow-hidden"
               >
                 <div className="w-16 h-16 bg-[#A47A2D] dark:bg-[#A47A2D] rounded-full mb-4 flex items-center justify-center shadow-[4px_4px_0px_rgba(82,29,7,0.2)]">
                   <span className="text-[24px] font-black text-white dark:text-[#1A1715]">✓</span>
@@ -158,7 +169,7 @@ export default function AboutPage() {
                 <p style={{ fontFamily: 'Michroma, sans-serif' }} className="text-[20px] md:text-[24px] font-black text-[#521D07] dark:text-[#E2E8F0] text-center uppercase">
                   {skill}
                 </p>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -180,6 +191,6 @@ export default function AboutPage() {
           </button>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

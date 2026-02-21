@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 
 // Sample data - You can add as many as you want here!
 const ALL_BLOG_POSTS = [
@@ -63,7 +64,7 @@ export default function BlogSection() {
 
   // Handlers
   const totalPages = Math.ceil(ALL_BLOG_POSTS.length / postsPerPage);
-  
+
   const handleNext = () => {
     if (currentPage < totalPages - 1) {
       setCurrentPage(prev => prev + 1);
@@ -79,7 +80,7 @@ export default function BlogSection() {
   return (
     <section className="py-20 bg-[#FDF5E7] dark:bg-[#1A1715]">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Header */}
         <div className="text-center mb-16">
           <h2 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-[40px] md:text-[56px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4">
@@ -92,10 +93,15 @@ export default function BlogSection() {
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 min-h-[600px]">
-          {currentPosts.map((post) => (
-            <div 
+          {currentPosts.map((post, index) => (
+            <motion.div
               key={post.id}
-              className="sticker-card bg-white dark:bg-[#252220] p-8 border-4 border-[#A47A2D] dark:border-[#A47A2D] flex flex-col justify-between hover:scale-[1.02] transition-transform duration-300 animate-in fade-in slide-in-from-bottom-4"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -5, boxShadow: '0 15px 30px -10px rgba(82, 29, 7, 0.3)' }}
+              className="sticker-card bg-white dark:bg-[#252220] p-8 border-4 border-[#A47A2D] dark:border-[#A47A2D] flex flex-col justify-between transition-all duration-300"
             >
               <div>
                 <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#A47A2D] dark:text-[#B8B0A6]">
@@ -103,11 +109,11 @@ export default function BlogSection() {
                   <span>•</span>
                   <span>☕ {post.readTime}</span>
                 </div>
-                
+
                 <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-[28px] leading-tight font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4">
                   {post.title}
                 </h3>
-                
+
                 <p className="text-[18px] font-bold text-[#521D07]/80 dark:text-[#B8B0A6] mb-6 line-clamp-3">
                   {post.excerpt}
                 </p>
@@ -126,30 +132,30 @@ export default function BlogSection() {
                   Read Article →
                 </a>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
 
         {/* Navigation Buttons */}
         <div className="flex justify-center items-center gap-8">
-          <button 
+          <button
             onClick={handlePrev}
             disabled={currentPage === 0}
-            className={`pill-button px-8 py-3 bg-[#521D07] dark:bg-[#521D07] text-white text-[18px] 
-              ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#FFA51F] hover:scale-105'}`}
+            className={`pill-button px-8 py-3 bg-[#521D07] dark:bg-[#521D07] text-white text-[18px] transition-all hover:bg-[#FFA51F] hover:scale-105
+              ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             ← Previous
           </button>
-          
+
           <span className="font-mono text-[18px] font-bold text-[#521D07] dark:text-[#E2E8F0]">
             Page {currentPage + 1} of {totalPages}
           </span>
 
-          <button 
+          <button
             onClick={handleNext}
             disabled={currentPage === totalPages - 1}
-            className={`pill-button px-8 py-3 bg-[#521D07] dark:bg-[#521D07] text-white text-[18px]
-              ${currentPage === totalPages - 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-[#FFA51F] hover:scale-105'}`}
+            className={`pill-button px-8 py-3 bg-[#521D07] dark:bg-[#521D07] text-white text-[18px] transition-all hover:bg-[#FFA51F] hover:scale-105
+              ${currentPage === totalPages - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             Next →
           </button>

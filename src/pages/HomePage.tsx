@@ -142,7 +142,7 @@ export default function HomePage() {
         </div>
 
         {/* --- MARQUEE STRIP (Restored) --- */}
-        <div className="marquee-divider rounded-[40px] overflow-hidden mb-32 mt-20">
+        <div className="marquee-divider w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] rounded-none overflow-hidden mb-32 mt-20">
           <div className="marquee-content">
             {[...Array(4)].map((_, i) => (
               <div key={i} className="flex items-center">

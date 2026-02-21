@@ -10,14 +10,13 @@ export default function CustomCursor() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 1024 || 'ontouchstart' in window);
     };
-    
+
     checkMobile();
     window.addEventListener('resize', checkMobile);
 
     const updatePosition = (e: MouseEvent) => {
       setPosition({ x: e.clientX, y: e.clientY });
     };
-
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (
@@ -63,11 +62,10 @@ export default function CustomCursor() {
       >
         {/* Main cursor dot */}
         <div
-          className={`transition-all duration-300 ease-out ${
-            isHovering
+          className={`transition-all duration-300 ease-out ${isHovering
               ? 'w-12 h-12 -translate-x-6 -translate-y-6 border-4 border-[#A47A2D] bg-transparent'
               : 'w-4 h-4 -translate-x-2 -translate-y-2 bg-[#521D07]'
-          } rounded-full`}
+            } rounded-full`}
         />
       </div>
     </>

@@ -1,6 +1,12 @@
 import React from 'react';
 import { Github, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCoverflow, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+
 import SpotlightCard from '../components/SpotlightCard';
 import MagneticButton from '../components/MagneticButton';
 
@@ -13,7 +19,7 @@ export default function ProjectsPage() {
       github: 'https://github.com/Josh-Aguiluz',
       live: 'https://hauecoquest.vercel.app',
       color: 'border-[#A47A2D] dark:border-[#A47A2D]',
-      image: 'https://images.unsplash.com/photo-1542601906990-b4d3fb7d5c73?w=600&q=80', // Nature/Eco theme
+      image: 'https://i.ytimg.com/vi/9eoUM7hzeKQ/maxresdefault.jpg', // Nature/Eco theme
     },
     {
       title: 'The Wellness Apparel',
@@ -77,89 +83,101 @@ export default function ProjectsPage() {
           </motion.p>
         </div>
 
-        {/* Projects Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12 md:mb-16">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: index * 0.15 }}
-              viewport={{ once: true }}
-            >
-              <SpotlightCard>
-                <motion.div
-                  whileHover={{
-                    scale: 1.05,
-                    y: -10,
-                    boxShadow: '0 25px 50px -12px rgba(82, 29, 7, 0.5)',
-                  }}
-                  transition={{
-                    type: 'spring',
-                    stiffness: 300,
-                    damping: 20,
-                  }}
-                  className={`sticker-card bg-white dark:bg-[#252220] p-0 border-4 ${project.color} overflow-hidden flex flex-col`}
-                >
-                  {/* Thumbnail */}
-                  <div className="h-[200px] md:h-[300px] w-full relative overflow-hidden border-b-4 border-[#A47A2D] dark:border-[#A47A2D]">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-[#521D07]/10 mix-blend-multiply" />
-                  </div>
-
-                  <div className="p-6 md:p-10 flex-1 flex flex-col">
-                    {/* Project Number */}
-                    <div className="flex items-start justify-between mb-4 md:mb-6">
-                      <span className="font-mono text-3xl md:text-[48px] font-black text-[#A47A2D] dark:text-[#A47A2D]">
-                        0{index + 1}
-                      </span>
-                      <div className="flex gap-2 md:gap-3">
-                        <a
-                          href={project.github}
-                          className="p-3 md:p-4 bg-[#F5EBD9] dark:bg-[#1A1715] rounded-[16px] hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-all group"
-                          aria-label="View on GitHub"
-                        >
-                          <Github className="w-6 h-6 md:w-8 md:h-8 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors" />
-                        </a>
-                        <a
-                          href={project.live}
-                          className="p-3 md:p-4 bg-[#F5EBD9] dark:bg-[#1A1715] rounded-[16px] hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-all group"
-                          aria-label="View Live Demo"
-                        >
-                          <ExternalLink className="w-6 h-6 md:w-8 md:h-8 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors" />
-                        </a>
+        {/* Projects Carousel */}
+        <div className="mb-12 md:mb-16">
+          <Swiper
+            effect={'coverflow'}
+            grabCursor={true}
+            centeredSlides={true}
+            slidesPerView={'auto'}
+            loop={true}
+            coverflowEffect={{
+              rotate: 0,
+              stretch: -20, // Negative stretch pulls cards closer together
+              depth: 100,
+              modifier: 2,
+              slideShadows: false,
+            }}
+            pagination={{ clickable: true }}
+            modules={[EffectCoverflow, Pagination]}
+            className="w-full py-12 px-0 project-swiper overflow-visible"
+          >
+            {projects.map((project, index) => (
+              <SwiperSlide key={index} className="w-[300px] sm:w-[400px] md:w-[450px]">
+                <div className="h-full project-card-inner transition-opacity duration-300">
+                  <SpotlightCard>
+                    <motion.div
+                      whileHover={{
+                        scale: 1.05,
+                        y: -10,
+                        boxShadow: '0 25px 50px -12px rgba(82, 29, 7, 0.5)',
+                      }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 20,
+                      }}
+                      className={`sticker-card deck-card bg-white dark:bg-[#252220] p-0 border-4 ${project.color} overflow-hidden flex flex-col h-full items-center text-center`}
+                    >
+                      {/* Thumbnail */}
+                      <div className="h-[220px] w-full relative overflow-hidden border-b-4 border-[#A47A2D] dark:border-[#A47A2D]">
+                        <img
+                          src={project.image}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-[#521D07]/10 mix-blend-multiply" />
                       </div>
-                    </div>
 
-                    {/* Project Content */}
-                    <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-2xl md:text-[40px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 md:mb-4">
-                      {project.title}
-                    </h3>
+                      <div className="p-6 flex-1 flex flex-col justify-center items-center w-full">
+                        {/* Project Content */}
+                        <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-xl md:text-[24px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-2">
+                          {project.title}
+                        </h3>
 
-                    <p className="text-lg md:text-[24px] font-bold text-[#521D07] dark:text-[#B8B0A6] mb-4 md:mb-6 leading-relaxed">
-                      {project.description}
-                    </p>
+                        <p className="text-sm md:text-base font-bold text-[#521D07] dark:text-[#B8B0A6] mb-4 leading-relaxed line-clamp-3">
+                          {project.description}
+                        </p>
 
-                    {/* Tags */}
-                    <div className="flex flex-wrap gap-2 md:gap-3 mt-auto">
-                      {project.tags.map((tag, tagIndex) => (
-                        <span
-                          key={tagIndex}
-                          className="mono-tag text-xs md:text-base"
-                        >
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </motion.div>
-              </SpotlightCard>
-            </motion.div>
-          ))}
+                        {/* Links & Tags Section */}
+                        <div className="flex flex-col items-center gap-4 mt-auto w-full">
+                          <div className="flex flex-wrap justify-center gap-2">
+                            {project.tags.map((tag, tagIndex) => (
+                              <span
+                                key={tagIndex}
+                                className="mono-tag text-[10px] px-2 py-1"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="flex justify-center gap-4 w-full pt-2 border-t border-[#A47A2D]/20">
+                            <a
+                              href={project.github}
+                              className="flex items-center gap-2 px-4 py-2 bg-[#F5EBD9] dark:bg-[#1A1715] rounded-full hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-all group"
+                              aria-label="View on GitHub"
+                            >
+                              <Github className="w-4 h-4 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors" />
+                              <span className="text-sm font-bold text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white">Code</span>
+                            </a>
+                            <a
+                              href={project.live}
+                              className="flex items-center gap-2 px-4 py-2 bg-[#F5EBD9] dark:bg-[#1A1715] rounded-full hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-all group"
+                              aria-label="View Live Demo"
+                            >
+                              <ExternalLink className="w-4 h-4 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors" />
+                              <span className="text-sm font-bold text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white">Live</span>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  </SpotlightCard>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
 
         {/* Featured Section */}
@@ -174,10 +192,10 @@ export default function ProjectsPage() {
             </svg>
           </div>
 
-          <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-3xl md:text-[48px] font-black text-white dark:text-[#1A1715] uppercase mb-4 md:mb-6 relative z-10">
+          <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-3xl md:text-[48px] font-black text-[#521D07] dark:text-[#521D07] uppercase mb-4 md:mb-6 relative z-10">
             Want To See More?
           </h3>
-          <p className="text-lg md:text-[24px] font-bold text-white dark:text-[#1A1715] mb-6 md:mb-8 max-w-2xl mx-auto relative z-10">
+          <p className="text-lg md:text-[24px] font-bold text-[#521D07] dark:text-[#521D07] mb-6 md:mb-8 max-w-2xl mx-auto relative z-10">
             Check out my GitHub profile for additional projects, contributions,
             and code samples that showcase my development journey.
           </p>

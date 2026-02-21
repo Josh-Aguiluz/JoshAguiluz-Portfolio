@@ -5,6 +5,8 @@ export default function TypewriterTerminal() {
   const [currentPhase, setCurrentPhase] = useState(0);
   const [showCursor, setShowCursor] = useState(true);
 
+  const [isDeleting, setIsDeleting] = useState(false);
+
   const phases = [
     '> Initializing System...',
     '> Loading Backend Architecture...',
@@ -21,28 +23,33 @@ export default function TypewriterTerminal() {
   }, []);
 
   useEffect(() => {
-    if (currentPhase >= phases.length) return;
-
+    let timer: NodeJS.Timeout;
     const currentText = phases[currentPhase];
-    let index = 0;
 
-    const typingInterval = setInterval(() => {
-      if (index <= currentText.length) {
-        setDisplayText(currentText.slice(0, index));
-        index++;
-      } else {
-        clearInterval(typingInterval);
-        // Wait 1 second before moving to next phase
-        setTimeout(() => {
-          if (currentPhase < phases.length - 1) {
-            setCurrentPhase(prev => prev + 1);
-          }
-        }, 1000);
-      }
-    }, 50); // Typing speed
+    if (isDeleting) {
+      // Deleting text
+      timer = setTimeout(() => {
+        setDisplayText(currentText.substring(0, displayText.length - 1));
+        if (displayText.length === 0) {
+          setIsDeleting(false);
+          setCurrentPhase((prev) => (prev + 1) % phases.length);
+        }
+      }, 30); // Deleting speed
+    } else {
+      // Typing text
+      timer = setTimeout(() => {
+        setDisplayText(currentText.substring(0, displayText.length + 1));
+        if (displayText.length === currentText.length) {
+          // Pause before deleting
+          timer = setTimeout(() => {
+            setIsDeleting(true);
+          }, 2000); // Wait 2s before deleting
+        }
+      }, 50); // Typing speed
+    }
 
-    return () => clearInterval(typingInterval);
-  }, [currentPhase]);
+    return () => clearTimeout(timer);
+  }, [displayText, currentPhase, isDeleting]);
 
   return (
     <div className="font-mono text-[18px] md:text-[20px] text-[#521D07] dark:text-[#A47A2D] mt-6">
