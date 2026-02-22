@@ -40,20 +40,20 @@ const ContactPage = () => {
     {
       icon: <Mail />,
       label: 'Email',
-      value: 'josh.aguiluz@example.com',
-      link: 'mailto:josh.aguiluz@example.com'
+      value: 'josh.dizon.aguiluz25@gmail.com',
+      link: 'mailto:josh.dizon.aguiluz25@gmail.com'
     },
     {
       icon: <Linkedin />,
       label: 'LinkedIn',
       value: 'Josh Andrei Aguiluz',
-      link: 'https://linkedin.com'
+      link: 'https://www.linkedin.com/in/josh-aguiluz-0a150a350/'
     },
     {
       icon: <Github />,
       label: 'GitHub',
-      value: '@joshaguiluz',
-      link: 'https://github.com'
+      value: '@Josh-Aguiluz',
+      link: 'https://github.com/Josh-Aguiluz'
     }
   ];
 
@@ -107,14 +107,15 @@ const ContactPage = () => {
               </h4>
               <div className="flex justify-center gap-4 md:gap-6">
                 {[
-                  { icon: <Github />, link: 'https://github.com' },
-                  { icon: <Linkedin />, link: 'https://linkedin.com' },
-                  { icon: <Twitter />, link: 'https://twitter.com' },
-                  { icon: <Mail />, link: 'mailto:josh.aguiluz@example.com' },
+                  { icon: <Github />, link: 'https://github.com/Josh-Aguiluz', label: "GitHub Profile" },
+                  { icon: <Linkedin />, link: 'https://www.linkedin.com/in/josh-aguiluz-0a150a350/', label: "LinkedIn Profile" },
+                  { icon: <Twitter />, link: 'https://twitter.com', label: "Twitter Profile" },
+                  { icon: <Mail />, link: 'mailto:josh.dizon.aguiluz25@gmail.com', label: "Send Email" },
                 ].map((social, index) => (
                   <a
                     key={index}
                     href={social.link}
+                    aria-label={social.label}
                     className="p-3 md:p-4 bg-white dark:bg-[#1A1715] rounded-full hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-colors group"
                   >
                     <div className="w-5 h-5 md:w-6 md:h-6 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors">
@@ -130,11 +131,12 @@ const ContactPage = () => {
           <form onSubmit={handleSubmit} className="sticker-card bg-white dark:bg-[#252220] p-6 md:p-10 border-4 border-[#A47A2D] dark:border-[#A47A2D]">
             <div className="space-y-6">
               <div>
-                <label style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
+                <label htmlFor="name" style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
                   Name
                 </label>
                 <input
                   type="text"
+                  id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
@@ -145,11 +147,12 @@ const ContactPage = () => {
               </div>
 
               <div>
-                <label style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
+                <label htmlFor="email" style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
                   Email
                 </label>
                 <input
                   type="email"
+                  id="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
@@ -160,11 +163,12 @@ const ContactPage = () => {
               </div>
 
               <div>
-                <label style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
+                <label htmlFor="subject" style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
                   Subject
                 </label>
                 <input
                   type="text"
+                  id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
@@ -175,10 +179,11 @@ const ContactPage = () => {
               </div>
 
               <div>
-                <label style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
+                <label htmlFor="message" style={{ fontFamily: 'Michroma, sans-serif' }} className="block text-[16px] md:text-[20px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-3 tracking-wide">
                   Message
                 </label>
                 <textarea
+                  id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}

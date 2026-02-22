@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
+import logo from './assets/logo.png';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
@@ -98,10 +99,13 @@ export default function App() {
             {/* Logo with Magnetic Effect */}
             <MagneticButton
               onClick={() => scrollToSection('home')}
-              className="flex items-center transition-transform hover:scale-105 bg-transparent border-none text-[18px] md:text-[24px] font-black"
-              style={{ fontFamily: 'Michroma, sans-serif' }}
+              className="flex items-center transition-transform hover:scale-105 bg-transparent border-none"
             >
-              <span className="text-[#A47A2D]">JA</span>
+              <img
+                src={logo}
+                alt="Josh Aguiluz Logo"
+                className="h-16 md:h-20 w-auto object-contain"
+              />
             </MagneticButton>
 
             {/* Desktop Navigation with Magnetic Buttons */}

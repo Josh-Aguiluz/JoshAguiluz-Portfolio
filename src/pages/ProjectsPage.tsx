@@ -1,14 +1,7 @@
 import React from 'react';
-import { Github, ExternalLink } from 'lucide-react';
+import { Github } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCoverflow, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-import 'swiper/css/pagination';
-
-import SpotlightCard from '../components/SpotlightCard';
-import MagneticButton from '../components/MagneticButton';
+import GlassCardDeck from '../components/GlassCardDeck';
 
 export default function ProjectsPage() {
   const projects = [
@@ -18,8 +11,7 @@ export default function ProjectsPage() {
       tags: ['REACT', 'NODE.JS', 'MONGODB', 'JWT'],
       github: 'https://github.com/Josh-Aguiluz',
       live: 'https://hauecoquest.vercel.app',
-      color: 'border-[#A47A2D] dark:border-[#A47A2D]',
-      image: 'https://i.ytimg.com/vi/9eoUM7hzeKQ/maxresdefault.jpg', // Nature/Eco theme
+      image: 'https://i.ytimg.com/vi/9eoUM7hzeKQ/maxresdefault.jpg',
     },
     {
       title: 'The Wellness Apparel',
@@ -27,8 +19,7 @@ export default function ProjectsPage() {
       tags: ['PHP', 'MYSQL', 'BOOTSTRAP', 'E-COMMERCE'],
       github: 'https://github.com/Josh-Aguiluz',
       live: 'http://the-wellness-apparel.onlinewebshop.net',
-      color: 'border-[#A47A2D] dark:border-[#A47A2D]',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80', // Apparel/Shop theme
+      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
     },
     {
       title: 'Chanel Website Replica',
@@ -36,8 +27,7 @@ export default function ProjectsPage() {
       tags: ['HTML5', 'CSS3', 'JAVASCRIPT', 'UI/UX'],
       github: 'https://github.com/Josh-Aguiluz',
       live: 'https://prelim-project-thefourwhoadore.netlify.app/home',
-      color: 'border-[#A47A2D] dark:border-[#A47A2D]',
-      image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80', // Fashion/Luxury theme
+      image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80',
     },
   ];
 
@@ -83,102 +73,16 @@ export default function ProjectsPage() {
           </motion.p>
         </div>
 
-        {/* Projects Carousel */}
-        <div className="mb-12 md:mb-16">
-          <Swiper
-            effect={'coverflow'}
-            grabCursor={true}
-            centeredSlides={true}
-            slidesPerView={'auto'}
-            loop={true}
-            coverflowEffect={{
-              rotate: 0,
-              stretch: -20, // Negative stretch pulls cards closer together
-              depth: 100,
-              modifier: 2,
-              slideShadows: false,
-            }}
-            pagination={{ clickable: true }}
-            modules={[EffectCoverflow, Pagination]}
-            className="w-full py-12 px-0 project-swiper overflow-visible"
-          >
-            {projects.map((project, index) => (
-              <SwiperSlide key={index} className="w-[300px] sm:w-[400px] md:w-[450px]">
-                <div className="h-full project-card-inner transition-opacity duration-300">
-                  <SpotlightCard>
-                    <motion.div
-                      whileHover={{
-                        scale: 1.05,
-                        y: -10,
-                        boxShadow: '0 25px 50px -12px rgba(82, 29, 7, 0.5)',
-                      }}
-                      transition={{
-                        type: 'spring',
-                        stiffness: 300,
-                        damping: 20,
-                      }}
-                      className={`sticker-card deck-card bg-white dark:bg-[#252220] p-0 border-4 ${project.color} overflow-hidden flex flex-col h-full items-center text-center`}
-                    >
-                      {/* Thumbnail */}
-                      <div className="h-[220px] w-full relative overflow-hidden border-b-4 border-[#A47A2D] dark:border-[#A47A2D]">
-                        <img
-                          src={project.image}
-                          alt={project.title}
-                          className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                        />
-                        <div className="absolute inset-0 bg-[#521D07]/10 mix-blend-multiply" />
-                      </div>
-
-                      <div className="p-6 flex-1 flex flex-col justify-center items-center w-full">
-                        {/* Project Content */}
-                        <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-xl md:text-[24px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-2">
-                          {project.title}
-                        </h3>
-
-                        <p className="text-sm md:text-base font-bold text-[#521D07] dark:text-[#B8B0A6] mb-4 leading-relaxed line-clamp-3">
-                          {project.description}
-                        </p>
-
-                        {/* Links & Tags Section */}
-                        <div className="flex flex-col items-center gap-4 mt-auto w-full">
-                          <div className="flex flex-wrap justify-center gap-2">
-                            {project.tags.map((tag, tagIndex) => (
-                              <span
-                                key={tagIndex}
-                                className="mono-tag text-[10px] px-2 py-1"
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-
-                          <div className="flex justify-center gap-4 w-full pt-2 border-t border-[#A47A2D]/20">
-                            <a
-                              href={project.github}
-                              className="flex items-center gap-2 px-4 py-2 bg-[#F5EBD9] dark:bg-[#1A1715] rounded-full hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-all group"
-                              aria-label="View on GitHub"
-                            >
-                              <Github className="w-4 h-4 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors" />
-                              <span className="text-sm font-bold text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white">Code</span>
-                            </a>
-                            <a
-                              href={project.live}
-                              className="flex items-center gap-2 px-4 py-2 bg-[#F5EBD9] dark:bg-[#1A1715] rounded-full hover:bg-[#FFA51F] dark:hover:bg-[#FFA51F] transition-all group"
-                              aria-label="View Live Demo"
-                            >
-                              <ExternalLink className="w-4 h-4 text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white transition-colors" />
-                              <span className="text-sm font-bold text-[#521D07] dark:text-[#E2E8F0] group-hover:text-white">Live</span>
-                            </a>
-                          </div>
-                        </div>
-                      </div>
-                    </motion.div>
-                  </SpotlightCard>
-                </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
+        {/* Glass Card Deck */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.3 }}
+          viewport={{ once: true }}
+          className="mb-12 md:mb-16"
+        >
+          <GlassCardDeck projects={projects} />
+        </motion.div>
 
         {/* Featured Section */}
         <div className="sticker-card bg-[#D4AF37] dark:bg-[#C9A232] p-6 md:p-12 text-center border-4 border-[#3E3632] dark:border-[#E2E8F0] relative overflow-hidden">
@@ -200,7 +104,7 @@ export default function ProjectsPage() {
             and code samples that showcase my development journey.
           </p>
           <a
-            href="https://github.com"
+            href="https://github.com/Josh-Aguiluz"
             target="_blank"
             rel="noopener noreferrer"
             className="pill-button px-8 md:px-12 py-4 md:py-6 bg-[#3E3632] dark:bg-[#E2E8F0] text-white dark:text-[#1A1715] text-lg md:text-[24px] inline-flex items-center gap-2 md:gap-3 relative z-10 hover:scale-105 transition-transform"

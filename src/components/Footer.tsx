@@ -105,7 +105,7 @@ export default function Footer() {
                             />
                         </a>
                         <a
-                            href="https://linkedin.com/in/josh-aguiluz"
+                            href="https://www.linkedin.com/in/josh-aguiluz-0a150a350/"
                             target="_blank"
                             rel="noopener noreferrer"
                             className="hover:scale-110 shadow-lg hover:shadow-[#A47A2D]/50 relative z-30"

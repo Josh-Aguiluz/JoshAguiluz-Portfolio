@@ -2996,3 +2996,428 @@ html {
     -12px 12px 0 0 #252220,
     -12px 12px 0 2px #E2E8F0;
 }
+
+/* ================================================
+   GLASS CARD DECK STYLES
+   ================================================ */
+
+.glass-deck-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  padding: 20px 0;
+  perspective: 1200px;
+}
+
+.glass-deck-fan {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  height: 500px;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+@media (min-width: 640px) {
+  .glass-deck-fan {
+    max-width: 800px;
+    height: 540px;
+  }
+}
+
+@media (min-width: 768px) {
+  .glass-deck-fan {
+    max-width: 900px;
+    height: 560px;
+  }
+}
+
+/* Glass Card Base */
+.glass-card {
+  width: 420px;
+  height: 100%;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1.5px solid rgba(164, 122, 45, 0.25);
+  background: rgba(253, 245, 231, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 32px rgba(82, 29, 7, 0.12),
+    0 2px 8px rgba(82, 29, 7, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .glass-card {
+    width: 300px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 639px) {
+  .glass-card {
+    width: 340px;
+  }
+}
+
+.dark .glass-card {
+  background: rgba(37, 34, 32, 0.7);
+  border-color: rgba(164, 122, 45, 0.3);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* Stack cards behind active */
+.glass-card-stack {
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Active card */
+.glass-card-active {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.glass-card-active:hover {
+  box-shadow:
+    0 16px 48px rgba(82, 29, 7, 0.18),
+    0 4px 12px rgba(82, 29, 7, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.dark .glass-card-active:hover {
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.45),
+    0 4px 12px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+/* Card Image */
+.glass-card-image {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+@media (min-width: 640px) {
+  .glass-card-image {
+    height: 220px;
+  }
+}
+
+@media (min-width: 768px) {
+  .glass-card-image {
+    height: 240px;
+  }
+}
+
+.glass-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.glass-card-active:hover .glass-card-image img {
+  transform: scale(1.05);
+}
+
+.glass-card-image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom,
+      transparent 50%,
+      rgba(253, 245, 231, 0.5) 100%);
+  pointer-events: none;
+}
+
+.dark .glass-card-image-overlay {
+  background: linear-gradient(to bottom,
+      transparent 50%,
+      rgba(37, 34, 32, 0.6) 100%);
+}
+
+/* Card Content */
+.glass-card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  text-align: center;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (min-width: 640px) {
+  .glass-card-content {
+    padding: 24px;
+    gap: 12px;
+  }
+}
+
+.glass-card-title {
+  font-family: 'Michroma', sans-serif;
+  font-size: 18px !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #521D07;
+  line-height: 1.3;
+}
+
+.dark .glass-card-title {
+  color: #E2E8F0;
+}
+
+@media (min-width: 640px) {
+  .glass-card-title {
+    font-size: 20px !important;
+  }
+}
+
+/* Override global h3 clamp for glass cards */
+.glass-card h3 {
+  font-size: 18px !important;
+}
+
+@media (min-width: 640px) {
+  .glass-card h3 {
+    font-size: 20px !important;
+  }
+}
+
+.glass-card-desc {
+  font-size: 13px !important;
+  font-weight: 600;
+  color: #521D07;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  opacity: 0.85;
+}
+
+.dark .glass-card-desc {
+  color: #B8B0A6;
+}
+
+@media (min-width: 640px) {
+  .glass-card-desc {
+    font-size: 14px !important;
+  }
+}
+
+/* Override global p clamp for glass cards */
+.glass-card p {
+  font-size: 13px !important;
+}
+
+@media (min-width: 640px) {
+  .glass-card p {
+    font-size: 14px !important;
+  }
+}
+
+/* Tags */
+.glass-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.glass-card-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(164, 122, 45, 0.12);
+  border: 1px solid rgba(164, 122, 45, 0.25);
+  color: #A47A2D;
+}
+
+.dark .glass-card-tag {
+  background: rgba(164, 122, 45, 0.15);
+  border-color: rgba(164, 122, 45, 0.3);
+  color: #D4AF37;
+}
+
+/* Links */
+.glass-card-links {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 12px;
+  border-top: 1px solid rgba(164, 122, 45, 0.15);
+  width: 100%;
+}
+
+.glass-card-link {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  color: #521D07;
+  background: rgba(164, 122, 45, 0.1);
+  border: 1px solid rgba(164, 122, 45, 0.2);
+  transition: all 0.25s ease;
+}
+
+.dark .glass-card-link {
+  color: #E2E8F0;
+  background: rgba(164, 122, 45, 0.12);
+  border-color: rgba(164, 122, 45, 0.25);
+}
+
+.glass-card-link:hover {
+  background: #A47A2D;
+  color: white;
+  border-color: #A47A2D;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(164, 122, 45, 0.3);
+}
+
+.dark .glass-card-link:hover {
+  background: #A47A2D;
+  color: #1A1715;
+  border-color: #A47A2D;
+}
+
+/* Navigation */
+.glass-deck-nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.glass-deck-arrow {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(164, 122, 45, 0.12);
+  border: 1.5px solid rgba(164, 122, 45, 0.25);
+  color: #521D07;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.dark .glass-deck-arrow {
+  color: #E2E8F0;
+  background: rgba(164, 122, 45, 0.12);
+  border-color: rgba(164, 122, 45, 0.3);
+}
+
+.glass-deck-arrow:hover {
+  background: #A47A2D;
+  color: white;
+  border-color: #A47A2D;
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(164, 122, 45, 0.3);
+}
+
+.dark .glass-deck-arrow:hover {
+  color: #1A1715;
+}
+
+/* Dots */
+.glass-deck-dots {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.glass-deck-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(164, 122, 45, 0.25);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.glass-deck-dot:hover {
+  background: rgba(164, 122, 45, 0.5);
+  transform: scale(1.2);
+}
+
+.glass-deck-dot.active {
+  background: #A47A2D;
+  width: 28px;
+  border-radius: 100px;
+  box-shadow: 0 0 10px rgba(164, 122, 45, 0.4);
+}
+
+.dark .glass-deck-dot {
+  background: rgba(164, 122, 45, 0.2);
+}
+
+.dark .glass-deck-dot.active {
+  background: #D4AF37;
+  box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+}
+
+/* Swipe hint animation */
+@keyframes swipe-hint {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-6px);
+  }
+
+  75% {
+    transform: translateX(6px);
+  }
+}
+
+.glass-card-active {
+  /* subtle shimmer on the border */
+  animation: none;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg,
+      transparent,
+      rgba(255, 255, 255, 0.08),
+      transparent);
+  z-index: 1;
+  pointer-events: none;
+  transition: left 0.6s ease;
+}
+
+.glass-card-active:hover::before {
+  left: 100%;
+}
