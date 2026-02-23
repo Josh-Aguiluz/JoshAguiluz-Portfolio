@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Mail, Github, Linkedin, Twitter, Send } from 'lucide-react';
+import { Mail, Github, Linkedin, Twitter, Send, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
+import resumePdf from '../assets/resume.pdf';
 
 const ContactPage = () => {
   const [formData, setFormData] = useState({
@@ -125,6 +126,18 @@ const ContactPage = () => {
                 ))}
               </div>
             </div>
+
+            {/* Download Resume */}
+            <a
+              href={resumePdf}
+              download="Josh_Aguiluz_Resume.pdf"
+              className="sticker-card bg-[#A47A2D] dark:bg-[#D4AF37] p-6 md:p-8 flex items-center justify-center gap-4 border-4 border-[#521D07] dark:border-[#1A1715] hover:scale-105 hover:bg-[#FFA51F] dark:hover:bg-[#F2C94C] transition-all group cursor-pointer"
+            >
+              <Download className="w-8 h-8 text-white dark:text-[#1A1715] group-hover:-translate-y-1 transition-transform" />
+              <h4 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-[20px] md:text-[24px] font-black text-white dark:text-[#1A1715] uppercase">
+                Download Resume
+              </h4>
+            </a>
           </div>
 
           {/* Contact Form */}

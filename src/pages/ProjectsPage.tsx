@@ -6,6 +6,14 @@ import GlassCardDeck from '../components/GlassCardDeck';
 export default function ProjectsPage() {
   const projects = [
     {
+      title: "Danono's Bakery",
+      description: "A premium bakery platform for Danono's in Angeles City. Features a vibrant UI to showcase their signature 24-hour fermented brioche doughnuts, seamless ordering, and the story behind their daily fresh creations.",
+      tags: ['REACT', 'TAILWIND', 'E-COMMERCE', 'UI/UX'],
+      github: 'https://github.com/Josh-Aguiluz',
+      live: 'https://danonos.com',
+      image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80',
+    },
+    {
       title: 'HAU Eco-Quest',
       description: 'Architected a gamified sustainability platform with secure JWT authentication and Role-Based Access Control (RBAC). Built with MERN Stack (React, Node.js, MongoDB).',
       tags: ['REACT', 'NODE.JS', 'MONGODB', 'JWT'],

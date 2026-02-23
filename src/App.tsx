@@ -82,9 +82,6 @@ export default function App() {
       {/* 3D Bouncing Sphere */}
       <Scene3D scrollY={scrollYValue} scrollYProgress={scrollYProgressValue} />
 
-      {/* Custom Cursor */}
-      <CustomCursor />
-
       {/* Fixed Navigation - ALWAYS ON TOP */}
       <motion.nav
         initial={{ y: 0 }}
@@ -235,6 +232,9 @@ export default function App() {
 
       {/* Global Scroll Progress Bar */}
       <ScrollProgress />
+
+      {/* Custom Cursor - Rendered last so it sits on top of everything including modals */}
+      <CustomCursor />
     </div>
   );
 }

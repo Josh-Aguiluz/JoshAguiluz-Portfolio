@@ -1,8 +1,9 @@
 import React from 'react';
 import TypewriterTerminal from '../components/TypewriterTerminal';
 import { motion } from 'framer-motion';
-import { Layers, Award, TrendingUp } from 'lucide-react';
+import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp } from 'lucide-react';
 import homeBGHD from '../assets/homeBGHD.png';
+import resumePdf from '../assets/resume.pdf';
 
 export default function HomePage() {
   const scrollToSection = (sectionId: string) => {
@@ -140,7 +141,7 @@ export default function HomePage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 0.5 }}
-              className="text-lg md:text-xl font-semibold leading-relaxed mb-14 max-w-lg text-[#521D07]/90 dark:text-[#E8DCC8] drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] dark-hero-desc"
+              className="text-lg md:text-xl font-semibold leading-relaxed mb-20 max-w-lg text-[#521D07]/90 dark:text-[#E8DCC8] drop-shadow-[0_1px_2px_rgba(0,0,0,0.1)] dark:drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)] dark-hero-desc"
             >
               Building{' '}
               <span className="text-[#A47A2D] dark:text-[#FFA51F] font-bold">efficient</span>,{' '}
@@ -153,20 +154,50 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.65 }}
-              className="flex flex-col sm:flex-row gap-6"
+              className="flex flex-col sm:flex-row gap-6 pt-4"
             >
+              {/* Primary Button */}
               <button
                 onClick={() => scrollToSection('projects')}
-                className="pill-button px-10 py-4 bg-[#521D07] dark:bg-[#D4AF37] text-white dark:text-[#1A0E05] text-lg md:text-xl font-bold hover:bg-[#A47A2D] dark:hover:bg-[#FFA51F] hover:scale-105 shadow-[0_4px_20px_rgba(82,29,7,0.4)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.4)] transition-all duration-300 w-full sm:w-auto dark-btn-primary"
+                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#521D07] dark:bg-[#D4AF37] overflow-hidden rounded-full font-black text-lg md:text-xl text-white dark:text-[#1A0E05] hover:scale-105 shadow-[0_4px_20px_rgba(82,29,7,0.4)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.4)] transition-all duration-300 w-full sm:w-auto dark-btn-primary"
               >
-                View Projects
+                <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-14 group-hover:opacity-0">
+                  View Projects
+                </span>
+                <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#A47A2D] to-[#D4AF37] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
+                <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white translate-y-14 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  View Projects
+                </span>
               </button>
+
+              {/* Secondary Button */}
               <button
                 onClick={() => scrollToSection('contact')}
-                className="pill-button px-10 py-4 bg-[#A47A2D] dark:bg-transparent dark:border-2 dark:border-[#D4AF37] text-white dark:text-[#D4AF37] text-lg md:text-xl font-bold hover:bg-[#D4AF37] dark:hover:bg-[#D4AF37] dark:hover:text-[#1A0E05] hover:scale-105 shadow-[0_4px_20px_rgba(164,122,45,0.3)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.3)] transition-all duration-300 w-full sm:w-auto dark-btn-secondary"
+                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 bg-transparent overflow-hidden rounded-full font-black text-lg md:text-xl text-[#521D07] dark:text-[#D4AF37] border-2 border-[#A47A2D] dark:border-[#D4AF37] hover:scale-105 shadow-[0_4px_20px_rgba(164,122,45,0.15)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.2)] transition-all duration-300 w-full sm:w-auto dark-btn-secondary"
               >
-                Contact Me
+                <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-14 group-hover:opacity-0">
+                  Contact Me
+                </span>
+                <div className="absolute inset-0 z-0 bg-[#A47A2D] dark:bg-[#D4AF37] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
+                <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white dark:text-[#1A0E05] translate-y-14 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  Contact Me
+                </span>
               </button>
+
+              {/* Tertiary Button - Download Resume */}
+              <a
+                href={resumePdf}
+                download="Josh_Aguiluz_Resume.pdf"
+                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 bg-transparent overflow-hidden rounded-full font-black text-lg md:text-xl text-[#521D07] dark:text-[#D4AF37] border-2 border-[#A47A2D] dark:border-[#D4AF37] hover:scale-105 shadow-[0_4px_20px_rgba(164,122,45,0.15)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.2)] transition-all duration-300 w-full sm:w-auto dark-btn-secondary"
+              >
+                <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-14 group-hover:opacity-0">
+                  <Download className="w-5 h-5" /> Resume
+                </span>
+                <div className="absolute inset-0 z-0 bg-[#A47A2D] dark:bg-[#D4AF37] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
+                <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white dark:text-[#1A0E05] translate-y-14 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                  <Download className="w-5 h-5" /> Resume
+                </span>
+              </a>
             </motion.div>
           </div>
         </div>
@@ -207,7 +238,7 @@ export default function HomePage() {
               className="sticker-card bg-white dark:bg-[#252220] p-6 md:p-8 center-content border-4 border-[#A47A2D]"
             >
               <Layers className="w-10 h-10 md:w-12 md:h-12 text-[#A47A2D] mb-4 mx-auto" />
-              <div className="text-[40px] md:text-[56px] font-black text-[#A47A2D] mb-2">15+</div>
+              <div className="text-[40px] md:text-[56px] font-black text-[#A47A2D] mb-2">4</div>
               <div className="text-[18px] md:text-[24px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">Projects</div>
             </motion.div>
             <motion.div
@@ -354,57 +385,57 @@ export default function HomePage() {
                     scale: 1.05,
                     transition: { duration: 0.3 },
                   }}
-                  className={`tech-card-${tech.name.replace('.', '')} group relative flex flex-col items-center text-center p-6 md:p-10 rounded-[28px] shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden`}
+                  className={`tech - card - ${tech.name.replace('.', '')} group relative flex flex - col items - center text - center p - 6 md: p - 10 rounded - [28px] shadow - lg hover: shadow - 2xl transition - all duration - 500 cursor - pointer overflow - hidden`}
                   style={{
-                    backgroundColor: `var(--tech-bg, ${tech.bgLight})`,
-                    border: `3px solid ${tech.borderLight}`,
-                    boxShadow: `inset 0 0 0 1px ${tech.borderLight}33, 0 4px 20px -4px ${tech.color}20`,
+                    backgroundColor: `var(--tech - bg, ${tech.bgLight})`,
+                    border: `3px solid ${tech.borderLight} `,
+                    boxShadow: `inset 0 0 0 1px ${tech.borderLight} 33, 0 4px 20px - 4px ${tech.color} 20`,
                   }}
                 >
                   {/* Dark mode background override */}
                   <style>{`
-                    .dark .tech-card-${tech.name.replace('.', '')} {
-                      background-color: ${tech.bgDark} !important;
-                      border-color: ${tech.borderDark} !important;
-                      box-shadow: inset 0 0 0 1px ${tech.borderDark}55, 0 4px 30px -4px ${tech.color}30 !important;
-                    }
-                    .dark .tech-card-${tech.name.replace('.', '')}:hover {
-                      box-shadow: inset 0 0 0 1px ${tech.borderDark}88, 0 8px 40px -4px ${tech.color}40 !important;
-                    }
-                  `}</style>
+  .dark.tech - card - ${tech.name.replace('.', '')} {
+  background - color: ${tech.bgDark} !important;
+  border - color: ${tech.borderDark} !important;
+  box - shadow: inset 0 0 0 1px ${tech.borderDark} 55, 0 4px 30px - 4px ${tech.color} 30!important;
+}
+                    .dark.tech - card - ${tech.name.replace('.', '')}:hover {
+  box - shadow: inset 0 0 0 1px ${tech.borderDark} 88, 0 8px 40px - 4px ${tech.color} 40!important;
+}
+`}</style>
 
                   {/* Glow effect on hover */}
                   <div
                     className="absolute inset-0 rounded-[24px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                     style={{
-                      background: `radial-gradient(circle at 50% 30%, ${tech.color}20, transparent 65%)`,
+                      background: `radial - gradient(circle at 50 % 30 %, ${tech.color}20, transparent 65 %)`,
                     }}
                   />
 
                   {/* Top accent line */}
                   <div
                     className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-1/2 group-hover:w-full transition-all duration-500 rounded-b-full"
-                    style={{ background: `linear-gradient(90deg, transparent, ${tech.color}, transparent)` }}
+                    style={{ background: `linear - gradient(90deg, transparent, ${tech.color}, transparent)` }}
                   />
 
                   {/* Decorative corner accents */}
                   <div
                     className="absolute top-0 right-0 w-24 h-24 opacity-[0.05] group-hover:opacity-[0.12] transition-opacity duration-500"
                     style={{
-                      background: `radial-gradient(circle at 100% 0%, ${tech.color}, transparent 70%)`,
+                      background: `radial - gradient(circle at 100 % 0 %, ${tech.color}, transparent 70 %)`,
                     }}
                   />
                   <div
                     className="absolute bottom-0 left-0 w-20 h-20 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500"
                     style={{
-                      background: `radial-gradient(circle at 0% 100%, ${tech.color}, transparent 70%)`,
+                      background: `radial - gradient(circle at 0 % 100 %, ${tech.color}, transparent 70 %)`,
                     }}
                   />
 
                   {/* Icon */}
                   <div
                     className="relative z-10 mb-5 md:mb-6 p-4 md:p-5 rounded-2xl group-hover:scale-110 transition-transform duration-500"
-                    style={{ backgroundColor: `${tech.color}15` }}
+                    style={{ backgroundColor: `${tech.color} 15` }}
                   >
                     {tech.iconSimple}
                   </div>
@@ -428,7 +459,7 @@ export default function HomePage() {
                   {/* Bottom accent line */}
                   <div
                     className="absolute bottom-0 left-1/2 -translate-x-1/2 h-1 w-0 group-hover:w-3/4 transition-all duration-500 rounded-full"
-                    style={{ background: `linear-gradient(90deg, transparent, ${tech.color}, transparent)` }}
+                    style={{ background: `linear - gradient(90deg, transparent, ${tech.color}, transparent)` }}
                   />
                 </motion.div>
               ))}
@@ -440,11 +471,12 @@ export default function HomePage() {
 
       {/* Gradient animation keyframes and manual dark mode styles */}
       <style>{`
-        @keyframes gradientShift {
-          0%, 100% { background-position: 0% center; }
-          50% { background-position: 200% center; }
+@keyframes gradientShift {
+  0 %, 100 % { background- position: 0 % center;
+}
+50 % { background- position: 200 % center; }
         }
-        
+
         /* 
          * RAW CSS OVERRIDES FOR DARK MODE!
          * Because Tailwind CSS in this project is pre-compiled (static),
@@ -454,17 +486,17 @@ export default function HomePage() {
         .dark .dark-hero-overlay { opacity: 1 !important; }
         .dark .dark-bracket-code { color: #FDF5E7 !important; }
         .dark .dark-hero-title { color: #FDF5E7 !important; }
-        .dark .dark-hero-desc { color: #E8DCC8 !important; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.8)) !important; }
-        .dark .dark-btn-primary { 
-          background-color: #D4AF37 !important; 
-          color: #1A0E05 !important; 
-          box-shadow: 0 4px 20px rgba(212,175,55,0.4) !important;
+        .dark .dark-hero-desc { color: #E8DCC8 !important; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)) !important; }
+        .dark .dark-btn-primary {
+          background-color: #D4AF37 !important;
+          color: #1A0E05 !important;
+          box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4) !important;
         }
         .dark .dark-btn-primary:hover { background-color: #FFA51F !important; }
         .dark .dark-btn-secondary {
           background-color: transparent !important;
           color: #D4AF37 !important;
-          box-shadow: inset 0 0 0 2px #D4AF37, 0 4px 20px rgba(212,175,55,0.3) !important;
+          box-shadow: inset 0 0 0 2px #D4AF37, 0 4px 20px rgba(212, 175, 55, 0.3) !important;
           border: none !important;
         }
         .dark .dark-btn-secondary:hover {

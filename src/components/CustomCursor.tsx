@@ -46,25 +46,19 @@ export default function CustomCursor() {
 
   return (
     <>
-      {/* Hide default cursor */}
-      <style>{`
-        * {
-          cursor: none !important;
-        }
-      `}</style>
-
       {/* Custom Cursor */}
       <div
-        className="fixed top-0 left-0 pointer-events-none z-[9999] transition-all duration-150 ease-out"
+        className="fixed top-0 left-0 pointer-events-none transition-all duration-150 ease-out"
         style={{
           transform: `translate(${position.x}px, ${position.y}px)`,
+          zIndex: 999999,
         }}
       >
         {/* Main cursor dot */}
         <div
-          className={`transition-all duration-300 ease-out ${isHovering
-              ? 'w-12 h-12 -translate-x-6 -translate-y-6 border-4 border-[#A47A2D] bg-transparent'
-              : 'w-4 h-4 -translate-x-2 -translate-y-2 bg-[#521D07]'
+          className={`pointer-events-none transition-all duration-300 ease-out ${isHovering
+            ? 'w-12 h-12 -translate-x-6 -translate-y-6 border-4 border-[#A47A2D] bg-transparent'
+            : 'w-4 h-4 -translate-x-2 -translate-y-2 bg-[#521D07]'
             } rounded-full`}
         />
       </div>

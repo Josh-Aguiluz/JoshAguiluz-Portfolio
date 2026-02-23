@@ -2,13 +2,15 @@ import React from 'react';
 import { Award, Briefcase, GraduationCap, Download, Terminal, Globe, Cpu, MapPin, CheckCircle2, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MagneticButton from '../components/MagneticButton';
+import acsciImg from '../assets/ACSCI.jfif';
+import resumePdf from '../assets/resume.pdf';
 
 /* ================================================================
    SVG Donut Pie Chart — Labels OUTSIDE with leader lines
    ================================================================ */
 function SkillsPieChart() {
-  const size = 380;
-  const strokeWidth = 70;
+  const size = 320;
+  const strokeWidth = 60;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const cx = size / 2;
@@ -37,16 +39,16 @@ function SkillsPieChart() {
   });
 
   // SVG canvas is bigger to fit labels outside — must be large enough to contain all labels
-  const svgSize = 820;
+  const svgSize = 680;
   const svgCx = svgSize / 2;
   const svgCy = svgSize / 2;
-  const outerLabelRadius = radius + strokeWidth / 2 + 70;
+  const outerLabelRadius = radius + strokeWidth / 2 + 55;
   const lineStartRadius = radius + strokeWidth / 2 + 5;
 
   return (
-    <div className="flex flex-col lg:flex-row items-center gap-10 lg:gap-16">
+    <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4">
       {/* Pie Chart with external labels — scales on mobile */}
-      <div className="relative flex-shrink-0 flex items-center justify-center w-full lg:w-auto" style={{ maxWidth: svgSize }}>
+      <div className="relative flex-shrink-0 flex items-center justify-center w-full lg:w-auto" style={{ maxWidth: 500 }}>
         <svg width="100%" height="100%" viewBox={`0 0 ${svgSize} ${svgSize}`}>
           {/* Donut segments */}
           <g transform={`rotate(-90 ${svgCx} ${svgCy})`}>
@@ -190,14 +192,14 @@ export default function ResumePage() {
       title: 'BS Information Technology',
       org: 'Holy Angel University',
       desc: 'Major within Web Development Track. Top 1% ranking Academic Scholar.',
-      image: 'https://images.unsplash.com/photo-1523050854058-8df90110c476?w=400&q=80',
+      image: 'https://www.hau.edu.ph/images/banner-3.jpg',
     },
     {
       year: '2017 - 2022',
       title: 'STEM Strand Badge',
       org: 'Angeles City Science High School',
       desc: 'Graduated with High Honors. Specialization in Advanced Mathematics & Research.',
-      image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=400&q=80',
+      image: acsciImg,
     },
     {
       year: '2024',
@@ -272,111 +274,119 @@ export default function ResumePage() {
             </motion.h1>
           </div>
 
-          <MagneticButton className="px-6 py-3 md:px-8 md:py-4 bg-[#A47A2D] hover:bg-[#FFA51F] text-white rounded-[20px] font-black text-base md:text-lg flex items-center gap-3 shadow-[8px_8px_0px_#521D07] dark:shadow-[8px_8px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#521D07] transition-all border-2 border-[#521D07] dark:border-[#E2E8F0]">
-            <Download className="w-5 h-5" />
-            Download PDF
-          </MagneticButton>
+          <a href={resumePdf} download="Josh_Aguiluz_Resume.pdf">
+            <MagneticButton className="px-6 py-3 md:px-8 md:py-4 bg-[#A47A2D] hover:bg-[#FFA51F] text-white rounded-[20px] font-black text-base md:text-lg flex items-center gap-3 shadow-[8px_8px_0px_#521D07] dark:shadow-[8px_8px_0px_#000] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[4px_4px_0px_#521D07] transition-all border-2 border-[#521D07] dark:border-[#E2E8F0]">
+              <Download className="w-5 h-5" />
+              Download PDF
+            </MagneticButton>
+          </a>
         </div>
 
-        {/* ===== SECTION 1: Profile Card + Summary ===== */}
+        {/* ===== SECTION 1: Unified Profile & Summary Container ===== */}
         <section className="mb-24">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="bg-white dark:bg-[#252220] rounded-[40px] border-4 border-[#A47A2D] p-8 lg:p-14 relative overflow-hidden shadow-2xl"
+          >
+            {/* Subtle background decoration */}
+            <Briefcase className="absolute -right-12 -bottom-12 w-64 h-64 text-[#A47A2D] opacity-[0.03] rotate-12 pointer-events-none" />
 
-            {/* Left — Profile Card */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="lg:col-span-4 bg-white dark:bg-[#252220] rounded-[32px] border-4 border-[#A47A2D] p-8 lg:p-10 flex flex-col items-center text-center"
-            >
-              {/* Avatar */}
-              <div className="relative mb-8">
-                <div className="w-32 h-32 rounded-full bg-gradient-to-br from-[#A47A2D] via-[#D4AF37] to-[#A47A2D] p-1.5 shadow-xl">
-                  <div className="w-full h-full rounded-full bg-[#FDF5E7] dark:bg-[#1A1715] flex items-center justify-center">
-                    <span style={{ fontFamily: 'Michroma, sans-serif' }} className="text-4xl font-black text-[#A47A2D]">JA</span>
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative z-10">
+
+              {/* Left Column — About Me (Profile) */}
+              <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
+                {/* Avatar */}
+                <div className="relative mb-8 self-center lg:self-start">
+                  <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-[#A47A2D] via-[#D4AF37] to-[#A47A2D] p-1.5 shadow-xl">
+                    <div className="w-full h-full rounded-full bg-[#FDF5E7] dark:bg-[#1A1715] flex items-center justify-center">
+                      <span style={{ fontFamily: 'Michroma, sans-serif' }} className="text-4xl lg:text-5xl font-black text-[#A47A2D]">JA</span>
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 right-4 w-6 h-6 bg-green-400 rounded-full border-4 border-white dark:border-[#252220] shadow-md animate-pulse" />
+                </div>
+
+                <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-3xl lg:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-2 leading-tight">
+                  Josh Andrei<br />Aguiluz
+                </h3>
+                <p className="text-[#A47A2D] font-black text-lg mb-8 tracking-wide uppercase">Backend & Full-Stack Developer</p>
+
+                <div className="w-full space-y-5 text-left mb-10 pb-10 border-b-2 lg:border-b-0 lg:pb-0 border-[#A47A2D]/20">
+                  <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
+                    <div className="w-10 h-10 rounded-full bg-[#A47A2D]/10 flex items-center justify-center flex-shrink-0">
+                      <MapPin className="w-5 h-5 text-[#A47A2D]" />
+                    </div>
+                    Angeles City, Pampanga
+                  </div>
+                  <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
+                    <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
+                      <CheckCircle2 className="w-5 h-5 text-green-500" />
+                    </div>
+                    Available for Internships
+                  </div>
+                  <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
+                    <div className="w-10 h-10 rounded-full bg-[#A47A2D]/10 flex items-center justify-center flex-shrink-0">
+                      <GraduationCap className="w-5 h-5 text-[#A47A2D]" />
+                    </div>
+                    Top 1% Scholar
                   </div>
                 </div>
-                <div className="absolute bottom-2 right-2 w-5 h-5 bg-green-400 rounded-full border-3 border-white dark:border-[#252220] shadow-md" />
+
+                <a
+                  href="mailto:josh.dizon.aguiluz25@gmail.com"
+                  className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#A47A2D] hover:bg-[#FFA51F] text-white rounded-2xl font-black text-lg transition-transform hover:-translate-y-1 shadow-lg mt-auto"
+                >
+                  <Mail className="w-5 h-5" /> Contact Me
+                </a>
               </div>
 
-              <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-2xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-2 leading-tight">
-                Josh Andrei<br />Aguiluz
-              </h3>
-              <p className="text-[#A47A2D] font-bold text-base mb-8">Backend & Full-Stack Developer</p>
+              {/* Custom Desktop Divider */}
+              <div className="hidden lg:block absolute left-[45%] top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-[#A47A2D]/40 to-transparent" />
 
-              <div className="w-full space-y-4 text-left mb-8">
-                <div className="flex items-center gap-3 text-base font-bold text-[#521D07] dark:text-[#B8B0A6]">
-                  <MapPin className="w-5 h-5 text-[#A47A2D] flex-shrink-0" />
-                  Angeles City, Pampanga
-                </div>
-                <div className="flex items-center gap-3 text-base font-bold text-[#521D07] dark:text-[#B8B0A6]">
-                  <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
-                  Available for Internships
-                </div>
-                <div className="flex items-center gap-3 text-base font-bold text-[#521D07] dark:text-[#B8B0A6]">
-                  <GraduationCap className="w-5 h-5 text-[#A47A2D] flex-shrink-0" />
-                  Top 1% Scholar
-                </div>
-              </div>
-
-              <a
-                href="mailto:josh.dizon.aguiluz25@gmail.com"
-                className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-[#A47A2D] hover:bg-[#FFA51F] text-white rounded-2xl font-black text-lg transition-colors shadow-lg"
-              >
-                <Mail className="w-5 h-5" /> Contact
-              </a>
-            </motion.div>
-
-            {/* Right — Professional Summary */}
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.15 }}
-              className="lg:col-span-8 bg-white dark:bg-[#252220] rounded-[32px] border-4 border-[#A47A2D] p-8 lg:p-12 relative overflow-hidden flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-center gap-3 mb-8">
-                  <div className="w-12 h-12 bg-[#A47A2D] rounded-xl flex items-center justify-center shadow-md">
-                    <Briefcase className="text-white w-6 h-6" />
+              {/* Right Column — Professional Summary */}
+              <div className="lg:col-span-7 flex flex-col justify-center">
+                <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
+                  <div className="w-14 h-14 bg-[#A47A2D] rounded-xl flex items-center justify-center shadow-lg rotate-3">
+                    <Briefcase className="text-white w-7 h-7 -rotate-3" />
                   </div>
-                  <h2 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-xl md:text-3xl lg:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">
+                  <h2 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-2xl md:text-3xl lg:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">
                     Professional <span className="text-[#A47A2D]">Summary</span>
                   </h2>
                 </div>
 
-                <p className="text-base md:text-xl lg:text-2xl font-medium text-[#521D07] dark:text-[#B8B0A6] leading-relaxed mb-8 md:mb-10">
+                <p className="text-lg lg:text-xl xl:text-2xl font-medium text-[#521D07]/90 dark:text-[#B8B0A6] leading-relaxed mb-12 text-center lg:text-left">
                   Motivated <span className="text-[#A47A2D] font-black">BS Information Technology</span> student and{' '}
                   <span className="text-[#A47A2D] font-black">Top 1% Scholar</span> seeking a Backend Developer internship.
                   I leverage Full-Stack capabilities in{' '}
-                  <span className="bg-[#A47A2D]/10 px-2 py-0.5 rounded-lg font-bold text-[#A47A2D]">Node.js</span>,{' '}
-                  <span className="bg-[#A47A2D]/10 px-2 py-0.5 rounded-lg font-bold text-[#A47A2D]">Angular</span>, and{' '}
-                  <span className="bg-[#A47A2D]/10 px-2 py-0.5 rounded-lg font-bold text-[#A47A2D]">Flutter</span>{' '}
+                  <span className="bg-[#A47A2D]/10 px-2 py-1 rounded-md font-black text-[#A47A2D] border border-[#A47A2D]/20">Node.js</span>,{' '}
+                  <span className="bg-[#A47A2D]/10 px-2 py-1 rounded-md font-black text-[#A47A2D] border border-[#A47A2D]/20">Angular</span>, and{' '}
+                  <span className="bg-[#A47A2D]/10 px-2 py-1 rounded-md font-black text-[#A47A2D] border border-[#A47A2D]/20">Flutter</span>{' '}
                   to build efficient, scalable systems while driving rapid technical growth.
                 </p>
+
+                {/* Quick Stats Grid */}
+                <div className="grid grid-cols-2 gap-4 lg:gap-6 mt-auto">
+                  {quickStats.map((stat, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      whileHover={{ scale: 1.05 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 + i * 0.1 }}
+                      className="bg-[#F5EBD9] dark:bg-[#1A1715] rounded-2xl p-6 text-center border border-[#A47A2D]/30 shadow-sm flex flex-col justify-center gap-1"
+                    >
+                      <div className="text-3xl lg:text-4xl font-black text-[#A47A2D]">{stat.value}</div>
+                      <div className="text-sm font-black text-[#521D07] dark:text-[#E2E8F0] uppercase tracking-wide">{stat.label}</div>
+                    </motion.div>
+                  ))}
+                </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
-                {quickStats.map((stat, i) => (
-                  <motion.div
-                    key={i}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.3 + i * 0.1 }}
-                    className="bg-[#F5EBD9] dark:bg-[#1A1715] rounded-2xl p-4 text-center border-2 border-[#A47A2D]/20"
-                  >
-                    <div className="text-2xl md:text-3xl font-black text-[#A47A2D]">{stat.value}</div>
-                    <div className="text-xs font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mt-1">{stat.label}</div>
-                  </motion.div>
-                ))}
-              </div>
-
-              <Briefcase className="absolute -right-8 -bottom-8 w-48 h-48 text-[#A47A2D] opacity-[0.04] rotate-12" />
-            </motion.div>
-          </div>
+            </div>
+          </motion.div>
         </section>
 
         {/* ===== SECTION 2: Technical Skills — Large Pie Chart ===== */}
@@ -402,7 +412,7 @@ export default function ResumePage() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-[#252220] rounded-[24px] md:rounded-[32px] border-4 border-[#A47A2D] p-4 md:p-8 lg:p-14 overflow-hidden"
+            className="bg-white dark:bg-[#252220] rounded-[24px] md:rounded-[32px] border-4 border-[#A47A2D] p-4 md:p-8 lg:p-14"
           >
             <SkillsPieChart />
           </motion.div>
@@ -426,12 +436,26 @@ export default function ResumePage() {
             </div>
           </motion.div>
 
+          {/* Custom responsive styles for timeline since Tailwind responsive classes not in build */}
+          <style>{`
+            .tl-mobile { display: block; }
+            .tl-desktop { display: none; }
+            .tl-line { position: absolute; top: 0; bottom: 0; left: 16px; transform: none; }
+            .tl-entries { display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 1; }
+            @media (min-width: 768px) {
+              .tl-mobile { display: none !important; }
+              .tl-desktop { display: grid !important; }
+              .tl-line { left: 50% !important; transform: translateX(-50%) !important; }
+              .tl-entries { gap: 60px !important; }
+            }
+          `}</style>
+
           {/* Timeline — responsive: stacked on mobile, zigzag on md+ */}
           <div className="relative max-w-5xl mx-auto">
 
-            {/* Center vertical line — left on mobile, center on md+ */}
+            {/* Center vertical line */}
             <div
-              className="absolute top-0 bottom-0 left-4 md:left-1/2 md:-translate-x-1/2"
+              className="tl-line"
               style={{
                 width: '4px',
                 background: 'linear-gradient(to bottom, #A47A2D, #D4AF37, #A47A2D)',
@@ -440,7 +464,7 @@ export default function ResumePage() {
               }}
             />
 
-            <div className="flex flex-col gap-10 md:gap-16 relative z-[1]">
+            <div className="tl-entries">
               {timeline.map((item, idx) => {
                 const imageOnLeft = idx % 2 === 0;
 
@@ -453,7 +477,7 @@ export default function ResumePage() {
                     transition={{ duration: 0.6, ease: 'easeOut' }}
                   >
                     {/* === MOBILE layout (< md): stacked card with image on top === */}
-                    <div className="md:hidden pl-10 relative">
+                    <div className="tl-mobile pl-10 relative">
                       {/* Dot on the left line */}
                       <div className="absolute left-2 top-6 z-10"
                         style={{
@@ -475,20 +499,14 @@ export default function ResumePage() {
                     </div>
 
                     {/* === DESKTOP layout (md+): zigzag grid === */}
-                    <div
-                      className="hidden md:grid"
-                      style={{
-                        gridTemplateColumns: '1fr 60px 1fr',
-                        alignItems: 'center',
-                      }}
-                    >
+                    <div className="tl-desktop" style={{ gridTemplateColumns: 'minmax(0, 1fr) 60px minmax(0, 1fr)', alignItems: 'center' }}>
                       {/* LEFT COLUMN */}
                       <div style={{ gridColumn: '1 / 2' }}>
                         {imageOnLeft ? (
                           <motion.div
                             whileHover={{ scale: 1.04, rotate: -2 }}
                             transition={{ duration: 0.3 }}
-                            style={{ borderRadius: '24px', overflow: 'hidden', border: '4px solid #A47A2D' }}
+                            style={{ borderRadius: '24px', overflow: 'hidden', border: '4px solid #A47A2D', width: '100%' }}
                             className="shadow-xl"
                           >
                             <img
@@ -554,7 +572,7 @@ export default function ResumePage() {
                           <motion.div
                             whileHover={{ scale: 1.04, rotate: 2 }}
                             transition={{ duration: 0.3 }}
-                            style={{ borderRadius: '24px', overflow: 'hidden', border: '4px solid #A47A2D' }}
+                            style={{ borderRadius: '24px', overflow: 'hidden', border: '4px solid #A47A2D', width: '100%' }}
                             className="shadow-xl"
                           >
                             <img

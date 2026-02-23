@@ -1,80 +1,110 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import React, { useState, useCallback, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, X, Calendar, Clock } from 'lucide-react';
+import top1Img from '../assets/top1.jpg';
+import lifeAsHauImg from '../assets/lifeAsHau.jpg';
+import codingDailyImg from '../assets/codingDaily.jpg';
 
-// Sample data - You can add as many as you want here!
-const ALL_BLOG_POSTS = [
+interface BlogPost {
+  id: number;
+  date: string;
+  readTime: string;
+  title: string;
+  excerpt: string;
+  tags: string[];
+  image: string;
+  content: string[];
+}
+
+const ALL_BLOG_POSTS: BlogPost[] = [
   {
     id: 1,
     date: 'Jan 2024',
-    readTime: '5 min read',
+    readTime: '6 min read',
     title: 'MY JOURNEY TO TOP 1%',
     excerpt: 'How I achieved top rankings in web development through consistent learning, strategic goal-setting, and a growth mindset.',
-    tags: ['CAREER', 'LEARNING', 'MOTIVATION']
+    tags: ['CAREER', 'MINDSET', 'GROWTH'],
+    image: top1Img,
+    content: [
+      'When I first enrolled at Holy Angel University as a BS Information Technology student, I never imagined I would reach the top 1% of my class. It was a journey built on discipline, curiosity, and an unwavering love for building things with code.',
+      'The early semesters were about survival — learning the fundamentals of programming, understanding data structures, and figuring out how to debug code late into the night. But somewhere along the way, something clicked. I stopped seeing assignments as chores and started seeing them as puzzles to be solved.',
+      'One of the biggest lessons I learned at HAU is that consistency beats talent. There were students who grasped concepts faster than I did, but I showed up every single day. I wrote code every day, asked questions, attended workshops, and treated every failure as a stepping stone.',
+      'The journey taught me that success in tech is not about being the smartest person in the room — it is about being the most persistent. Every frustrating merge conflict and late-night debugging session built the foundation that brought me here today.',
+      'To anyone reading this who feels like they are struggling: keep going. The path to the top is a marathon of small, consistent wins. The view from the top 1% is worth every struggle along the way.'
+    ]
   },
   {
     id: 2,
     date: 'Dec 2023',
-    readTime: '8 min read',
-    title: 'BUILDING WITH FLUTTER',
-    excerpt: 'Lessons learned from developing cross-platform mobile applications. Performance optimization, state management, and best practices.',
-    tags: ['FLUTTER', 'MOBILE', 'DART']
+    readTime: '5 min read',
+    title: 'MY LIFE AS AN HAU STUDENT',
+    excerpt: 'A glimpse into my daily routine, balancing academic excellence, extracurricular projects, and personal growth at Holy Angel University.',
+    tags: ['HAU', 'STUDENT LIFE', 'ACADEMICS'],
+    image: lifeAsHauImg,
+    content: [
+      'Life as an Information Technology student at Holy Angel University is a whirlwind of lectures, lab sessions, and endless lines of code. It is an environment that constantly challenges you to push beyond your limits and strive for excellence.',
+      'A typical day starts early with coffee and a review of my pending tasks. The campus is vibrant, and the IT department is always buzzing with students collaborating on projects or preparing for upcoming hackathons. The energy is contagious.',
+      'Balancing academics with practical development requires strict time management. I adopted a routine where my mornings are dedicated to attending classes and absorbing theoretical concepts, while my late afternoons and evenings are reserved for hands-on coding and building personal projects.',
+      'Beyond the academics, HAU has provided a community of like-minded individuals. The friendships formed over complex group projects and the mentorship from dedicated professors have been invaluable to my growth.',
+      'My life as a student here isn\'t just about maintaining high grades; it\'s about preparing for the real world. Every project presentation, every group collaboration, and every deadline met has molded me into a more disciplined and capable developer.'
+    ]
   },
   {
     id: 3,
     date: 'Nov 2023',
-    readTime: '10 min read',
-    title: 'BACKEND ARCHITECTURE',
-    excerpt: 'Exploring scalable backend system design patterns, API optimization strategies, and database performance tuning.',
-    tags: ['BACKEND', 'NODE.JS', 'ARCHITECTURE']
-  },
-  {
-    id: 4,
-    date: 'Oct 2023',
     readTime: '7 min read',
-    title: 'SEO OPTIMIZATION',
-    excerpt: 'A comprehensive guide to modern SEO strategies including technical SEO and performance improvements.',
-    tags: ['SEO', 'WEB DEV', 'MARKETING']
-  },
-  {
-    id: 5,
-    date: 'Sep 2023',
-    readTime: '6 min read',
-    title: 'THE ART OF UI DESIGN',
-    excerpt: 'Understanding color theory, typography, and spacing to create visually stunning and user-friendly interfaces.',
-    tags: ['DESIGN', 'UI/UX', 'CREATIVE']
-  },
-  {
-    id: 6,
-    date: 'Aug 2023',
-    readTime: '12 min read',
-    title: 'TYPESCRIPT MASTERY',
-    excerpt: 'Deep dive into advanced TypeScript features, generics, and utility types for safer codebases.',
-    tags: ['TYPESCRIPT', 'CODING', 'GUIDE']
+    title: 'CODING AS MY DAILY LIFE',
+    excerpt: 'Why programming is more than a required subject for me — it has become my passion, my hobby, and my daily routine.',
+    tags: ['CODING', 'PASSION', 'LIFESTYLE'],
+    image: codingDailyImg,
+    content: [
+      'For many, coding is a skill learned in a classroom to pass an exam or secure a job. For me, it has evolved into a fundamental part of my daily life. It is the first thing I think about when I wake up and the last thing I do before going to sleep.',
+      'My day usually involves diving into new frameworks, optimizing existing projects, or simply experimenting with code to see what breaks. There is a profound satisfaction in typing a sequence of characters and watching it come to life on the screen.',
+      'I treat coding as both an art and a science. It is an outlet for creativity where I can build beautiful, functional interfaces, and a rigorous discipline where logic and problem-solving reign supreme.',
+      'Even on weekends or holidays, you will likely find me at my desk, dark mode enabled, building something new. This relentless practice is not driven by obligation, but by a genuine curiosity to understand how systems work under the hood.',
+      'Integrating coding into my daily life has accelerated my learning curve exponentially. When you immerse yourself in something completely, it stops being difficult work and starts becoming second nature.'
+    ]
   }
 ];
 
 export default function BlogSection() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const postsPerPage = 4;
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+  const n = ALL_BLOG_POSTS.length;
 
-  // Calculate which posts to show
-  const indexOfLastPost = (currentPage + 1) * postsPerPage;
-  const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = ALL_BLOG_POSTS.slice(indexOfFirstPost, indexOfLastPost);
+  const prev = (activeIndex - 1 + n) % n;
+  const next = (activeIndex + 1) % n;
 
-  // Handlers
-  const totalPages = Math.ceil(ALL_BLOG_POSTS.length / postsPerPage);
+  const goPrev = useCallback(() => setActiveIndex((i) => (i - 1 + n) % n), [n]);
+  const goNext = useCallback(() => setActiveIndex((i) => (i + 1) % n), [n]);
+  const goTo = useCallback((index: number) => setActiveIndex(index), []);
 
-  const handleNext = () => {
-    if (currentPage < totalPages - 1) {
-      setCurrentPage(prev => prev + 1);
+  // Close modal on Escape key
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setSelectedPost(null);
+    };
+    if (selectedPost) {
+      document.addEventListener('keydown', handleEsc);
+      document.body.style.overflow = 'hidden';
     }
-  };
+    return () => {
+      document.removeEventListener('keydown', handleEsc);
+      document.body.style.overflow = '';
+    };
+  }, [selectedPost]);
 
-  const handlePrev = () => {
-    if (currentPage > 0) {
-      setCurrentPage(prev => prev - 1);
+  const getCardStyle = (index: number) => {
+    if (index === activeIndex) {
+      return { x: 0, scale: 1, rotate: 0, opacity: 1, zIndex: 30 };
     }
+    if (index === prev) {
+      return { x: '-40%', scale: 0.82, rotate: -6, opacity: 1, zIndex: 20 };
+    }
+    if (index === next) {
+      return { x: '40%', scale: 0.82, rotate: 6, opacity: 1, zIndex: 20 };
+    }
+    return { x: 0, scale: 0.7, rotate: 0, opacity: 0, zIndex: 10 };
   };
 
   return (
@@ -83,85 +113,281 @@ export default function BlogSection() {
 
         {/* Header */}
         <div className="text-center mb-16">
-          <h2 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-[40px] md:text-[56px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-block px-6 md:px-10 py-2 md:py-4 bg-[#A47A2D] rounded-full mb-6 md:mb-8"
+          >
+            <p className="font-mono text-base md:text-[24px] font-bold text-white dark:text-[#1A1715] uppercase tracking-wider">
+              // Insights
+            </p>
+          </motion.div>
+          <motion.h2
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            style={{ fontFamily: 'Michroma, sans-serif' }}
+            className="text-4xl sm:text-6xl lg:text-7xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4"
+          >
             Latest Thoughts
-          </h2>
-          <p className="font-mono text-[18px] text-[#A47A2D] dark:text-[#B8B0A6]">
-            // INSIGHTS & LEARNINGS
-          </p>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-lg md:text-[28px] font-bold text-[#521D07] dark:text-[#B8B0A6] max-w-3xl mx-auto"
+          >
+            Stories, lessons, and insights from my development journey.
+          </motion.p>
         </div>
 
-        {/* Blog Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 min-h-[600px]">
-          {currentPosts.map((post, index) => (
+        {/* Deck of Cards */}
+        <div className="blog-deck-container">
+          <div className="blog-deck-fan">
+            {ALL_BLOG_POSTS.map((post, index) => {
+              const style = getCardStyle(index);
+              const isActive = index === activeIndex;
+              const isPeeking = index === prev || index === next;
+
+              return (
+                <motion.div
+                  key={post.id}
+                  className={`blog-deck-card ${isActive ? 'blog-deck-card-active' : ''}`}
+                  animate={{
+                    x: style.x,
+                    scale: style.scale,
+                    rotate: style.rotate,
+                    opacity: style.opacity,
+                    zIndex: style.zIndex,
+                  }}
+                  transition={{
+                    type: 'spring',
+                    stiffness: 260,
+                    damping: 26,
+                    mass: 0.9,
+                  }}
+                  style={{
+                    position: 'absolute',
+                    left: '50%',
+                    top: 0,
+                    marginLeft: '-210px',
+                    transformOrigin: 'center bottom',
+                    cursor: isPeeking ? 'pointer' : isActive ? 'grab' : 'default',
+                    pointerEvents: isActive || isPeeking ? 'auto' : 'none',
+                  }}
+                  onClick={() => {
+                    if (index === prev) goPrev();
+                    if (index === next) goNext();
+                  }}
+                  drag={isActive ? 'x' : false}
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.6}
+                  onDragEnd={(_, info) => {
+                    if (info.offset.x < -80) goNext();
+                    else if (info.offset.x > 80) goPrev();
+                  }}
+                  whileDrag={isActive ? { scale: 1.03, cursor: 'grabbing' } : undefined}
+                >
+                  {/* Card Image */}
+                  <div className="blog-deck-card-image">
+                    <img src={post.image} alt={post.title} />
+                    <div className="blog-deck-card-image-overlay" />
+                  </div>
+
+                  {/* Card Content */}
+                  <div className="blog-deck-card-content">
+                    {/* Meta */}
+                    <div className="flex items-center gap-2 mb-3 font-mono text-xs text-[#A47A2D]">
+                      <Calendar className="w-3 h-3" />
+                      <span>{post.date}</span>
+                      <span>•</span>
+                      <Clock className="w-3 h-3" />
+                      <span>{post.readTime}</span>
+                    </div>
+
+                    {/* Title */}
+                    <div className="blog-deck-card-title text-[#A47A2D] dark:text-[#D4AF37]">{post.title}</div>
+
+                    {isActive && (
+                      <div className="flex flex-col h-full justify-between mt-2">
+                        {/* Excerpt */}
+                        <p className="text-[13px] md:text-sm font-medium text-[#521D07]/80 dark:text-[#B8B0A6] mb-3 line-clamp-3 leading-relaxed">
+                          {post.excerpt}
+                        </p>
+
+                        <div className="mt-auto pt-4 border-t border-[#A47A2D]/20">
+                          {/* Tags */}
+                          <div className="flex flex-wrap gap-2 mb-4">
+                            {post.tags.map(tag => (
+                              <span
+                                key={tag}
+                                className="px-3 py-1 bg-[#F5EBD9] dark:bg-[#1A1715] border border-[#A47A2D] rounded-md text-[11px] font-bold text-[#521D07] dark:text-[#E2E8F0] uppercase tracking-wider"
+                              >
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
+
+                          {/* Read Article Button */}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedPost(post);
+                            }}
+                            className="group relative inline-flex items-center gap-2 px-6 py-2.5 bg-transparent overflow-hidden rounded-xl font-black text-sm text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] cursor-pointer"
+                          >
+                            <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-10 group-hover:opacity-0">
+                              Read Article <ArrowRight className="w-4 h-4" />
+                            </span>
+                            <div className="absolute inset-0 z-0 bg-[#A47A2D] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
+                            <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white translate-y-10 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                              Read Article <ArrowRight className="w-4 h-4" />
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+
+          {/* Navigation */}
+          <div className="blog-deck-nav">
+            <button className="blog-deck-arrow" onClick={goPrev} aria-label="Previous article">
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <div className="blog-deck-dots">
+              {ALL_BLOG_POSTS.map((_, i) => (
+                <button
+                  key={i}
+                  className={`blog-deck-dot ${i === activeIndex ? 'active' : ''}`}
+                  onClick={() => goTo(i)}
+                  aria-label={`Go to article ${i + 1}`}
+                />
+              ))}
+            </div>
+            <button className="blog-deck-arrow" onClick={goNext} aria-label="Next article">
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      {/* ===== Article Modal ===== */}
+      <AnimatePresence>
+        {selectedPost && (
+          <motion.div
+            className="blog-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelectedPost(null)}
+          >
             <motion.div
-              key={post.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              viewport={{ once: true }}
-              whileHover={{ y: -5, boxShadow: '0 15px 30px -10px rgba(82, 29, 7, 0.3)' }}
-              className="sticker-card bg-white dark:bg-[#252220] p-8 border-4 border-[#A47A2D] dark:border-[#A47A2D] flex flex-col justify-between transition-all duration-300"
+              className="blog-modal-content"
+              initial={{ opacity: 0, y: 60, scale: 0.95 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 60, scale: 0.95 }}
+              transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+              onClick={(e) => e.stopPropagation()}
             >
-              <div>
-                <div className="flex items-center gap-2 mb-4 font-mono text-sm text-[#A47A2D] dark:text-[#B8B0A6]">
-                  <span>📅 {post.date}</span>
-                  <span>•</span>
-                  <span>☕ {post.readTime}</span>
-                </div>
+              {/* Back Button */}
+              <button
+                onClick={() => setSelectedPost(null)}
+                className="blog-modal-back"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>Back</span>
+              </button>
 
-                <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-[28px] leading-tight font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4">
-                  {post.title}
-                </h3>
+              {/* Close Button */}
+              <button
+                onClick={() => setSelectedPost(null)}
+                className="blog-modal-close"
+                aria-label="Close article"
+              >
+                <X className="w-5 h-5" />
+              </button>
 
-                <p className="text-[18px] font-bold text-[#521D07]/80 dark:text-[#B8B0A6] mb-6 line-clamp-3">
-                  {post.excerpt}
-                </p>
+              {/* Hero Image */}
+              <div className="blog-modal-hero">
+                <img src={selectedPost.image} alt={selectedPost.title} />
+                <div className="blog-modal-hero-overlay" />
               </div>
 
-              <div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {post.tags.map(tag => (
-                    <span key={tag} className="px-3 py-1 bg-[#F5EBD9] dark:bg-[#1A1715] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-lg text-xs font-black text-[#521D07] dark:text-[#E2E8F0]">
+              {/* Article Body */}
+              <div className="blog-modal-body">
+                {/* Meta */}
+                <div className="flex items-center gap-3 mb-4 font-mono text-sm text-[#A47A2D]">
+                  <span className="flex items-center gap-1"><Calendar className="w-4 h-4" /> {selectedPost.date}</span>
+                  <span>•</span>
+                  <span className="flex items-center gap-1"><Clock className="w-4 h-4" /> {selectedPost.readTime}</span>
+                </div>
+
+                {/* Title */}
+                <h2
+                  style={{ fontFamily: 'Michroma, sans-serif' }}
+                  className="text-2xl md:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4 leading-tight"
+                >
+                  {selectedPost.title}
+                </h2>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {selectedPost.tags.map(tag => (
+                    <span
+                      key={tag}
+                      className="px-3 py-1 bg-[#F5EBD9] dark:bg-[#2A2520] border-2 border-[#A47A2D] rounded-lg text-xs font-black text-[#521D07] dark:text-[#E2E8F0] uppercase"
+                    >
                       {tag}
                     </span>
                   ))}
                 </div>
 
-                <a href="#" className="inline-flex items-center gap-2 text-[#A47A2D] font-black hover:gap-4 transition-all">
-                  Read Article →
-                </a>
+                {/* Divider */}
+                <div className="w-full h-1 bg-gradient-to-r from-[#A47A2D] via-[#D4AF37] to-[#A47A2D] rounded-full mb-8" />
+
+                {/* Article Paragraphs */}
+                <div className="space-y-6">
+                  {selectedPost.content.map((paragraph, i) => (
+                    <motion.p
+                      key={i}
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.1 + i * 0.05 }}
+                      className="text-base md:text-lg leading-relaxed text-[#521D07]/85 dark:text-[#B8B0A6] font-medium"
+                    >
+                      {paragraph}
+                    </motion.p>
+                  ))}
+                </div>
+
+                {/* Back to articles bottom button */}
+                <div className="mt-12 pt-8 border-t-2 border-[#A47A2D]/20">
+                  <button
+                    onClick={() => setSelectedPost(null)}
+                    className="group relative inline-flex items-center gap-2 px-6 py-2.5 bg-transparent overflow-hidden rounded-xl font-black text-sm text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] cursor-pointer"
+                  >
+                    <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-x-10 group-hover:opacity-0">
+                      <ArrowLeft className="w-4 h-4" /> Back to Articles
+                    </span>
+                    <div className="absolute inset-0 z-0 bg-[#A47A2D] translate-x-full transition-transform duration-300 group-hover:translate-x-0" />
+                    <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white -translate-x-10 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
+                      <ArrowLeft className="w-4 h-4" /> Back to Articles
+                    </span>
+                  </button>
+                </div>
               </div>
             </motion.div>
-          ))}
-        </div>
-
-        {/* Navigation Buttons */}
-        <div className="flex justify-center items-center gap-8">
-          <button
-            onClick={handlePrev}
-            disabled={currentPage === 0}
-            className={`pill-button px-8 py-3 bg-[#521D07] dark:bg-[#521D07] text-white text-[18px] transition-all hover:bg-[#FFA51F] hover:scale-105
-              ${currentPage === 0 ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            ← Previous
-          </button>
-
-          <span className="font-mono text-[18px] font-bold text-[#521D07] dark:text-[#E2E8F0]">
-            Page {currentPage + 1} of {totalPages}
-          </span>
-
-          <button
-            onClick={handleNext}
-            disabled={currentPage === totalPages - 1}
-            className={`pill-button px-8 py-3 bg-[#521D07] dark:bg-[#521D07] text-white text-[18px] transition-all hover:bg-[#FFA51F] hover:scale-105
-              ${currentPage === totalPages - 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-          >
-            Next →
-          </button>
-        </div>
-
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 }
