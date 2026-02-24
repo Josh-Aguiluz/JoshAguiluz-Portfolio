@@ -26,15 +26,41 @@ const ContactPage = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE";
 
-    setIsSubmitting(false);
-    setSubmitStatus('success');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: accessKey,
+          name: formData.name,
+          email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
 
-    // Reset status after 3 seconds
-    setTimeout(() => setSubmitStatus('idle'), 3000);
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        console.error("Web3Forms error:", result);
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+      // Reset status after a few seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    }
   };
 
   const contactInfo = [
@@ -228,6 +254,17 @@ const ContactPage = () => {
                   className="p-4 bg-green-100 dark:bg-green-900/30 border-2 border-green-500 rounded-xl text-center"
                 >
                   <p className="font-bold text-green-700 dark:text-green-300">Message sent successfully!</p>
+                </motion.div>
+              )}
+
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-4 bg-red-100 dark:bg-red-900/30 border-2 border-red-500 rounded-xl text-center flex flex-col items-center justify-center"
+                >
+                  <p className="font-bold text-red-700 dark:text-red-300">Failed to send message.</p>
+                  <p className="text-sm font-bold text-red-700/80 dark:text-red-300/80 mt-1">If you are the owner, please check your Web3Forms Access Key.</p>
                 </motion.div>
               )}
             </div>

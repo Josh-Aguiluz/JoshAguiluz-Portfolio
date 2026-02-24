@@ -1,9 +1,11 @@
 import React from 'react';
 import TypewriterTerminal from '../components/TypewriterTerminal';
 import { motion } from 'framer-motion';
-import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp } from 'lucide-react';
+import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp, ArrowRight, ExternalLink, Calendar } from 'lucide-react';
 import homeBGHD from '../assets/homeBGHD.png';
 import resumePdf from '../assets/resume.pdf';
+import GlassCardDeck from '../components/GlassCardDeck';
+import ScrollVelocityText from '../components/ScrollVelocityText';
 
 export default function HomePage() {
   const scrollToSection = (sectionId: string) => {
@@ -108,7 +110,7 @@ export default function HomePage() {
             >
               <h1
                 style={{ fontFamily: 'Michroma, sans-serif' }}
-                className="text-5xl sm:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] leading-[1.05] font-black uppercase tracking-tight text-[#521D07] dark:text-[#FDF5E7] dark-hero-title"
+                className="text-4xl sm:text-7xl lg:text-[5.5rem] xl:text-[6.5rem] leading-[1.05] font-black uppercase tracking-tight text-[#521D07] dark:text-[#FDF5E7] dark-hero-title"
               >
                 BACKEND{' '}
                 <br className="hidden sm:block" />
@@ -264,19 +266,24 @@ export default function HomePage() {
               <div className="text-[18px] md:text-[24px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">Class Rank</div>
             </motion.div>
           </div>
-          <br></br> <br></br> <br></br> <br></br>
-          {/* Marquee Strip */}
-          <div className="marquee-divider w-[100vw] relative left-[50%] right-[50%] -ml-[50vw] -mr-[50vw] rounded-none overflow-hidden mb-32">
-            <div className="marquee-content">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="flex items-center">
-                  <span className="marquee-text" style={{ fontFamily: 'var(--font-mono)' }}>/// FULL STACK</span>
-                  <span className="marquee-text" style={{ fontFamily: 'var(--font-mono)' }}>/// BACKEND</span>
-                  <span className="marquee-text" style={{ fontFamily: 'var(--font-mono)' }}>/// CODE</span>
-                </div>
-              ))}
-            </div>
-          </div>
+        </div>
+        <br></br> <br></br> <br></br>
+
+        {/* Marquee Strip - Fixed with ScrollVelocity component - Small & Light Style */}
+        <div className="mb-32">
+          <ScrollVelocityText
+            text="BACKEND /// CODE /// FULL STACK /// BACKEND /// CODE /// FULL STACK"
+            baseVelocity={1}
+            fontSize="text-[28px] md:text-[36px]"
+            padding="py-4"
+            bgColor="bg-white dark:bg-[#1A1715]"
+            textColor="text-[#521D07] dark:text-[#D4AF37]"
+            borderColor="border-[#A47A2D]/20 dark:border-[#D4AF37]/20"
+          />
+        </div>
+
+        {/* Re-open constrained wrapper */}
+        <div className="max-w-7xl mx-auto px-6 lg:px-12 w-full">
 
           {/* Tech Stack Showcase */}
           <div className="max-w-5xl mx-auto mt-8 pb-32">
@@ -385,57 +392,57 @@ export default function HomePage() {
                     scale: 1.05,
                     transition: { duration: 0.3 },
                   }}
-                  className={`tech - card - ${tech.name.replace('.', '')} group relative flex flex - col items - center text - center p - 6 md: p - 10 rounded - [28px] shadow - lg hover: shadow - 2xl transition - all duration - 500 cursor - pointer overflow - hidden`}
+                  className={`tech-card-${tech.name.replace('.', '')} group relative flex flex-col items-center text-center p-6 md:p-10 rounded-[28px] shadow-lg hover:shadow-2xl transition-all duration-500 cursor-pointer overflow-hidden`}
                   style={{
-                    backgroundColor: `var(--tech - bg, ${tech.bgLight})`,
-                    border: `3px solid ${tech.borderLight} `,
-                    boxShadow: `inset 0 0 0 1px ${tech.borderLight} 33, 0 4px 20px - 4px ${tech.color} 20`,
+                    backgroundColor: tech.bgLight,
+                    border: `3px solid ${tech.borderLight}`,
+                    boxShadow: `inset 0 0 0 1px ${tech.borderLight}33, 0 4px 20px -4px ${tech.color}20`,
                   }}
                 >
                   {/* Dark mode background override */}
                   <style>{`
-  .dark.tech - card - ${tech.name.replace('.', '')} {
-  background - color: ${tech.bgDark} !important;
-  border - color: ${tech.borderDark} !important;
-  box - shadow: inset 0 0 0 1px ${tech.borderDark} 55, 0 4px 30px - 4px ${tech.color} 30!important;
-}
-                    .dark.tech - card - ${tech.name.replace('.', '')}:hover {
-  box - shadow: inset 0 0 0 1px ${tech.borderDark} 88, 0 8px 40px - 4px ${tech.color} 40!important;
-}
-`}</style>
+                    .dark .tech-card-${tech.name.replace('.', '')} {
+                      background-color: ${tech.bgDark} !important;
+                      border-color: ${tech.borderDark} !important;
+                      box-shadow: inset 0 0 0 1px ${tech.borderDark}55, 0 4px 30px -4px ${tech.color}30 !important;
+                    }
+                    .dark .tech-card-${tech.name.replace('.', '')}:hover {
+                      box-shadow: inset 0 0 0 1px ${tech.borderDark}88, 0 8px 40px -4px ${tech.color}40 !important;
+                    }
+                  `}</style>
 
                   {/* Glow effect on hover */}
                   <div
                     className="absolute inset-0 rounded-[24px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                     style={{
-                      background: `radial - gradient(circle at 50 % 30 %, ${tech.color}20, transparent 65 %)`,
+                      background: `radial-gradient(circle at 50% 30%, ${tech.color}20, transparent 65%)`,
                     }}
                   />
 
                   {/* Top accent line */}
                   <div
                     className="absolute top-0 left-1/2 -translate-x-1/2 h-[3px] w-1/2 group-hover:w-full transition-all duration-500 rounded-b-full"
-                    style={{ background: `linear - gradient(90deg, transparent, ${tech.color}, transparent)` }}
+                    style={{ background: `linear-gradient(90deg, transparent, ${tech.color}, transparent)` }}
                   />
 
                   {/* Decorative corner accents */}
                   <div
                     className="absolute top-0 right-0 w-24 h-24 opacity-[0.05] group-hover:opacity-[0.12] transition-opacity duration-500"
                     style={{
-                      background: `radial - gradient(circle at 100 % 0 %, ${tech.color}, transparent 70 %)`,
+                      background: `radial-gradient(circle at 100% 0%, ${tech.color}, transparent 70%)`,
                     }}
                   />
                   <div
                     className="absolute bottom-0 left-0 w-20 h-20 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity duration-500"
                     style={{
-                      background: `radial - gradient(circle at 0 % 100 %, ${tech.color}, transparent 70 %)`,
+                      background: `radial-gradient(circle at 0% 100%, ${tech.color}, transparent 70%)`,
                     }}
                   />
 
                   {/* Icon */}
                   <div
                     className="relative z-10 mb-5 md:mb-6 p-4 md:p-5 rounded-2xl group-hover:scale-110 transition-transform duration-500"
-                    style={{ backgroundColor: `${tech.color} 15` }}
+                    style={{ backgroundColor: `${tech.color}15` }}
                   >
                     {tech.iconSimple}
                   </div>
@@ -465,7 +472,63 @@ export default function HomePage() {
               ))}
             </div>
           </div>
+        </div>
+        <br></br> <br></br>
+        {/* Featured Projects */}
+        <div className="max-w-6xl mx-auto pb-32">
+          <div className="text-center mb-16">
+            <motion.span
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-mono text-[16px] md:text-[20px] font-bold text-[#A47A2D] dark:text-[#D4AF37] tracking-wider"
+            >
+              {'// Selected Work'}
+            </motion.span>
+            <motion.h3
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              style={{ fontFamily: 'Michroma, sans-serif' }}
+              className="text-4xl md:text-[56px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mt-4"
+            >
+              Featured Projects
+            </motion.h3>
+          </div>
 
+          <div className="w-full max-w-[1200px] mx-auto px-4 mt-12 mb-16 h-[650px] md:h-[750px] relative">
+            <GlassCardDeck
+              projects={[
+                {
+                  title: "DANONO'S BAKERY",
+                  description: "A premium e-commerce bakery platform showcasing 24-hour fermented brioche doughnuts with live ordering.",
+                  image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80",
+                  live: "https://danonos.com",
+                  github: "https://github.com/gabewebd/WSEA.git", // GlassCardDeck expects 'github' instead of 'code'
+                  tags: ["NEXT.JS", "TAILWIND", "STRIPE"]
+                },
+                {
+                  title: "CHANEL WEBSITE REPLICA",
+                  description: "Engineered a pixel-perfect, fully responsive frontend clone demonstrating precision UI/UX implementation using HTML5, CSS3, and JavaScript.",
+                  image: "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80",
+                  live: "https://prelim-project-thefourwhoadore.netlify.app/home",
+                  github: "https://github.com/gabewebd/6AWEB-TheFourWhoAdore.git",
+                  tags: ["HTML5", "CSS3", "JAVASCRIPT", "UI/UX"]
+                }
+              ]}
+            />
+          </div>
+
+          <div className="text-center md:mt-16">
+            <button
+              onClick={() => { const el = document.getElementById('projects'); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+              className="group inline-flex items-center justify-center gap-2 px-8 py-3 bg-[#521D07] dark:bg-[#D4AF37] rounded-full font-bold text-sm md:text-base text-white dark:text-[#1A0E05] hover:scale-105 shadow-md transition-all duration-300 dark-btn-primary"
+            >
+              View All Projects
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+            </button>
+          </div>
         </div>
       </div>
 
@@ -504,6 +567,6 @@ export default function HomePage() {
           color: #1A0E05 !important;
         }
       `}</style>
-    </section>
+    </section >
   );
 }

@@ -27,6 +27,18 @@ export default function Footer() {
           padding: 80px 60px 30px;
           position: relative;
           overflow: hidden;
+          font-family: 'Michroma', sans-serif !important;
+        }
+        
+        /* STRICT OVERRIDES AGAINST MAIN.CSS MOBILE CLAMPS */
+        #pf-footer-nuke p, 
+        #pf-footer-nuke a, 
+        #pf-footer-nuke li,
+        #pf-footer-nuke span,
+        #pf-footer-nuke h3 {
+          font-family: 'Michroma', sans-serif !important;
+          font-size: 13px !important;
+          line-height: 1.5 !important;
         }
         .pf-footer-content {
           max-width: 1200px;
@@ -37,7 +49,8 @@ export default function Footer() {
         }
         .pf-footer-section h3 {
           color: #A47A2D;
-          font-size: 16px;
+          font-size: 14px !important;
+          font-family: 'Michroma', sans-serif;
           text-transform: uppercase;
           letter-spacing: 1px;
           margin: 0 0 25px 0;
@@ -55,10 +68,14 @@ export default function Footer() {
           color: rgba(255,255,255,0.8);
           text-decoration: none;
           transition: 0.3s;
-          font-size: 14px;
+          font-size: 13px !important;
+          font-family: 'Michroma', sans-serif;
           display: inline-flex;
           align-items: center;
           gap: 8px;
+        }
+        .pf-quick-links a {
+          font-size: 13px !important;
         }
         .pf-footer-section a:hover {
           color: #A47A2D;
@@ -89,12 +106,14 @@ export default function Footer() {
           border-top: 1px solid rgba(255,255,255,0.1);
           padding-top: 30px;
           text-align: center;
-          font-size: 13px;
+          font-size: 12px !important;
+          font-family: 'Michroma', sans-serif;
           opacity: 0.7;
         }
         .pf-footer-about p {
           color: rgba(255,255,255,0.8);
-          font-size: 14px;
+          font-size: 13px !important;
+          font-family: 'Michroma', sans-serif;
           line-height: 1.7;
           margin: 0 0 0 0;
         }
@@ -107,6 +126,7 @@ export default function Footer() {
       `}</style>
 
             <footer
+                id="pf-footer-nuke"
                 className="pf-footer"
                 onMouseMove={onMove}
                 onMouseEnter={() => setHovering(true)}
@@ -149,7 +169,9 @@ export default function Footer() {
                                 style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: '50%', marginBottom: 15 }}
                             />
                         </a>
-                        <p>Backend Engineer & Full-Stack Developer from Angeles City, Pampanga. Crafting efficient, scalable systems with modern technologies.</p>
+                        <p className="!text-[13px] !font-['Michroma'] !leading-relaxed !m-0">
+                            Backend Engineer & Full-Stack Developer from Magalang, Pampanga. Crafting efficient, scalable systems with modern technologies.
+                        </p>
                         <div className="pf-social-icons">
                             <a href="https://github.com/Josh-Aguiluz" className="pf-social-icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                                 <Github size={18} />
@@ -165,28 +187,28 @@ export default function Footer() {
 
                     {/* Col 2 — Quick Links */}
                     <div className="pf-footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="#home"><Home size={14} /> Home</a></li>
-                            <li><a href="#about"><User size={14} /> About</a></li>
-                            <li><a href="#projects"><Briefcase size={14} /> Projects</a></li>
-                            <li><a href="#resume"><BookOpen size={14} /> Resume</a></li>
-                            <li><a href="#contact"><Send size={14} /> Contact</a></li>
+                        <h3 className="!font-['Michroma'] !text-[13px] !uppercase !tracking-widest !font-bold !mb-6">Quick Links</h3>
+                        <ul className="pf-quick-links">
+                            <li><a href="#home" className="!font-['Michroma'] !text-[13px]"><Home size={14} /> Home</a></li>
+                            <li><a href="#about" className="!font-['Michroma'] !text-[13px]"><User size={14} /> About</a></li>
+                            <li><a href="#projects" className="!font-['Michroma'] !text-[13px]"><Briefcase size={14} /> Projects</a></li>
+                            <li><a href="#resume" className="!font-['Michroma'] !text-[13px]"><BookOpen size={14} /> Resume</a></li>
+                            <li><a href="#contact" className="!font-['Michroma'] !text-[13px]"><Send size={14} /> Contact</a></li>
                         </ul>
                     </div>
 
                     {/* Col 3 — Contact */}
                     <div className="pf-footer-section">
-                        <h3>Contact Me</h3>
+                        <h3 className="!font-['Michroma'] !text-[13px] !uppercase !tracking-widest !font-bold !mb-6">Contact Me</h3>
                         <ul>
                             <li>
-                                <a href="mailto:josh.dizon.aguiluz25@gmail.com" target="_blank" rel="noopener noreferrer">
+                                <a href="mailto:josh.dizon.aguiluz25@gmail.com" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">
                                     <Mail size={14} /> josh.dizon.aguiluz25@gmail.com
                                 </a>
                             </li>
                             <li>
-                                <a href="https://maps.app.goo.gl/" target="_blank" rel="noopener noreferrer">
-                                    <MapPin size={14} /> Angeles City, Pampanga
+                                <a href="https://maps.app.goo.gl/" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">
+                                    <MapPin size={14} /> Magalang, Pampanga
                                 </a>
                             </li>
                         </ul>
@@ -195,27 +217,22 @@ export default function Footer() {
 
                 {/* Bottom bar */}
                 <div className="pf-footer-bottom" style={{ position: 'relative', zIndex: 20 }}>
-                    <p>© 2026 Josh Andrei Aguiluz. All rights reserved. Built with React & TypeScript.</p>
+                    <p className="!font-['Michroma'] !text-[12px] !m-0 !opacity-70">
+                        © 2026 Josh Andrei Aguiluz. All rights reserved. Built with React & TypeScript.
+                    </p>
                 </div>
 
                 {/* Back to top */}
                 <button
                     onClick={scrollToTop}
                     aria-label="Back to Top"
+                    className="fixed bottom-[90px] right-4 md:bottom-[130px] md:right-6 w-10 h-10 md:w-11 md:h-11 rounded-full flex items-center justify-center cursor-pointer z-[999] shadow-lg transition-transform hover:scale-110"
                     style={{
-                        position: 'fixed', bottom: 130, right: 24,
-                        width: 44, height: 44, borderRadius: '50%',
                         backgroundColor: GOLD, color: LIGHT_TEXT,
                         border: `2px solid ${LIGHT_TEXT}`,
-                        display: 'flex', alignItems: 'center', justifyContent: 'center',
-                        cursor: 'pointer', zIndex: 999,
-                        boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-                        transition: 'transform 0.3s',
                     }}
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.1)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
                 >
-                    <ArrowUp size={20} strokeWidth={3} />
+                    <ArrowUp size={20} className="md:w-[24px] md:h-[24px]" strokeWidth={3} />
                 </button>
             </footer>
         </>

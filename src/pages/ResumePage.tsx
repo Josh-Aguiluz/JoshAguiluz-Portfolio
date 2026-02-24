@@ -239,7 +239,7 @@ export default function ResumePage() {
   ];
 
   const quickStats = [
-    { value: '15+', label: 'Projects' },
+    { value: '4+', label: 'Projects' },
     { value: '6+', label: 'Certifications' },
     { value: 'Top 1%', label: 'Class Rank' },
     { value: '100%', label: 'Commitment' },
@@ -318,7 +318,7 @@ export default function ResumePage() {
                     <div className="w-10 h-10 rounded-full bg-[#A47A2D]/10 flex items-center justify-center flex-shrink-0">
                       <MapPin className="w-5 h-5 text-[#A47A2D]" />
                     </div>
-                    Angeles City, Pampanga
+                    Magalang, Pampanga
                   </div>
                   <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
                     <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
@@ -388,7 +388,7 @@ export default function ResumePage() {
             </div>
           </motion.div>
         </section>
-
+        <br></br> <br></br> <br></br>
         {/* ===== SECTION 2: Technical Skills — Large Pie Chart ===== */}
         <section className="mb-24">
           <motion.div
@@ -417,7 +417,7 @@ export default function ResumePage() {
             <SkillsPieChart />
           </motion.div>
         </section>
-
+        <br></br> <br></br> <br></br>
         {/* ===== SECTION 3: Professional Journey — Zigzag Timeline with Images ===== */}
         <section className="mb-16">
           <motion.div
@@ -442,16 +442,34 @@ export default function ResumePage() {
             .tl-desktop { display: none; }
             .tl-line { position: absolute; top: 0; bottom: 0; left: 16px; transform: none; }
             .tl-entries { display: flex; flex-direction: column; gap: 40px; position: relative; z-index: 1; }
+            
+            /* NUCLEAR OVERRIDES FOR TIMELINE HEADERS */
+            #tl-nuke-wrapper .tl-card-title {
+              font-family: 'Michroma', sans-serif !important;
+              font-size: 14px !important;
+              font-weight: 900 !important;
+              line-height: 1.4 !important;
+              letter-spacing: -0.01em !important;
+              word-break: keep-all !important;
+              overflow-wrap: break-word !important;
+              text-transform: uppercase !important;
+              margin-bottom: 8px !important;
+              display: block !important;
+            }
+
             @media (min-width: 768px) {
               .tl-mobile { display: none !important; }
               .tl-desktop { display: grid !important; }
               .tl-line { left: 50% !important; transform: translateX(-50%) !important; }
               .tl-entries { gap: 60px !important; }
+              #tl-nuke-wrapper .tl-card-title {
+                font-size: 15px !important;
+              }
             }
           `}</style>
 
           {/* Timeline — responsive: stacked on mobile, zigzag on md+ */}
-          <div className="relative max-w-5xl mx-auto">
+          <div id="tl-nuke-wrapper" className="relative max-w-5xl mx-auto">
 
             {/* Center vertical line */}
             <div
@@ -489,9 +507,11 @@ export default function ResumePage() {
                       />
                       <div className="bg-white dark:bg-[#252220] rounded-2xl border-4 border-[#A47A2D] overflow-hidden shadow-lg">
                         <img src={item.image} alt={item.title} className="w-full h-40 object-cover" />
-                        <div className="p-5">
-                          <span className="inline-block px-3 py-1 bg-[#A47A2D] rounded-lg font-mono text-xs font-black text-white uppercase tracking-wider mb-2">{item.year}</span>
-                          <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-base font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-1 leading-tight">{item.title}</h3>
+                        <div className="p-4 md:p-5">
+                          <span className="inline-block px-3 py-1 bg-[#A47A2D] rounded-lg font-mono text-[10px] font-black text-white uppercase tracking-wider mb-2">{item.year}</span>
+                          <div className="tl-card-title font-black text-[#521D07] dark:text-[#E2E8F0]">
+                            {item.title}
+                          </div>
                           <p className="text-[#A47A2D] font-bold text-xs mb-2">{item.org}</p>
                           <p className="text-xs font-medium text-[#521D07]/80 dark:text-[#B8B0A6] leading-relaxed">{item.desc}</p>
                         </div>
@@ -519,14 +539,14 @@ export default function ResumePage() {
                         ) : (
                           <div
                             className="bg-white dark:bg-[#252220] shadow-lg hover:shadow-2xl transition-shadow duration-300 group"
-                            style={{ borderRadius: '24px', border: '4px solid #A47A2D', padding: '28px', position: 'relative', overflow: 'hidden', textAlign: 'left' }}
+                            style={{ borderRadius: '24px', border: '4px solid #A47A2D', padding: '20px 24px', position: 'relative', overflow: 'hidden', textAlign: 'left' }}
                           >
                             <span style={{ display: 'inline-block', padding: '4px 14px', backgroundColor: '#A47A2D', borderRadius: '10px', marginBottom: '12px' }}>
                               <span className="font-mono text-xs font-black text-white uppercase tracking-wider">{item.year}</span>
                             </span>
-                            <h3 style={{ fontFamily: 'Michroma, sans-serif', fontSize: '18px', marginBottom: '4px', lineHeight: 1.3 }} className="font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">
+                            <div className="tl-card-title font-black text-[#521D07] dark:text-[#E2E8F0]">
                               {item.title}
-                            </h3>
+                            </div>
                             <p style={{ fontSize: '14px', marginBottom: '10px' }} className="text-[#A47A2D] font-bold">{item.org}</p>
                             <p style={{ fontSize: '14px', lineHeight: 1.6 }} className="font-medium text-[#521D07]/80 dark:text-[#B8B0A6]">{item.desc}</p>
                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#A47A2D] to-[#D4AF37] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
@@ -556,14 +576,14 @@ export default function ResumePage() {
                         {imageOnLeft ? (
                           <div
                             className="bg-white dark:bg-[#252220] shadow-lg hover:shadow-2xl transition-shadow duration-300 group"
-                            style={{ borderRadius: '24px', border: '4px solid #A47A2D', padding: '28px', position: 'relative', overflow: 'hidden', textAlign: 'left' }}
+                            style={{ borderRadius: '24px', border: '4px solid #A47A2D', padding: '20px 24px', position: 'relative', overflow: 'hidden', textAlign: 'left' }}
                           >
                             <span style={{ display: 'inline-block', padding: '4px 14px', backgroundColor: '#A47A2D', borderRadius: '10px', marginBottom: '12px' }}>
                               <span className="font-mono text-xs font-black text-white uppercase tracking-wider">{item.year}</span>
                             </span>
-                            <h3 style={{ fontFamily: 'Michroma, sans-serif', fontSize: '18px', marginBottom: '4px', lineHeight: 1.3 }} className="font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">
+                            <div className="tl-card-title font-black text-[#521D07] dark:text-[#E2E8F0]">
                               {item.title}
-                            </h3>
+                            </div>
                             <p style={{ fontSize: '14px', marginBottom: '10px' }} className="text-[#A47A2D] font-bold">{item.org}</p>
                             <p style={{ fontSize: '14px', lineHeight: 1.6 }} className="font-medium text-[#521D07]/80 dark:text-[#B8B0A6]">{item.desc}</p>
                             <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-[#A47A2D] to-[#D4AF37] scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />

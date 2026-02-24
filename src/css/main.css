@@ -1,8 +1,22 @@
 ﻿@import url("https://fonts.googleapis.com/css2?family=Michroma&family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap");
 
+html,
+body {
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
 /*! tailwindcss v4.1.3 | MIT License | https://tailwindcss.com */
 @layer properties {
   @supports (((-webkit-hyphens: none)) and (not (margin-trim: inline))) or ((-moz-orient: inline) and (not (color: rgb(from red r g b)))) {
+
+    html,
+    body {
+      overflow-x: hidden !important;
+      max-width: 100%;
+      width: 100%;
+    }
 
     *,
     :before,
@@ -1918,16 +1932,11 @@ html {
 
 .marquee-text {
   font-family: var(--font-sans);
-  color: #521d07;
   text-transform: uppercase;
   letter-spacing: .1em;
   padding: 0 40px;
   font-size: 32px;
   font-weight: 900;
-}
-
-.dark .marquee-text {
-  color: #e2e8f0;
 }
 
 .image-placeholder {
@@ -2683,14 +2692,9 @@ html {
   font-family: var(--font-sans);
   font-size: 32px;
   font-weight: 900;
-  color: #521D07;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0 40px;
-}
-
-.dark .marquee-text {
-  color: #E2E8F0;
 }
 
 /* Image Placeholders */

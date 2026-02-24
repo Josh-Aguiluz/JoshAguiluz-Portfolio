@@ -26,11 +26,24 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="fixed bottom-8 right-8 z-50 pill-button px-6 py-4 bg-[#5A6B7A] dark:bg-[#7A8A9D] text-[#FFFCF9] dark:text-[#1A1F2E] text-[24px] flex items-center gap-3 hover:scale-110 transition-transform shadow-2xl"
+      className="pill-button flex items-center hover:scale-110 transition-transform shadow-2xl"
+      style={{
+        position: 'fixed',
+        zIndex: 9999,
+        bottom: '1rem',
+        right: '1rem',
+        padding: '0.75rem 1rem',
+        backgroundColor: isDark ? '#7A8A9D' : '#5A6B7A',
+        color: isDark ? '#1A1F2E' : '#FFFCF9',
+        gap: '8px',
+        border: 'none',
+        borderRadius: '9999px',
+        cursor: 'pointer'
+      }}
       aria-label="Toggle theme"
     >
-      <div className="w-8 h-8 rounded-full bg-[#E8C547] dark:bg-[#4A5568]"></div>
-      <span className="hidden sm:inline font-black uppercase">
+      <div className="w-5 h-5 sm:w-8 sm:h-8 rounded-full flex-shrink-0" style={{ backgroundColor: isDark ? '#4A5568' : '#E8C547' }}></div>
+      <span className="font-black uppercase text-xs sm:text-[18px]">
         {isDark ? 'Light Mode' : 'Dark Mode'}
       </span>
     </button>

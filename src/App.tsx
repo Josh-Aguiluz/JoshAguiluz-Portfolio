@@ -78,7 +78,7 @@ export default function App() {
   ];
 
   return (
-    <div className="relative bg-[#FDF5E7] dark:bg-[#1A1715]">
+    <div className="relative overflow-x-hidden w-full bg-[#FDF5E7] dark:bg-[#1A1715]">
       {/* 3D Bouncing Sphere */}
       <Scene3D scrollY={scrollYValue} scrollYProgress={scrollYProgressValue} />
 

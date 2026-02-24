@@ -171,9 +171,10 @@ export default function BlogSection() {
                   }}
                   style={{
                     position: 'absolute',
-                    left: '50%',
+                    left: 0,
+                    right: 0,
+                    margin: '0 auto',
                     top: 0,
-                    marginLeft: '-210px',
                     transformOrigin: 'center bottom',
                     cursor: isPeeking ? 'pointer' : isActive ? 'grab' : 'default',
                     pointerEvents: isActive || isPeeking ? 'auto' : 'none',
