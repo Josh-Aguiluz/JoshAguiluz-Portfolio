@@ -1,8 +1,14 @@
 import React from 'react';
-import { Award, Briefcase, GraduationCap, Download, Terminal, Globe, Cpu, MapPin, CheckCircle2, Mail } from 'lucide-react';
+import { Award, Briefcase, GraduationCap, Download, Terminal, Globe, Cpu, MapPin, CheckCircle2, Mail, Layers, TrendingUp } from 'lucide-react';
 import { motion } from 'framer-motion';
 import MagneticButton from '../components/MagneticButton';
-import acsciImg from '../assets/ACSCI.jfif';
+import acsciWebp from '../assets/ACSCI.webp';
+import holyAngelWebp from '../assets/holyAngel.webp';
+import javascriptWebp from '../assets/javascript.webp';
+import phpResumeWebp from '../assets/phpResume.webp';
+import ccnaResumeWebp from '../assets/ccnaReallll.webp';
+import comptiaResumeWebp from '../assets/comptiaResume.webp';
+import hubspotResumeWebp from '../assets/hubspotResume.webp';
 import resumePdf from '../assets/resume.pdf';
 
 /* ================================================================
@@ -16,14 +22,31 @@ function SkillsPieChart() {
   const cx = size / 2;
   const cy = size / 2;
 
+  const [isDark, setIsDark] = React.useState(false);
+
+  React.useEffect(() => {
+    // Detect dark mode from document class
+    const checkTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+
+    checkTheme(); // Initial check
+
+    // Observe class changes on <html> to catch theme toggles
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    return () => observer.disconnect();
+  }, []);
+
   const segments = [
-    { label: 'Backend', pct: 50, color: '#A47A2D', darkColor: '#C9A232', items: ['Node.js', 'PHP', 'MySQL', 'Firebase', 'Express'] },
+    { label: 'Backend', pct: 50, color: '#A47A2D', darkColor: '#D4AF37', items: ['Node.js', 'PHP', 'MySQL', 'Firebase', 'Express'] },
     { label: 'DevTools', pct: 30, color: '#D4AF37', darkColor: '#E8C94B', items: ['Git/GitHub', 'VS Code', 'Postman', 'Figma'] },
-    { label: 'Frontend', pct: 20, color: '#521D07', darkColor: '#8B4513', items: ['React', 'Angular', 'Flutter', 'HTML5/CSS3', 'Tailwind'] },
+    { label: 'Frontend', pct: 20, color: '#8B4513', darkColor: '#E27D60', items: ['React', 'Angular', 'Flutter', 'HTML5/CSS3', 'Tailwind'] },
   ];
 
   let offsetAngle = -Math.PI / 2;
-  let dashOffset = 0;
+  let accumulatedDash = 0;
 
   const segmentData = segments.map((seg) => {
     const dash = (seg.pct / 100) * circumference;
@@ -32,13 +55,18 @@ function SkillsPieChart() {
     const segAngle = (seg.pct / 100) * 2 * Math.PI;
     const endAngle = startAngle + segAngle;
     const midAngle = (startAngle + endAngle) / 2;
-    const currentOffset = -dashOffset;
-    dashOffset += dash;
+
+    // Use positive offset for Safari compatibility
+    // In SVG, positive stroke-dashoffset moves the pattern towards the start of the path (counter-clockwise)
+    // To move the start point "forward" (clockwise) by 'accumulatedDash', we offset by (circumference - accumulatedDash)
+    const currentOffset = accumulatedDash === 0 ? 0 : circumference - (accumulatedDash % circumference);
+
+    accumulatedDash += dash;
     offsetAngle = endAngle;
     return { ...seg, dash, gap, currentOffset, midAngle };
   });
 
-  // SVG canvas is bigger to fit labels outside — must be large enough to contain all labels
+  // SVG canvas size
   const svgSize = 680;
   const svgCx = svgSize / 2;
   const svgCy = svgSize / 2;
@@ -49,7 +77,12 @@ function SkillsPieChart() {
     <div className="flex flex-col lg:flex-row items-center gap-2 lg:gap-4">
       {/* Pie Chart with external labels — scales on mobile */}
       <div className="relative flex-shrink-0 flex items-center justify-center w-full lg:w-auto" style={{ maxWidth: 500 }}>
-        <svg width="100%" height="100%" viewBox={`0 0 ${svgSize} ${svgSize}`}>
+        <svg
+          width="100%"
+          height="100%"
+          viewBox={`0 0 ${svgSize} ${svgSize}`}
+          style={{ overflow: 'visible' }}
+        >
           {/* Donut segments */}
           <g transform={`rotate(-90 ${svgCx} ${svgCy})`}>
             {segmentData.map((seg, i) => (
@@ -59,15 +92,18 @@ function SkillsPieChart() {
                 cy={svgCy}
                 r={radius}
                 fill="none"
-                stroke={seg.color}
+                stroke={isDark ? seg.darkColor : seg.color}
                 strokeWidth={strokeWidth}
-                strokeDasharray={`${seg.dash} ${seg.gap}`}
                 strokeDashoffset={seg.currentOffset}
                 strokeLinecap="butt"
-                initial={{ strokeDasharray: `0 ${circumference}` }}
-                whileInView={{ strokeDasharray: `${seg.dash} ${seg.gap}` }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.3 + i * 0.3, ease: 'easeOut' }}
+                initial={{ strokeDasharray: `0 ${circumference}`, opacity: 0 }}
+                whileInView={{ strokeDasharray: `${seg.dash} ${seg.gap}`, opacity: 1 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{
+                  duration: 1.2,
+                  delay: 0.4 + i * 0.25,
+                  ease: [0.4, 0, 0.2, 1],
+                }}
               />
             ))}
           </g>
@@ -81,25 +117,31 @@ function SkillsPieChart() {
             const isRight = Math.cos(seg.midAngle) >= 0;
 
             return (
-              <g key={i}>
+              <motion.g
+                key={i}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true, amount: 0.1 }}
+                transition={{ duration: 0.5, delay: 1.5 + i * 0.1 }}
+              >
                 {/* Leader line */}
                 <line
                   x1={lineX1} y1={lineY1}
                   x2={labelX} y2={labelY}
-                  stroke={seg.color}
+                  stroke={isDark ? seg.darkColor : seg.color}
                   strokeWidth={2}
                   strokeDasharray="4 3"
                   opacity={0.6}
                 />
                 {/* Dot at ring edge */}
-                <circle cx={lineX1} cy={lineY1} r={4} fill={seg.color} />
+                <circle cx={lineX1} cy={lineY1} r={4} fill={isDark ? seg.darkColor : seg.color} />
                 {/* Label text */}
                 <text
                   x={labelX}
                   y={labelY - 6}
                   textAnchor={isRight ? 'start' : 'end'}
                   dominantBaseline="middle"
-                  fill={seg.color}
+                  fill={isDark ? seg.darkColor : seg.color}
                   fontWeight={900}
                   fontSize={16}
                   fontFamily="Michroma, sans-serif"
@@ -112,28 +154,27 @@ function SkillsPieChart() {
                   y={labelY + 14}
                   textAnchor={isRight ? 'start' : 'end'}
                   dominantBaseline="middle"
-                  fill={seg.color}
+                  fill={isDark ? seg.darkColor : seg.color}
                   fontWeight={700}
                   fontSize={22}
                   fontFamily="Michroma, sans-serif"
                 >
                   {seg.pct}%
                 </text>
-              </g>
+              </motion.g>
             );
           })}
 
-          {/* Center circle background */}
-          {/* Center - using foreignObject for Tailwind dark mode support */}
+          {/* Center circle */}
           <foreignObject
-            x={svgCx - (radius - strokeWidth / 2 - 5)}
-            y={svgCy - (radius - strokeWidth / 2 - 5)}
-            width={(radius - strokeWidth / 2 - 5) * 2}
-            height={(radius - strokeWidth / 2 - 5) * 2}
+            x={svgCx - (radius - strokeWidth / 2 - 2)}
+            y={svgCy - (radius - strokeWidth / 2 - 2)}
+            width={(radius - strokeWidth / 2 - 2) * 2}
+            height={(radius - strokeWidth / 2 - 2) * 2}
           >
             <div
               style={{ width: '100%', height: '100%', borderRadius: '50%' }}
-              className="bg-[#FDF5E7] dark:bg-[#1A1715] flex flex-col items-center justify-center"
+              className="bg-[#FDF5E7] dark:bg-[#1A1715] flex flex-col items-center justify-center border-4 border-[#A47A2D]/10"
             >
               <span style={{ fontFamily: 'Michroma, sans-serif' }} className="text-4xl font-black text-[#521D07] dark:text-[#E2E8F0]">100%</span>
               <span style={{ fontFamily: 'Michroma, sans-serif', letterSpacing: '0.2em' }} className="text-xs font-bold text-[#A47A2D]">SKILLS</span>
@@ -153,7 +194,7 @@ function SkillsPieChart() {
             transition={{ duration: 0.5, delay: 0.2 + i * 0.15 }}
           >
             <div className="flex items-center gap-3 mb-3">
-              <div className="w-5 h-5 rounded-full flex-shrink-0 shadow-md" style={{ backgroundColor: seg.color }} />
+              <div className="w-5 h-5 rounded-full flex-shrink-0 shadow-md" style={{ backgroundColor: isDark ? seg.darkColor : seg.color }} />
               <span style={{ fontFamily: 'Michroma, sans-serif' }} className="font-black text-[#521D07] dark:text-[#E2E8F0] uppercase text-lg tracking-wide">
                 {seg.label}
               </span>
@@ -166,9 +207,9 @@ function SkillsPieChart() {
                   whileHover={{ scale: 1.08, y: -2 }}
                   className="px-4 py-2 text-sm font-bold rounded-xl border-2 cursor-default transition-colors"
                   style={{
-                    borderColor: seg.color,
-                    color: seg.color,
-                    backgroundColor: `${seg.color}12`,
+                    borderColor: isDark ? seg.darkColor : seg.color,
+                    color: isDark ? seg.darkColor : seg.color,
+                    backgroundColor: isDark ? `${seg.darkColor}12` : `${seg.color}12`,
                   }}
                 >
                   {item}
@@ -192,57 +233,57 @@ export default function ResumePage() {
       title: 'BS Information Technology',
       org: 'Holy Angel University',
       desc: 'Major within Web Development Track. Top 1% ranking Academic Scholar.',
-      image: 'https://www.hau.edu.ph/images/banner-3.jpg',
+      image: holyAngelWebp,
     },
     {
       year: '2017 - 2022',
       title: 'STEM Strand Badge',
       org: 'Angeles City Science High School',
       desc: 'Graduated with High Honors. Specialization in Advanced Mathematics & Research.',
-      image: acsciImg,
+      image: acsciWebp,
     },
     {
       year: '2024',
       title: 'JavaScript Essentials 1',
       org: 'Cisco',
       desc: 'Certified in core JavaScript fundamentals including ES6+ syntax and DOM manipulation.',
-      image: 'https://images.unsplash.com/photo-1627398242454-45a1465c2479?w=400&q=80',
+      image: javascriptWebp,
     },
     {
       year: '2024',
       title: 'CCNA: Intro to Networks',
       org: 'Cisco',
       desc: 'Certified in networking fundamentals, IP addressing, and network protocols.',
-      image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&q=80',
+      image: ccnaResumeWebp,
     },
     {
       year: '2023',
       title: 'PHP Basics',
       org: 'Simplilearn',
       desc: 'Certified in PHP fundamentals for server-side web development.',
-      image: 'https://images.unsplash.com/photo-1599507593499-a3f7d7d97667?w=400&q=80',
+      image: phpResumeWebp,
     },
     {
       year: '2023',
       title: 'CompTIA IT Fundamentals',
       org: 'CompTIA',
       desc: 'Certified in core IT concepts, security, and software development fundamentals.',
-      image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80',
+      image: comptiaResumeWebp,
     },
     {
       year: '2023',
       title: 'Digital Marketing',
       org: 'HubSpot Academy',
       desc: 'Certified in digital marketing strategies, SEO, and content marketing.',
-      image: 'https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?w=400&q=80',
+      image: hubspotResumeWebp,
     },
   ];
 
   const quickStats = [
-    { value: '4+', label: 'Projects' },
-    { value: '6+', label: 'Certifications' },
-    { value: 'Top 1%', label: 'Class Rank' },
-    { value: '100%', label: 'Commitment' },
+    { value: '5+', label: 'Projects', icon: Layers },
+    { value: '6+', label: 'Certifications', icon: Award },
+    { value: 'Top 1%', label: 'Class Rank', icon: TrendingUp },
+    { value: '100%', label: 'Commitment', icon: Cpu },
   ];
 
   return (
@@ -256,6 +297,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
               className="inline-block px-5 py-2 bg-[#A47A2D]/10 rounded-full mb-4 border border-[#A47A2D]/20"
             >
               <p className="font-mono text-sm font-bold text-[#A47A2D] uppercase tracking-wider">
@@ -266,7 +308,7 @@ export default function ResumePage() {
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
+              transition={{ delay: 0.1, duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
               style={{ fontFamily: 'Michroma, sans-serif' }}
               className="text-4xl md:text-5xl lg:text-7xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase"
             >
@@ -285,106 +327,186 @@ export default function ResumePage() {
         {/* ===== SECTION 1: Unified Profile & Summary Container ===== */}
         <section className="mb-24">
           <motion.div
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="bg-white dark:bg-[#252220] rounded-[40px] border-4 border-[#A47A2D] p-8 lg:p-14 relative overflow-hidden shadow-2xl"
+            transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+            style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(245,235,217,0.5) 100%)',
+              borderRadius: '32px',
+              border: '1px solid rgba(164,122,45,0.15)',
+              padding: '0',
+              overflow: 'hidden',
+              boxShadow: '0 20px 60px rgba(82,29,7,0.06), 0 2px 8px rgba(82,29,7,0.04)',
+            }}
+            className="resume-profile-card"
           >
-            {/* Subtle background decoration */}
-            <Briefcase className="absolute -right-12 -bottom-12 w-64 h-64 text-[#A47A2D] opacity-[0.03] rotate-12 pointer-events-none" />
+            {/* Inline responsive overrides */}
+            <style>{`
+              .dark .resume-profile-card {
+                background: linear-gradient(135deg, rgba(37,34,32,0.95) 0%, rgba(26,23,21,0.8) 100%) !important;
+                border-color: rgba(164,122,45,0.2) !important;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15) !important;
+              }
+              .resume-s1-divider { display: none; }
+              @media (min-width: 1024px) {
+                .resume-s1-divider {
+                  display: block;
+                  position: absolute;
+                  left: 42%;
+                  top: 48px;
+                  bottom: 48px;
+                  width: 1px;
+                  background: linear-gradient(to bottom, transparent, rgba(164,122,45,0.2), transparent);
+                }
+              }
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative z-10">
+              /* RESPONSIVE SUMMARY OVERRIDES */
+              .summary-stats-grid {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 12px;
+              }
+              .summary-card-inner {
+                padding: 24px 16px;
+              }
 
-              {/* Left Column — About Me (Profile) */}
-              <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left">
-                {/* Avatar */}
-                <div className="relative mb-8 self-center lg:self-start">
-                  <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-[#A47A2D] via-[#D4AF37] to-[#A47A2D] p-1.5 shadow-xl">
-                    <div className="w-full h-full rounded-full bg-[#FDF5E7] dark:bg-[#1A1715] flex items-center justify-center">
-                      <span style={{ fontFamily: 'Michroma, sans-serif' }} className="text-4xl lg:text-5xl font-black text-[#A47A2D]">JA</span>
-                    </div>
-                  </div>
-                  <div className="absolute bottom-2 right-4 w-6 h-6 bg-green-400 rounded-full border-4 border-white dark:border-[#252220] shadow-md animate-pulse" />
-                </div>
+              @media (min-width: 480px) {
+                .summary-stats-grid {
+                  grid-template-columns: repeat(2, 1fr);
+                  gap: 16px;
+                }
+                .summary-card-inner {
+                  padding: 40px 32px;
+                }
+              }
+            `}</style>
 
-                <h3 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-3xl lg:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-2 leading-tight">
-                  Josh Andrei<br />Aguiluz
-                </h3>
-                <p className="text-[#A47A2D] font-black text-lg mb-8 tracking-wide uppercase">Backend & Full-Stack Developer</p>
+            <div className="relative summary-card-inner">
+              {/* Subtle decorative circle */}
+              <div style={{
+                position: 'absolute', right: '-80px', bottom: '-80px',
+                width: '280px', height: '280px', borderRadius: '50%',
+                background: 'radial-gradient(circle, rgba(164,122,45,0.04) 0%, transparent 70%)',
+                pointerEvents: 'none',
+              }} />
 
-                <div className="w-full space-y-5 text-left mb-10 pb-10 border-b-2 lg:border-b-0 lg:pb-0 border-[#A47A2D]/20">
-                  <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
-                    <div className="w-10 h-10 rounded-full bg-[#A47A2D]/10 flex items-center justify-center flex-shrink-0">
-                      <MapPin className="w-5 h-5 text-[#A47A2D]" />
-                    </div>
-                    Magalang, Pampanga
-                  </div>
-                  <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
-                    <div className="w-10 h-10 rounded-full bg-green-500/10 flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="w-5 h-5 text-green-500" />
-                    </div>
-                    Available for Internships
-                  </div>
-                  <div className="flex items-center gap-4 text-base lg:text-lg font-bold text-[#521D07] dark:text-[#B8B0A6]">
-                    <div className="w-10 h-10 rounded-full bg-[#A47A2D]/10 flex items-center justify-center flex-shrink-0">
-                      <GraduationCap className="w-5 h-5 text-[#A47A2D]" />
-                    </div>
-                    Top 1% Scholar
-                  </div>
-                </div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '48px', position: 'relative', zIndex: 1 }} className="lg:grid-cols-12">
 
-                <a
-                  href="mailto:josh.dizon.aguiluz25@gmail.com"
-                  className="w-full flex items-center justify-center gap-3 px-8 py-4 bg-[#A47A2D] hover:bg-[#FFA51F] text-white rounded-2xl font-black text-lg transition-transform hover:-translate-y-1 shadow-lg mt-auto"
+                {/* Professional Summary */}
+                <motion.div
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.7, delay: 0.2, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  className="lg:col-span-12 flex flex-col justify-center"
                 >
-                  <Mail className="w-5 h-5" /> Contact Me
-                </a>
-              </div>
+                  {/* Section Label */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                    className="flex items-center gap-3 mb-6"
+                  >
+                    <div style={{
+                      width: '40px', height: '40px', borderRadius: '10px',
+                      background: 'linear-gradient(135deg, #A47A2D, #D4AF37)',
+                      display: 'flex', alignItems: 'center', justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(164,122,45,0.2)',
+                    }}>
+                      <Briefcase style={{ width: '20px', height: '20px', color: 'white' }} />
+                    </div>
+                    <span style={{
+                      fontFamily: 'Inter, sans-serif', fontSize: '13px',
+                      fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase',
+                    }} className="text-[#A47A2D]">
+                      Professional Summary
+                    </span>
+                  </motion.div>
 
-              {/* Custom Desktop Divider */}
-              <div className="hidden lg:block absolute left-[45%] top-4 bottom-4 w-px bg-gradient-to-b from-transparent via-[#A47A2D]/40 to-transparent" />
+                  {/* Summary Text */}
+                  <motion.p
+                    initial={{ opacity: 0, y: 15 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.35 }}
+                    style={{
+                      fontFamily: 'Inter, sans-serif',
+                      lineHeight: 1.75, fontWeight: 500,
+                    }}
+                    className="text-[#521D07]/90 dark:text-[#B8B0A6] mb-10 text-center lg:text-left text-[15px] sm:text-[17px]"
+                  >
+                    Motivated <span style={{ fontWeight: 800 }} className="text-[#A47A2D]">BS Information Technology</span> student and{' '}
+                    <span style={{ fontWeight: 800 }} className="text-[#A47A2D]">Top 1% Scholar</span> seeking a Backend Developer internship.
+                    I leverage Full-Stack capabilities in{' '}
+                    <span style={{
+                      fontFamily: 'Inter, sans-serif', fontWeight: 700,
+                      padding: '2px 8px', borderRadius: '6px', fontSize: '15px',
+                    }} className="bg-[#A47A2D]/10 text-[#A47A2D]">Node.js</span>,{' '}
+                    <span style={{
+                      fontFamily: 'Inter, sans-serif', fontWeight: 700,
+                      padding: '2px 8px', borderRadius: '6px', fontSize: '15px',
+                    }} className="bg-[#A47A2D]/10 text-[#A47A2D]">Angular</span>, and{' '}
+                    <span style={{
+                      fontFamily: 'Inter, sans-serif', fontWeight: 700,
+                      padding: '2px 8px', borderRadius: '6px', fontSize: '15px',
+                    }} className="bg-[#A47A2D]/10 text-[#A47A2D]">Flutter</span>{' '}
+                    to build efficient, scalable systems while driving rapid technical growth.
+                  </motion.p>
 
-              {/* Right Column — Professional Summary */}
-              <div className="lg:col-span-7 flex flex-col justify-center">
-                <div className="flex items-center justify-center lg:justify-start gap-4 mb-8">
-                  <div className="w-14 h-14 bg-[#A47A2D] rounded-xl flex items-center justify-center shadow-lg rotate-3">
-                    <Briefcase className="text-white w-7 h-7 -rotate-3" />
+                  {/* Quick Stats Grid — Responsive Columns */}
+                  <div className="summary-stats-grid">
+                    {quickStats.map((stat, i) => {
+                      const IconComp = stat.icon;
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          whileHover={{ y: -4 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.5, delay: 0.4 + i * 0.08 }}
+                          style={{
+                            display: 'flex', alignItems: 'center', gap: '14px',
+                            padding: '16px 18px',
+                            borderRadius: '16px',
+                            border: '1px solid rgba(164,122,45,0.12)',
+                            transition: 'all 0.3s ease',
+                            cursor: 'default',
+                          }}
+                          className="bg-[#F5EBD9]/50 dark:bg-[#1A1715]/60 hover:shadow-lg"
+                        >
+                          <div style={{
+                            width: '44px', height: '44px', borderRadius: '12px',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            background: 'linear-gradient(135deg, rgba(164,122,45,0.1), rgba(212,175,55,0.08))',
+                            flexShrink: 0,
+                          }}>
+                            <IconComp style={{ width: '20px', height: '20px', color: '#A47A2D' }} />
+                          </div>
+                          <div>
+                            <div style={{
+                              fontFamily: 'Inter, sans-serif', fontSize: '24px', fontWeight: 800,
+                              lineHeight: 1.1,
+                            }} className="text-[#A47A2D]">
+                              {stat.value}
+                            </div>
+                            <div style={{
+                              fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 600,
+                              letterSpacing: '0.06em', textTransform: 'uppercase',
+                              marginTop: '2px',
+                            }} className="text-[#521D07] dark:text-[#E2E8F0]">
+                              {stat.label}
+                            </div>
+                          </div>
+                        </motion.div>
+                      );
+                    })}
                   </div>
-                  <h2 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-2xl md:text-3xl lg:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">
-                    Professional <span className="text-[#A47A2D]">Summary</span>
-                  </h2>
-                </div>
+                </motion.div>
 
-                <p className="text-lg lg:text-xl xl:text-2xl font-medium text-[#521D07]/90 dark:text-[#B8B0A6] leading-relaxed mb-12 text-center lg:text-left">
-                  Motivated <span className="text-[#A47A2D] font-black">BS Information Technology</span> student and{' '}
-                  <span className="text-[#A47A2D] font-black">Top 1% Scholar</span> seeking a Backend Developer internship.
-                  I leverage Full-Stack capabilities in{' '}
-                  <span className="bg-[#A47A2D]/10 px-2 py-1 rounded-md font-black text-[#A47A2D] border border-[#A47A2D]/20">Node.js</span>,{' '}
-                  <span className="bg-[#A47A2D]/10 px-2 py-1 rounded-md font-black text-[#A47A2D] border border-[#A47A2D]/20">Angular</span>, and{' '}
-                  <span className="bg-[#A47A2D]/10 px-2 py-1 rounded-md font-black text-[#A47A2D] border border-[#A47A2D]/20">Flutter</span>{' '}
-                  to build efficient, scalable systems while driving rapid technical growth.
-                </p>
-
-                {/* Quick Stats Grid */}
-                <div className="grid grid-cols-2 gap-4 lg:gap-6 mt-auto">
-                  {quickStats.map((stat, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      whileInView={{ opacity: 1, scale: 1 }}
-                      whileHover={{ scale: 1.05 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: 0.2 + i * 0.1 }}
-                      className="bg-[#F5EBD9] dark:bg-[#1A1715] rounded-2xl p-6 text-center border border-[#A47A2D]/30 shadow-sm flex flex-col justify-center gap-1"
-                    >
-                      <div className="text-3xl lg:text-4xl font-black text-[#A47A2D]">{stat.value}</div>
-                      <div className="text-sm font-black text-[#521D07] dark:text-[#E2E8F0] uppercase tracking-wide">{stat.label}</div>
-                    </motion.div>
-                  ))}
-                </div>
               </div>
-
             </div>
           </motion.div>
         </section>
@@ -597,7 +719,7 @@ export default function ResumePage() {
                           >
                             <img
                               src={item.image}
-                              alt={item.title}
+                              alt={`Certificate photo for ${item.title} - ${item.org}`}
                               style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }}
                               className="hover:scale-110 transition-transform duration-700"
                             />

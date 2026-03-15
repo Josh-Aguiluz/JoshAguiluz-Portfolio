@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Github, Linkedin, Twitter, Send, Download } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Mail, Github, Linkedin, Send, Download, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 import resumePdf from '../assets/resume.pdf';
 
 const ContactPage = () => {
@@ -27,7 +27,8 @@ const ContactPage = () => {
     setIsSubmitting(true);
 
     try {
-      const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY || "YOUR_ACCESS_KEY_HERE";
+      // Hardcoded fallback for defense reliability
+      const ACCESS_KEY = "3aff745f-75ea-44b8-bd29-f8f15600113f";
 
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
@@ -36,11 +37,12 @@ const ContactPage = () => {
           Accept: "application/json",
         },
         body: JSON.stringify({
-          access_key: accessKey,
+          access_key: ACCESS_KEY,
           name: formData.name,
           email: formData.email,
-          subject: formData.subject,
+          subject: `Portfolio Inquiry: ${formData.subject}`,
           message: formData.message,
+          from_name: "Portfolio Form",
         }),
       });
 
@@ -58,8 +60,6 @@ const ContactPage = () => {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
-      // Reset status after a few seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000);
     }
   };
 
@@ -85,7 +85,15 @@ const ContactPage = () => {
   ];
 
   return (
-    <section className="min-h-screen py-20 md:py-32 graph-paper-bg relative overflow-hidden bg-[#FDF5E7] dark:bg-[#1A1715]">
+    <>
+      <style>{`
+        .dark input::placeholder,
+        .dark textarea::placeholder {
+          color: rgba(226, 232, 240, 0.5) !important;
+          opacity: 1 !important;
+        }
+      `}</style>
+      <section className="min-h-screen py-20 md:py-32 graph-paper-bg relative overflow-hidden bg-[#FDF5E7] dark:bg-[#1A1715]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="text-center mb-12 md:mb-20">
@@ -136,7 +144,6 @@ const ContactPage = () => {
                 {[
                   { icon: <Github />, link: 'https://github.com/Josh-Aguiluz', label: "GitHub Profile" },
                   { icon: <Linkedin />, link: 'https://www.linkedin.com/in/josh-aguiluz-0a150a350/', label: "LinkedIn Profile" },
-                  { icon: <Twitter />, link: 'https://twitter.com', label: "Twitter Profile" },
                   { icon: <Mail />, link: 'mailto:josh.dizon.aguiluz25@gmail.com', label: "Send Email" },
                 ].map((social, index) => (
                   <a
@@ -180,7 +187,7 @@ const ContactPage = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] transition-colors placeholder:text-[#521D07]/40"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] transition-colors placeholder:text-[#521D07]/40 dark:placeholder:text-[#E2E8F0]/40"
                   placeholder="Your name"
                 />
               </div>
@@ -196,7 +203,7 @@ const ContactPage = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] transition-colors placeholder:text-[#521D07]/40"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] transition-colors placeholder:text-[#521D07]/40 dark:placeholder:text-[#E2E8F0]/40"
                   placeholder="your@email.com"
                 />
               </div>
@@ -212,7 +219,7 @@ const ContactPage = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] transition-colors placeholder:text-[#521D07]/40"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] transition-colors placeholder:text-[#521D07]/40 dark:placeholder:text-[#E2E8F0]/40"
                   placeholder="What's this about?"
                 />
               </div>
@@ -228,7 +235,7 @@ const ContactPage = () => {
                   onChange={handleChange}
                   required
                   rows={6}
-                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] resize-none transition-colors placeholder:text-[#521D07]/40"
+                  className="w-full px-4 py-3 md:px-6 md:py-4 text-[16px] md:text-[20px] font-bold bg-white dark:bg-[#252220] text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] dark:border-[#A47A2D] rounded-[16px] md:rounded-[20px] focus:outline-none focus:border-[#FFA51F] dark:focus:border-[#FFA51F] resize-none transition-colors placeholder:text-[#521D07]/40 dark:placeholder:text-[#E2E8F0]/40"
                   placeholder="Tell me about your project..."
                 />
               </div>
@@ -247,31 +254,184 @@ const ContactPage = () => {
                 )}
               </button>
 
-              {submitStatus === 'success' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-green-100 dark:bg-green-900/30 border-2 border-green-500 rounded-xl text-center"
-                >
-                  <p className="font-bold text-green-700 dark:text-green-300">Message sent successfully!</p>
-                </motion.div>
-              )}
-
-              {submitStatus === 'error' && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-red-100 dark:bg-red-900/30 border-2 border-red-500 rounded-xl text-center flex flex-col items-center justify-center"
-                >
-                  <p className="font-bold text-red-700 dark:text-red-300">Failed to send message.</p>
-                  <p className="text-sm font-bold text-red-700/80 dark:text-red-300/80 mt-1">If you are the owner, please check your Web3Forms Access Key.</p>
-                </motion.div>
-              )}
             </div>
           </form>
         </div>
       </div>
+
+      {/* Status Modal Overlay */}
+      <AnimatePresence>
+        {submitStatus !== 'idle' && (
+          <div className="fixed inset-0 z-[999] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.8, y: 50 }}
+              style={{ 
+                backgroundColor: '#FFF9F0', 
+                width: '95%', 
+                maxWidth: '800px',
+                padding: '80px',
+                borderRadius: '60px',
+                border: '8px solid #A47A2D',
+                position: 'relative',
+                boxShadow: '0 50px 150px rgba(0,0,0,0.8)',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '60px'
+              }}
+            >
+              {submitStatus === 'success' ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%', gap: '50px' }}>
+                  <div style={{ 
+                    width: '140px', 
+                    height: '140px', 
+                    backgroundColor: '#A47A2D', 
+                    borderRadius: '50%', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    boxShadow: '0 20px 40px rgba(164,122,45,0.4)'
+                  }}>
+                    <CheckCircle2 size={80} strokeWidth={2} className="text-white" />
+                  </div>
+
+                  <div style={{ width: '100%' }}>
+                    <h3 
+                      style={{ 
+                        fontFamily: 'Michroma, sans-serif',
+                        fontSize: '56px',
+                        fontWeight: '900',
+                        color: '#521D07',
+                        textTransform: 'uppercase',
+                        lineHeight: '1',
+                        whiteSpace: 'nowrap',
+                        margin: '0 0 30px 0',
+                        letterSpacing: '0.1em'
+                      }}
+                    >
+                      SUCCESS!
+                    </h3>
+                    <p style={{ 
+                      fontSize: '28px', 
+                      fontWeight: '700', 
+                      color: 'rgba(82, 29, 7, 0.9)', 
+                      lineHeight: '1.5',
+                      margin: '0'
+                    }}>
+                      Your message was sent successfully.<br/>I'll reply to you shortly!
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setSubmitStatus('idle')}
+                    style={{ 
+                      width: '100%',
+                      padding: '30px',
+                      backgroundColor: '#521D07',
+                      color: '#FFFFFF',
+                      fontSize: '24px',
+                      fontWeight: '900',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.4em',
+                      borderRadius: '30px',
+                      border: '4px solid #A47A2D',
+                      boxShadow: '12px 12px 0 #A47A2D',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = '#A47A2D';
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = '#521D07';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    Got it
+                  </button>
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', width: '100%', gap: '50px' }}>
+                  <div style={{ 
+                    width: '140px', 
+                    height: '140px', 
+                    backgroundColor: '#DC2626', 
+                    borderRadius: '50%', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center',
+                    boxShadow: '0 20px 40px rgba(220,38,38,0.4)'
+                  }}>
+                    <AlertCircle size={80} strokeWidth={2} className="text-white" />
+                  </div>
+
+                  <div style={{ width: '100%' }}>
+                    <h3 
+                      style={{ 
+                        fontFamily: 'Michroma, sans-serif',
+                        fontSize: '56px',
+                        fontWeight: '900',
+                        color: '#DC2626',
+                        textTransform: 'uppercase',
+                        lineHeight: '1',
+                        whiteSpace: 'nowrap',
+                        margin: '0 0 30px 0',
+                        letterSpacing: '0.1em'
+                      }}
+                    >
+                      ERROR
+                    </h3>
+                    <p style={{ 
+                      fontSize: '28px', 
+                      fontWeight: '700', 
+                      color: 'rgba(82, 29, 7, 0.9)', 
+                      lineHeight: '1.5',
+                      margin: '0'
+                    }}>
+                      Something went wrong.<br/>Please try again later.
+                    </p>
+                  </div>
+
+                  <button
+                    onClick={() => setSubmitStatus('idle')}
+                    style={{ 
+                      width: '100%',
+                      padding: '30px',
+                      backgroundColor: '#DC2626',
+                      color: '#FFFFFF',
+                      fontSize: '24px',
+                      fontWeight: '900',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.4em',
+                      borderRadius: '30px',
+                      border: '4px solid #7F1D1D',
+                      boxShadow: '12px 12px 0 #7F1D1D',
+                      cursor: 'pointer',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseOver={(e) => {
+                      e.currentTarget.style.backgroundColor = '#B91C1C';
+                      e.currentTarget.style.transform = 'translateY(-4px)';
+                    }}
+                    onMouseOut={(e) => {
+                      e.currentTarget.style.backgroundColor = '#DC2626';
+                      e.currentTarget.style.transform = 'translateY(0)';
+                    }}
+                  >
+                    Back
+                  </button>
+                </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </section>
+    </>
   );
 };
 

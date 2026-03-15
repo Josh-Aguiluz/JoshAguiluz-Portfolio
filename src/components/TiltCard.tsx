@@ -64,7 +64,7 @@ export default function TiltCard({ children, className = '' }: TiltCardProps) {
           ),
         }}
       />
-      
+
       {/* Content */}
       <div style={{ transform: 'translateZ(50px)' }} className="relative">
         {children}

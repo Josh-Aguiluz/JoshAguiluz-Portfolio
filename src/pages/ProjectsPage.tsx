@@ -2,40 +2,87 @@ import React from 'react';
 import { Github } from 'lucide-react';
 import { motion } from 'framer-motion';
 import GlassCardDeck from '../components/GlassCardDeck';
+import firstProj from '../assets/firstProj.webp';
+import danonosWebp from '../assets/danonos.webp';
+import ecoQuestWebp from '../assets/ecoQuest.webp';
+import wellnessWebp from '../assets/wellness.webp';
+import chanelWebp from '../assets/chanel.webp';
 
 export default function ProjectsPage() {
   const projects = [
     {
       title: "Danono's Bakery",
-      description: "A premium bakery platform for Danono's in Angeles City. Features a vibrant UI to showcase their signature 24-hour fermented brioche doughnuts, seamless ordering, and the story behind their daily fresh creations.",
-      tags: ['REACT', 'TAILWIND', 'E-COMMERCE', 'UI/UX'],
+      description: "As the Backend & Full-Stack Developer, I built a premium e-commerce bakery platform for Danono's in Angeles City.",
+      role: 'Backend & Full-Stack Developer',
+      tags: ['PHP', 'CSS', 'JAVASCRIPT', 'E-COMMERCE'],
       github: 'https://github.com/gabewebd/WSEA.git',
       live: 'https://danonos.com',
-      image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80',
+      image: danonosWebp,
+      details: [
+        "As the Backend & Full-Stack Developer for Danono's Bakery, I was responsible for the entire server-side architecture and frontend implementation of this real-world e-commerce platform for a bakery based in Angeles City, Pampanga.",
+        "I developed the backend logic using PHP, handling product catalog management, order processing, and customer data. The server-side code ensures seamless ordering functionality, allowing customers to browse the menu and place orders for their signature 24-hour fermented brioche doughnuts.",
+        "On the frontend, I designed and implemented a vibrant, fully responsive UI using CSS and JavaScript that showcases the bakery's brand identity. The design emphasizes visual appeal with high-quality imagery and smooth interactions to create an engaging user experience.",
+        "This project taught me the importance of bridging design with functionality — building a system that not only looks premium but also handles real customer transactions reliably. The site is live and actively serving the business at danonos.com."
+      ]
     },
     {
       title: 'HAU Eco-Quest',
-      description: 'Architected a gamified sustainability platform with secure JWT authentication and Role-Based Access Control (RBAC). Built with MERN Stack (React, Node.js, MongoDB).',
+      description: 'As the Backend & Full-Stack Developer, I architected a gamified sustainability platform with JWT auth and RBAC.',
+      role: 'Backend & Full-Stack Developer',
       tags: ['REACT', 'NODE.JS', 'MONGODB', 'JWT'],
       github: 'https://github.com/Josh-Aguiluz/6WCSERVER-Final-Project.git',
       live: 'https://hauecoquest.vercel.app',
-      image: 'https://i.ytimg.com/vi/9eoUM7hzeKQ/maxresdefault.jpg',
+      image: ecoQuestWebp,
+      details: [
+        "As the Backend & Full-Stack Developer for HAU Eco-Quest, I architected and built this gamified sustainability platform from the ground up using the MERN Stack (MongoDB, Express.js, React, Node.js).",
+        "My primary responsibility was designing and implementing the entire backend infrastructure. This included building secure RESTful API endpoints, integrating JWT-based authentication for user sessions, and implementing Role-Based Access Control (RBAC) to differentiate between admin and regular user permissions.",
+        "I designed the MongoDB data layer with Mongoose schemas to manage user profiles, sustainability challenges, leaderboards, and activity tracking. The backend handles complex game logic including point systems, badge achievements, and progress tracking that gamifies eco-friendly actions on campus.",
+        "On the frontend, I worked with React to build the user-facing interface that connects to the API, displaying real-time leaderboards, challenge progress, and user dashboards. The application is deployed on Vercel and demonstrates my ability to build and deploy production-ready full-stack applications."
+      ]
     },
     {
       title: 'The Wellness Apparel',
-      description: 'Developed a full-stack e-commerce app featuring a custom Admin CMS, secure cart logic, and inventory management using PHP and MySQL.',
+      description: 'As the Project Leader & Full-Stack Developer, I led the team and built a complete e-commerce application.',
+      role: 'Project Leader & Full-Stack Developer',
       tags: ['PHP', 'MYSQL', 'BOOTSTRAP', 'E-COMMERCE'],
       github: 'https://github.com/Josh-Aguiluz',
       live: 'http://the-wellness-apparel.onlinewebshop.net',
-      image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=600&q=80',
+      image: wellnessWebp,
+      details: [
+        "As the Project Leader and Full-Stack Developer for The Wellness Apparel, I spearheaded the entire development lifecycle of this e-commerce platform — from planning and task delegation to hands-on coding and deployment.",
+        "In my leadership role, I coordinated the development workflow across the team, conducted code reviews, set milestones, and ensured timely delivery. I made key architectural decisions including the database schema design, authentication flow, and the admin panel structure.",
+        "On the technical side, I built a custom Admin Content Management System (CMS) that allows the store owner to manage products, categories, and inventory in real time. I implemented secure shopping cart logic with session management, order processing, and input validation to prevent common security vulnerabilities.",
+        "The backend is powered by PHP with MySQL for persistent data storage, handling product CRUD operations, user authentication, and order management. The frontend uses Bootstrap for responsive design, ensuring a consistent shopping experience across all devices. This project strengthened both my technical skills and my ability to lead a development team effectively."
+      ]
     },
     {
       title: 'Chanel Website Replica',
-      description: 'Engineered a pixel-perfect, fully responsive frontend clone demonstrating precision UI/UX implementation using HTML5, CSS3, and JavaScript.',
-      tags: ['HTML5', 'CSS3', 'JAVASCRIPT', 'UI/UX'],
+      description: 'As a Frontend Developer in a team of four, I helped build a pixel-perfect, responsive Chanel clone.',
+      role: 'Frontend Developer',
+      tags: ['HTML5', 'CSS3', 'TYPESCRIPT', 'UI/UX'],
       github: 'https://github.com/gabewebd/6AWEB-TheFourWhoAdore.git',
       live: 'https://prelim-project-thefourwhoadore.netlify.app/home',
-      image: 'https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80',
+      image: chanelWebp,
+      details: [
+        "As a Frontend Developer in a team of four (\"The Four Who Adore\"), I contributed to engineering a pixel-perfect, fully responsive clone of the Chanel luxury fashion website as an academic project.",
+        "My responsibilities included implementing key UI components such as navigation menus, product display grids, and interactive gallery sections. I focused on achieving visual fidelity to the original Chanel website while ensuring cross-browser compatibility across Chrome, Firefox, and Edge.",
+        "The project was built using HTML5, CSS3, and TypeScript, with a strong emphasis on semantic markup, CSS Grid/Flexbox layouts, and responsive design principles. I ensured that the site maintained its premium look and feel across all screen sizes, from mobile to ultra-wide displays.",
+        "This collaborative project strengthened my frontend development skills and taught me the importance of precision in UI/UX implementation. Working as a team also improved my skills in version control with Git, code collaboration, and maintaining consistent code standards across multiple developers."
+      ]
+    },
+    {
+      title: 'Furry Feast',
+      description: 'My first frontend project using HTML, CSS, and JS — building a responsive, interactive pet food website.',
+      role: 'Frontend Developer',
+      tags: ['HTML5', 'CSS3', 'JAVASCRIPT', 'UI/UX'],
+      github: 'https://github.com/Josh-Aguiluz/Furry-Feast.git',
+      live: 'https://furry-feast.netlify.app/',
+      image: firstProj,
+      details: [
+        "Furry Feast was my very first project stepping into frontend development. It was an exciting journey of taking design concepts and translating them into a functional website using the core pillars of the web: HTML, CSS, and JavaScript.",
+        "Through this project, I learned the fundamentals of semantic HTML structure, building responsive layouts with CSS Flexbox and media queries, and adding essential interactivity using Vanilla JavaScript.",
+        "This foundational project ignited my passion for frontend engineering, teaching me the importance of clean code and responsive design. It marks the milestone where my journey to becoming a professional web developer officially began."
+      ]
     },
   ];
 

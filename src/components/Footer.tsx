@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Github, Linkedin, Mail, MapPin, Home, User, Briefcase, BookOpen, Send, ArrowUp } from 'lucide-react';
-import logoImg from '../assets/logo.png';
+import logoImg from '../assets/logo.webp';
 
 export default function Footer() {
     const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -24,7 +24,7 @@ export default function Footer() {
         .pf-footer {
           background: linear-gradient(to right, #521D07, #5a2e22);
           color: white;
-          padding: 80px 60px 30px;
+          padding: 80px 8% 30px;
           position: relative;
           overflow: hidden;
           font-family: 'Michroma', sans-serif !important;
@@ -41,18 +41,18 @@ export default function Footer() {
           line-height: 1.5 !important;
         }
         .pf-footer-content {
-          max-width: 1200px;
+          max-width: 95%;
           margin: 0 auto 50px;
           display: grid;
-          grid-template-columns: 2fr 1fr 1fr;
-          gap: 50px;
+          grid-template-columns: 1.5fr 1fr 1fr;
+          gap: 80px;
         }
         .pf-footer-section h3 {
           color: #A47A2D;
-          font-size: 14px !important;
+          font-size: 11px !important;
           font-family: 'Michroma', sans-serif;
           text-transform: uppercase;
-          letter-spacing: 1px;
+          letter-spacing: 2px;
           margin: 0 0 25px 0;
           font-weight: 700;
         }
@@ -170,7 +170,7 @@ export default function Footer() {
                             />
                         </a>
                         <p className="!text-[13px] !font-['Michroma'] !leading-relaxed !m-0">
-                            Backend Engineer & Full-Stack Developer from Magalang, Pampanga. Crafting efficient, scalable systems with modern technologies.
+                            Backend-focused Full-Stack Engineer | Scalable Systems
                         </p>
                         <div className="pf-social-icons">
                             <a href="https://github.com/Josh-Aguiluz" className="pf-social-icon" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
@@ -187,7 +187,7 @@ export default function Footer() {
 
                     {/* Col 2 — Quick Links */}
                     <div className="pf-footer-section">
-                        <h3 className="!font-['Michroma'] !text-[13px] !uppercase !tracking-widest !font-bold !mb-6">Quick Links</h3>
+                        <h3 className="!font-['Michroma'] !uppercase !tracking-widest !font-bold !mb-6">Quick Links</h3>
                         <ul className="pf-quick-links">
                             <li><a href="#home" className="!font-['Michroma'] !text-[13px]"><Home size={14} /> Home</a></li>
                             <li><a href="#about" className="!font-['Michroma'] !text-[13px]"><User size={14} /> About</a></li>
@@ -199,7 +199,7 @@ export default function Footer() {
 
                     {/* Col 3 — Contact */}
                     <div className="pf-footer-section">
-                        <h3 className="!font-['Michroma'] !text-[13px] !uppercase !tracking-widest !font-bold !mb-6">Contact Me</h3>
+                        <h3 className="!font-['Michroma'] !uppercase !tracking-widest !font-bold !mb-6">Contact Me</h3>
                         <ul>
                             <li>
                                 <a href="mailto:josh.dizon.aguiluz25@gmail.com" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">

@@ -1,9 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ArrowLeft, ArrowRight, X, Calendar, Clock } from 'lucide-react';
-import top1Img from '../assets/top1.jpg';
-import lifeAsHauImg from '../assets/lifeAsHau.jpg';
-import codingDailyImg from '../assets/codingDaily.jpg';
+import top1Webp from '../assets/top1.webp';
+import lifeAsHauWebp from '../assets/lifeAsHau.webp';
+import codingDailyWebp from '../assets/codingDaily.webp';
 
 interface BlogPost {
   id: number;
@@ -24,7 +24,7 @@ const ALL_BLOG_POSTS: BlogPost[] = [
     title: 'MY JOURNEY TO TOP 1%',
     excerpt: 'How I achieved top rankings in web development through consistent learning, strategic goal-setting, and a growth mindset.',
     tags: ['CAREER', 'MINDSET', 'GROWTH'],
-    image: top1Img,
+    image: top1Webp,
     content: [
       'When I first enrolled at Holy Angel University as a BS Information Technology student, I never imagined I would reach the top 1% of my class. It was a journey built on discipline, curiosity, and an unwavering love for building things with code.',
       'The early semesters were about survival — learning the fundamentals of programming, understanding data structures, and figuring out how to debug code late into the night. But somewhere along the way, something clicked. I stopped seeing assignments as chores and started seeing them as puzzles to be solved.',
@@ -40,7 +40,7 @@ const ALL_BLOG_POSTS: BlogPost[] = [
     title: 'MY LIFE AS AN HAU STUDENT',
     excerpt: 'A glimpse into my daily routine, balancing academic excellence, extracurricular projects, and personal growth at Holy Angel University.',
     tags: ['HAU', 'STUDENT LIFE', 'ACADEMICS'],
-    image: lifeAsHauImg,
+    image: lifeAsHauWebp,
     content: [
       'Life as an Information Technology student at Holy Angel University is a whirlwind of lectures, lab sessions, and endless lines of code. It is an environment that constantly challenges you to push beyond your limits and strive for excellence.',
       'A typical day starts early with coffee and a review of my pending tasks. The campus is vibrant, and the IT department is always buzzing with students collaborating on projects or preparing for upcoming hackathons. The energy is contagious.',
@@ -56,7 +56,7 @@ const ALL_BLOG_POSTS: BlogPost[] = [
     title: 'CODING AS MY DAILY LIFE',
     excerpt: 'Why programming is more than a required subject for me — it has become my passion, my hobby, and my daily routine.',
     tags: ['CODING', 'PASSION', 'LIFESTYLE'],
-    image: codingDailyImg,
+    image: codingDailyWebp,
     content: [
       'For many, coding is a skill learned in a classroom to pass an exam or secure a job. For me, it has evolved into a fundamental part of my daily life. It is the first thing I think about when I wake up and the last thing I do before going to sleep.',
       'My day usually involves diving into new frameworks, optimizing existing projects, or simply experimenting with code to see what breaks. There is a profound satisfaction in typing a sequence of characters and watching it come to life on the screen.',
@@ -194,7 +194,7 @@ export default function BlogSection() {
                 >
                   {/* Card Image */}
                   <div className="blog-deck-card-image">
-                    <img src={post.image} alt={post.title} />
+                    <img src={post.image} alt={`Blog thumbnail: ${post.title}`} />
                     <div className="blog-deck-card-image-overlay" />
                   </div>
 
@@ -225,7 +225,7 @@ export default function BlogSection() {
                             {post.tags.map(tag => (
                               <span
                                 key={tag}
-                                className="px-3 py-1 bg-[#F5EBD9] dark:bg-[#1A1715] border border-[#A47A2D] rounded-md text-[11px] font-bold text-[#521D07] dark:text-[#E2E8F0] uppercase tracking-wider"
+                                className="modal-tag px-3 py-1 border rounded-md text-[11px] font-bold uppercase tracking-wider"
                               >
                                 {tag}
                               </span>
@@ -238,15 +238,10 @@ export default function BlogSection() {
                               e.stopPropagation();
                               setSelectedPost(post);
                             }}
-                            className="group relative inline-flex items-center gap-2 px-6 py-2.5 bg-transparent overflow-hidden rounded-xl font-black text-sm text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] cursor-pointer"
+                            className="modal-action-link"
                           >
-                            <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-10 group-hover:opacity-0">
-                              Read Article <ArrowRight className="w-4 h-4" />
-                            </span>
-                            <div className="absolute inset-0 z-0 bg-[#A47A2D] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
-                            <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white translate-y-10 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                              Read Article <ArrowRight className="w-4 h-4" />
-                            </span>
+                            <span>Read Article</span>
+                            <ArrowRight className="w-4 h-4" />
                           </button>
                         </div>
                       </div>
@@ -298,29 +293,31 @@ export default function BlogSection() {
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Back Button */}
+              {/* Hero Image */}
+              <div className="blog-modal-hero">
+                <img src={selectedPost.image} alt={`Full article image for ${selectedPost.title}`} />
+                <div className="blog-modal-hero-overlay" />
+              </div>
+
+              {/* Back Button - Top Left */}
               <button
                 onClick={() => setSelectedPost(null)}
                 className="blog-modal-back"
+                style={{ zIndex: 50 }}
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Back</span>
               </button>
 
-              {/* Close Button */}
+              {/* Close Button - Top Right */}
               <button
                 onClick={() => setSelectedPost(null)}
                 className="blog-modal-close"
+                style={{ zIndex: 50 }}
                 aria-label="Close article"
               >
                 <X className="w-5 h-5" />
               </button>
-
-              {/* Hero Image */}
-              <div className="blog-modal-hero">
-                <img src={selectedPost.image} alt={selectedPost.title} />
-                <div className="blog-modal-hero-overlay" />
-              </div>
 
               {/* Article Body */}
               <div className="blog-modal-body">
@@ -334,7 +331,7 @@ export default function BlogSection() {
                 {/* Title */}
                 <h2
                   style={{ fontFamily: 'Michroma, sans-serif' }}
-                  className="text-2xl md:text-4xl font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4 leading-tight"
+                  className="modal-title text-2xl md:text-4xl font-black uppercase mb-4 leading-tight"
                 >
                   {selectedPost.title}
                 </h2>
@@ -344,7 +341,7 @@ export default function BlogSection() {
                   {selectedPost.tags.map(tag => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-[#F5EBD9] dark:bg-[#2A2520] border-2 border-[#A47A2D] rounded-lg text-xs font-black text-[#521D07] dark:text-[#E2E8F0] uppercase"
+                      className="modal-tag px-3 py-1 border-2 rounded-lg text-xs font-black uppercase"
                     >
                       {tag}
                     </span>
@@ -362,7 +359,7 @@ export default function BlogSection() {
                       initial={{ opacity: 0, y: 15 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 + i * 0.05 }}
-                      className="text-base md:text-lg leading-relaxed text-[#521D07]/85 dark:text-[#B8B0A6] font-medium"
+                      className="modal-paragraph text-base md:text-lg leading-relaxed font-medium"
                     >
                       {paragraph}
                     </motion.p>
@@ -370,18 +367,13 @@ export default function BlogSection() {
                 </div>
 
                 {/* Back to articles bottom button */}
-                <div className="mt-12 pt-8 border-t-2 border-[#A47A2D]/20">
+                <div className="modal-actions mt-12 pt-8">
                   <button
                     onClick={() => setSelectedPost(null)}
-                    className="group relative inline-flex items-center gap-2 px-6 py-2.5 bg-transparent overflow-hidden rounded-xl font-black text-sm text-[#521D07] dark:text-[#E2E8F0] border-2 border-[#A47A2D] cursor-pointer"
+                    className="modal-action-link"
                   >
-                    <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-x-10 group-hover:opacity-0">
-                      <ArrowLeft className="w-4 h-4" /> Back to Articles
-                    </span>
-                    <div className="absolute inset-0 z-0 bg-[#A47A2D] translate-x-full transition-transform duration-300 group-hover:translate-x-0" />
-                    <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white -translate-x-10 opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
-                      <ArrowLeft className="w-4 h-4" /> Back to Articles
-                    </span>
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Back to Articles</span>
                   </button>
                 </div>
               </div>

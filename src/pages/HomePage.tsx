@@ -1,11 +1,14 @@
 import React from 'react';
 import TypewriterTerminal from '../components/TypewriterTerminal';
 import { motion } from 'framer-motion';
-import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp, ArrowRight, ExternalLink, Calendar } from 'lucide-react';
-import homeBGHD from '../assets/homeBGHD.png';
+import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp, ArrowRight, ExternalLink, Calendar, Mail, MousePointer2, Lock, ChevronDown } from 'lucide-react';
+import homeBGHD from '../assets/homeBGHD.webp';
 import resumePdf from '../assets/resume.pdf';
 import GlassCardDeck from '../components/GlassCardDeck';
 import ScrollVelocityText from '../components/ScrollVelocityText';
+import danonosWebp from '../assets/danonos.webp';
+import ecoQuestWebp from '../assets/ecoQuest.webp';
+import chanelWebp from '../assets/chanel.webp';
 
 export default function HomePage() {
   const scrollToSection = (sectionId: string) => {
@@ -93,9 +96,9 @@ export default function HomePage() {
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 mb-8 rounded-full bg-[#521D07] dark:bg-[#1A1715]/80 border border-[#A47A2D]/40 dark:border-[#D4AF37]/50 backdrop-blur-md shadow-lg max-w-full"
+              className="inline-flex items-center relative px-8 sm:px-10 py-2.5 mb-8 rounded-full bg-[#521D07] dark:bg-[#1A1715]/80 border border-[#A47A2D]/40 dark:border-[#D4AF37]/50 backdrop-blur-md shadow-lg"
             >
-              <div className="h-2 w-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.6)]" />
+              <div className="absolute left-3 sm:left-4 h-2 w-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.6)]" />
               <p className="font-mono text-[10px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-widest whitespace-nowrap">
                 Available for Work
               </p>
@@ -123,7 +126,7 @@ export default function HomePage() {
                     animation: 'gradientShift 4s ease infinite',
                   }}
                 >
-                  DEVELOPER
+                  ENGINEER
                 </span>
               </h1>
             </motion.div>
@@ -161,67 +164,68 @@ export default function HomePage() {
               {/* Primary Button */}
               <button
                 onClick={() => scrollToSection('projects')}
-                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 bg-[#521D07] dark:bg-[#D4AF37] overflow-hidden rounded-full font-black text-lg md:text-xl text-white dark:text-[#1A0E05] hover:scale-105 shadow-[0_4px_20px_rgba(82,29,7,0.4)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.4)] transition-all duration-300 w-full sm:w-auto dark-btn-primary"
+                className="split-btn split-espresso"
               >
-                <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-14 group-hover:opacity-0">
-                  View Projects
-                </span>
-                <div className="absolute inset-0 z-0 bg-gradient-to-r from-[#A47A2D] to-[#D4AF37] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
-                <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white translate-y-14 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  View Projects
-                </span>
+                <div className="split-btn-text">View Projects</div>
+                <div className="split-btn-icon-slot">
+                  <Layers />
+                </div>
               </button>
 
               {/* Secondary Button */}
               <button
                 onClick={() => scrollToSection('contact')}
-                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 bg-transparent overflow-hidden rounded-full font-black text-lg md:text-xl text-[#521D07] dark:text-[#D4AF37] border-2 border-[#A47A2D] dark:border-[#D4AF37] hover:scale-105 shadow-[0_4px_20px_rgba(164,122,45,0.15)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.2)] transition-all duration-300 w-full sm:w-auto dark-btn-secondary"
+                className="split-btn split-gold"
               >
-                <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-14 group-hover:opacity-0">
-                  Contact Me
-                </span>
-                <div className="absolute inset-0 z-0 bg-[#A47A2D] dark:bg-[#D4AF37] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
-                <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white dark:text-[#1A0E05] translate-y-14 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  Contact Me
-                </span>
+                <div className="split-btn-text">Contact Me</div>
+                <div className="split-btn-icon-slot">
+                  <Mail />
+                </div>
               </button>
 
               {/* Tertiary Button - Download Resume */}
               <a
                 href={resumePdf}
                 download="Josh_Aguiluz_Resume.pdf"
-                className="group relative inline-flex items-center justify-center gap-2 px-10 py-4 bg-transparent overflow-hidden rounded-full font-black text-lg md:text-xl text-[#521D07] dark:text-[#D4AF37] border-2 border-[#A47A2D] dark:border-[#D4AF37] hover:scale-105 shadow-[0_4px_20px_rgba(164,122,45,0.15)] dark:shadow-[0_4px_20px_rgba(212,175,55,0.2)] transition-all duration-300 w-full sm:w-auto dark-btn-secondary"
+                className="split-btn split-mocha"
               >
-                <span className="relative z-10 flex items-center gap-2 transition-transform duration-300 group-hover:-translate-y-14 group-hover:opacity-0">
-                  <Download className="w-5 h-5" /> Resume
-                </span>
-                <div className="absolute inset-0 z-0 bg-[#A47A2D] dark:bg-[#D4AF37] translate-y-full transition-transform duration-300 group-hover:translate-y-0" />
-                <span className="absolute inset-0 z-10 flex items-center justify-center gap-2 text-white dark:text-[#1A0E05] translate-y-14 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                  <Download className="w-5 h-5" /> Resume
-                </span>
+                <div className="split-btn-text">Resume</div>
+                <div className="split-btn-icon-slot">
+                  <Download />
+                </div>
               </a>
             </motion.div>
           </div>
         </div>
 
-        {/* Bottom fade transition */}
-        <div className="absolute bottom-0 left-0 right-0 h-40 z-[3] bg-gradient-to-t from-[#FDF5E7] dark:from-[#1A1715] to-transparent pointer-events-none" />
-
-        {/* Scroll indicator */}
+        {/* Scroll indicator - Perfectly Centered at Bottom */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2"
+          className="absolute bottom-8 left-0 right-0 z-20 flex flex-col items-center justify-center gap-4 pointer-events-none"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <span className="font-mono text-[10px] text-[#521D07]/40 dark:text-white/40 tracking-widest uppercase">Scroll</span>
-          <div className="w-5 h-8 rounded-full border-2 border-[#521D07]/30 dark:border-white/30 flex items-start justify-center p-1">
+          <span className="font-mono text-[11px] md:text-[13px] font-black text-[#A47A2D] dark:text-[#A47A2D] tracking-[0.3em] uppercase">
+            Scroll
+          </span>
+          <div className="flex flex-col items-center gap-2">
+            <div className="w-6 h-10 rounded-full border-[3px] border-[#A47A2D] dark:border-[#A47A2D] flex items-start justify-center p-1.5 shadow-[0_0_15px_rgba(164,122,45,0.1)]">
+              <motion.div
+                className="w-1.5 h-1.5 rounded-full bg-[#A47A2D] dark:bg-[#FFA51F]"
+                animate={{ y: [0, 15, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+              />
+            </div>
             <motion.div
-              className="w-1.5 h-1.5 rounded-full bg-[#A47A2D] dark:bg-[#D4AF37]"
-              animate={{ y: [0, 12, 0] }}
-              transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-            />
+              animate={{ y: [0, 5, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+            >
+              <ChevronDown className="w-5 h-5 text-[#A47A2D] mt-1" />
+            </motion.div>
           </div>
         </motion.div>
+
+        {/* Bottom fade transition */}
+        <div className="absolute bottom-0 left-0 right-0 h-40 z-[3] bg-gradient-to-t from-[#FDF5E7] dark:from-[#1A1715] to-transparent pointer-events-none" />
       </div>
       <br></br> <br></br> <br></br> <br></br>
       {/* =====================================================
@@ -240,7 +244,7 @@ export default function HomePage() {
               className="sticker-card bg-white dark:bg-[#252220] p-6 md:p-8 center-content border-4 border-[#A47A2D]"
             >
               <Layers className="w-10 h-10 md:w-12 md:h-12 text-[#A47A2D] mb-4 mx-auto" />
-              <div className="text-[40px] md:text-[56px] font-black text-[#A47A2D] mb-2">4</div>
+              <div className="text-[40px] md:text-[56px] font-black text-[#A47A2D] mb-2">5</div>
               <div className="text-[18px] md:text-[24px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase">Projects</div>
             </motion.div>
             <motion.div
@@ -272,12 +276,12 @@ export default function HomePage() {
         {/* Marquee Strip - Fixed with ScrollVelocity component - Small & Light Style */}
         <div className="mb-32">
           <ScrollVelocityText
-            text="BACKEND /// CODE /// FULL STACK /// BACKEND /// CODE /// FULL STACK"
+            text="SCALABLE SYSTEMS /// ROBUST APIS /// CLEAN CODE /// PERFORMANCE OPTIMIZATION /// SCALABLE SYSTEMS /// ROBUST APIS /// CLEAN CODE"
             baseVelocity={1}
             fontSize="text-[28px] md:text-[36px]"
             padding="py-4"
             bgColor="bg-white dark:bg-[#1A1715]"
-            textColor="text-[#521D07] dark:text-[#D4AF37]"
+            textColor="text-[#A47A2D] dark:text-[#E2E8F0]"
             borderColor="border-[#A47A2D]/20 dark:border-[#D4AF37]/20"
           />
         </div>
@@ -502,19 +506,48 @@ export default function HomePage() {
               projects={[
                 {
                   title: "DANONO'S BAKERY",
-                  description: "A premium e-commerce bakery platform showcasing 24-hour fermented brioche doughnuts with live ordering.",
-                  image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=600&q=80",
+                  description: "As the Backend & Full-Stack Developer, I built a premium e-commerce bakery platform with server-side logic, ordering integration, and a responsive frontend.",
+                  image: danonosWebp,
                   live: "https://danonos.com",
-                  github: "https://github.com/gabewebd/WSEA.git", // GlassCardDeck expects 'github' instead of 'code'
-                  tags: ["NEXT.JS", "TAILWIND", "STRIPE"]
+                  github: "https://github.com/gabewebd/WSEA.git",
+                  tags: ["PHP", "CSS", "JAVASCRIPT", "E-COMMERCE"],
+                  role: "Backend & Full-Stack Developer",
+                  details: [
+                    "As the Backend & Full-Stack Developer for Danono's Bakery, I was responsible for the entire server-side architecture and frontend implementation of this real-world e-commerce platform for a bakery based in Angeles City, Pampanga.",
+                    "I developed the backend logic using PHP, handling product catalog management, order processing, and customer data. The server-side code ensures seamless ordering functionality, allowing customers to browse the menu and place orders for their signature 24-hour fermented brioche doughnuts.",
+                    "On the frontend, I designed and implemented a vibrant, fully responsive UI using CSS and JavaScript that showcases the bakery's brand identity.",
+                    "This project taught me the importance of bridging design with functionality — building a system that not only looks premium but also handles real customer transactions reliably. The site is live and actively serving the business at danonos.com."
+                  ]
                 },
                 {
                   title: "CHANEL WEBSITE REPLICA",
-                  description: "Engineered a pixel-perfect, fully responsive frontend clone demonstrating precision UI/UX implementation using HTML5, CSS3, and JavaScript.",
-                  image: "https://images.unsplash.com/photo-1591561954557-26941169b49e?w=800&q=80",
+                  description: "As a Frontend Developer in a team of four, I contributed to engineering a pixel-perfect, fully responsive Chanel clone with cross-browser compatibility.",
+                  image: chanelWebp,
                   live: "https://prelim-project-thefourwhoadore.netlify.app/home",
                   github: "https://github.com/gabewebd/6AWEB-TheFourWhoAdore.git",
-                  tags: ["HTML5", "CSS3", "JAVASCRIPT", "UI/UX"]
+                  tags: ["HTML5", "CSS3", "TYPESCRIPT", "UI/UX"],
+                  role: "Frontend Developer",
+                  details: [
+                    "As a Frontend Developer in a team of four (\"The Four Who Adore\"), I contributed to engineering a pixel-perfect, fully responsive clone of the Chanel luxury fashion website.",
+                    "My responsibilities included implementing key UI components such as navigation menus, product display grids, and interactive gallery sections. I focused on achieving visual fidelity to the original Chanel website while ensuring cross-browser compatibility.",
+                    "The project was built using HTML5, CSS3, and TypeScript, with a strong emphasis on semantic markup, CSS Grid/Flexbox layouts, and responsive design principles.",
+                    "This collaborative project strengthened my frontend development skills and taught me the importance of precision in UI/UX implementation."
+                  ]
+                },
+                {
+                  title: "HAU ECO-QUEST",
+                  description: "As the Backend & Full-Stack Developer, I architected a gamified sustainability platform with JWT auth and RBAC.",
+                  image: ecoQuestWebp,
+                  live: "https://hauecoquest.vercel.app",
+                  github: "https://github.com/Josh-Aguiluz/6WCSERVER-Final-Project.git",
+                  tags: ["REACT", "NODE.JS", "MONGODB", "JWT"],
+                  role: "Backend & Full-Stack Developer",
+                  details: [
+                    "As the Backend & Full-Stack Developer for HAU Eco-Quest, I architected and built this gamified sustainability platform from the ground up using the MERN Stack (MongoDB, Express.js, React, Node.js).",
+                    "My primary responsibility was designing and implementing the entire backend infrastructure. This included building secure RESTful API endpoints, integrating JWT-based authentication for user sessions, and implementing Role-Based Access Control (RBAC) to differentiate between admin and regular user permissions.",
+                    "I designed the MongoDB data layer with Mongoose schemas to manage user profiles, sustainability challenges, leaderboards, and activity tracking. The backend handles complex game logic including point systems, badge achievements, and progress tracking that gamifies eco-friendly actions on campus.",
+                    "On the frontend, I worked with React to build the user-facing interface that connects to the API, displaying real-time leaderboards, challenge progress, and user dashboards. The application is deployed on Vercel and demonstrates my ability to build and deploy production-ready full-stack applications."
+                  ]
                 }
               ]}
             />
@@ -541,31 +574,128 @@ export default function HomePage() {
         }
 
         /* 
-         * RAW CSS OVERRIDES FOR DARK MODE!
-         * Because Tailwind CSS in this project is pre-compiled (static),
-         * arbitrary dark classes were not taking effect. These styles ensure
-         * the hero section flawlessly enters dark mode.
+         * PREMIUM DEEP EARTH-TONE SPLIT BUTTONS
+         * Deep, bold colors for maximum contrast and high-end presence.
          */
         .dark .dark-hero-overlay { opacity: 1 !important; }
         .dark .dark-bracket-code { color: #FDF5E7 !important; }
         .dark .dark-hero-title { color: #FDF5E7 !important; }
         .dark .dark-hero-desc { color: #E8DCC8 !important; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8)) !important; }
-        .dark .dark-btn-primary {
-          background-color: #D4AF37 !important;
-          color: #1A0E05 !important;
-          box-shadow: 0 4px 20px rgba(212, 175, 55, 0.4) !important;
+        
+        .split-btn {
+          display: flex;
+          align-items: stretch;
+          height: 60px;
+          border-radius: 12px;
+          overflow: hidden;
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          cursor: pointer;
+          min-width: 260px;
+          padding: 0;
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+          border: none;
         }
-        .dark .dark-btn-primary:hover { background-color: #FFA51F !important; }
-        .dark .dark-btn-secondary {
-          background-color: transparent !important;
-          color: #D4AF37 !important;
-          box-shadow: inset 0 0 0 2px #D4AF37, 0 4px 20px rgba(212, 175, 55, 0.3) !important;
-          border: none !important;
+
+        /* iPad/Tablet Specific Adjustment - Strictly for 768px - 1024px */
+        @media (min-width: 768px) and (max-width: 1024px) {
+          .split-btn {
+            min-width: 210px;
+          }
+          .split-btn-text {
+            padding-left: 15px;
+            font-size: 11px;
+          }
+          .split-btn-icon-slot {
+            width: 50px;
+          }
         }
-        .dark .dark-btn-secondary:hover {
-          background-color: #D4AF37 !important;
-          color: #1A0E05 !important;
+
+        .split-btn:hover {
+          transform: translateY(-6px) scale(1.03);
+          box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
         }
+
+        .split-btn-text {
+          flex: 1;
+          display: flex;
+          align-items: center;
+          padding-left: 28px;
+          padding-right: 12px;
+          font-weight: 800;
+          color: white;
+          text-transform: uppercase;
+          font-size: 13px;
+          letter-spacing: 0.14em;
+          z-index: 2;
+          text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .split-btn-icon-slot {
+          width: 60px;
+          background: #FDF5E7; /* Light Linen Slot */
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+          z-index: 1;
+        }
+
+        /* Fixed curved transition */
+        .split-btn-icon-slot::before {
+          content: '';
+          position: absolute;
+          left: -20px;
+          top: 0;
+          bottom: 0;
+          width: 40px;
+          background: #FDF5E7;
+          border-top-left-radius: 100%;
+          border-bottom-left-radius: 100%;
+          z-index: 1;
+        }
+
+        .split-btn-icon-slot svg {
+          position: relative;
+          z-index: 10;
+          width: 24px;
+          height: 24px;
+          transition: all 0.3s ease;
+        }
+
+        /* Deep, Bold Earth Tones */
+        .split-espresso { 
+          background: #2D1A0F; /* Deep Dark Espresso */
+        }
+        .split-espresso .split-btn-icon-slot svg { color: #2D1A0F; }
+
+        .split-gold { 
+          background: #7D5A1F; /* Deep Brass/Gold */
+        }
+        .split-gold .split-btn-icon-slot svg { color: #7D5A1F; }
+
+        .split-mocha { 
+          background: #521D07; /* Deep Burnt Mocha */
+        }
+        .split-mocha .split-btn-icon-slot svg { color: #521D07; }
+
+        .split-btn:hover .split-btn-icon-slot svg {
+          transform: scale(1.2);
+        }
+
+        /* Dark Mode Consistency */
+        .dark .split-btn {
+          box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+        }
+        .dark .split-btn-icon-slot,
+        .dark .split-btn-icon-slot::before { 
+          background: #252220; 
+        }
+        .dark .split-btn-icon-slot svg {
+          color: #A47A2D !important;
+        }
+        .dark .split-espresso { background: #3D2B1F; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .dark .split-gold { background: #8B6E32; border: 1px solid rgba(212, 175, 55, 0.3); }
+        .dark .split-mocha { background: #6D2E15; border: 1px solid rgba(212, 175, 55, 0.3); }
       `}</style>
     </section >
   );

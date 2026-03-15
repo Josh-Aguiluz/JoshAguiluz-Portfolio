@@ -1,6 +1,16 @@
 import React from 'react';
-import { Database, Server, Code2, Zap } from 'lucide-react';
+import { Database, Server, Code2, Zap, CheckCircle2, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
+import phpBasicsImg from '../assets/phpBasics.webp';
+import comptiaImg from '../assets/comptiaReal.webp';
+import ccnaImg from '../assets/ccna.webp';
+import awsImg from '../assets/aws.webp';
+import phpBasicsPdf from '../assets/phpBasics.pdf';
+import comptiaSource from '../assets/comptiaReal.webp';
+import ccnaPdf from '../assets/ccna.pdf';
+import awsPdf from '../assets/aws.pdf';
+import profileImg from '../assets/casualProf.webp';
+import CertCoverflow from '../components/CertCoverflow';
 
 export default function AboutPage() {
   const techStack = [
@@ -13,6 +23,41 @@ export default function AboutPage() {
   ];
 
   const softSkills = ['Adaptability', 'Problem Solving', 'Team Collaboration', 'Fast Learning', 'Communication', 'Critical Thinking'];
+
+  const certifications = [
+    {
+      title: 'PHP Basics',
+      issuer: 'SIMPLILEARN',
+      image: phpBasicsImg,
+      link: 'https://simpli-web.app.link/e/p6Kseqkvt1b',
+      sourceFile: phpBasicsPdf,
+      description: 'Demonstrates foundational knowledge in PHP server-side scripting.'
+    },
+    {
+      title: 'CompTIA IT Fundamentals',
+      issuer: 'COMPTIA',
+      image: comptiaImg,
+      link: 'https://www.credly.com/badges/e721a78b-70bc-43af-9726-7178adf7f5b3/public_url',
+      sourceFile: comptiaSource,
+      description: 'Validates foundational IT skills including hardware, software, and networking.'
+    },
+    {
+      title: 'CCNA: Introduction to Networks',
+      issuer: 'CISCO',
+      image: ccnaImg,
+      link: 'https://www.credly.com/badges/2ebb0a57-01e9-4b0f-9204-bb8ffcfba067/public_url',
+      sourceFile: ccnaPdf,
+      description: 'Demonstrates understanding of network architectures, models, and protocols.'
+    },
+    {
+      title: 'AWS Certified',
+      issuer: 'AWS',
+      image: awsImg,
+      link: 'https://www.credly.com/badges/3b16631a-9f77-4594-90b8-4c84c48b4dad/public_url',
+      sourceFile: awsPdf,
+      description: 'Validates overall understanding of the AWS Cloud platform and basic security.'
+    }
+  ];
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -68,32 +113,32 @@ export default function AboutPage() {
               </p>
             </div>
           </div>
-          {/* Right: Lifestyle Image - WIDER & HIGHER */}
-          {/* Changed items-center to items-start + pt-8 to move it UP */}
-          <div className="flex items-start justify-center h-full min-h-[300px] md:min-h-[500px] pt-8">
-
+          {/* Right: Personal Professional Photo */}
+          <div className="flex flex-col items-center justify-center h-full min-h-[400px]">
             <div
-              className="sticker-card p-0 border-4 border-[#A47A2D] dark:border-[#A47A2D] relative group rotate-3 hover:rotate-0 transition-all duration-500 shadow-2xl"
+              className="sticker-card p-0 border-4 border-[#A47A2D] dark:border-[#A47A2D] relative group -rotate-2 hover:rotate-0 transition-all duration-500 shadow-2xl overflow-hidden"
               style={{
                 width: '100%',
-                maxWidth: '500px', // <--- CHANGED: Made it wider (was 400px)
-                height: '300px',   // Fixed height for mobile
-                minHeight: '300px',
+                maxWidth: '400px',
               }}
             >
-              <div style={{
-                width: '100%',
-                height: '100%',
-                backgroundImage: `url('https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&q=80')`,
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-                borderRadius: '36px'
-              }}>
-                {/* Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#521D07]/40 to-transparent pointer-events-none rounded-[36px]" />
-              </div>
+              <img 
+                src={profileImg} 
+                alt="Josh Andrei Aguiluz - Backend Engineer Profile Photo" 
+                className="w-full h-full object-cover block"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#521D07]/40 via-transparent to-transparent pointer-events-none" />
             </div>
+
+            {/* Repositioned & Improved "Backend Engineer" Tag */}
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              className="mt-10 px-10 py-4 bg-[#521D07] text-white rounded-full font-black text-sm md:text-md uppercase tracking-[0.2em] border-2 border-[#A47A2D] shadow-[0_8px_30px_rgba(82,29,7,0.3)] z-20"
+              style={{ fontFamily: 'Michroma, sans-serif' }}
+            >
+              Backend Engineer
+            </motion.div>
           </div>
         </div>
 
@@ -172,6 +217,20 @@ export default function AboutPage() {
               </motion.div>
             ))}
           </div>
+        </div>
+
+        {/* Certifications Section */}
+        <div className="mb-20">
+          <div className="text-center mb-10">
+            <h2 style={{ fontFamily: 'Michroma, sans-serif' }} className="text-4xl md:text-[56px] font-black text-[#521D07] dark:text-[#E2E8F0] uppercase mb-4 tracking-tight">
+              My <span className="text-[#A47A2D] dark:text-[#D4AF37]">Certifications</span>
+            </h2>
+            <p className="text-[#521D07]/80 dark:text-[#B8B0A6] font-bold text-lg max-w-2xl mx-auto uppercase" style={{ fontFamily: 'Michroma, sans-serif' }}>
+              A specialized track record of my technical credentials and academic milestones.
+            </p>
+          </div>
+
+          <CertCoverflow certifications={certifications} />
         </div>
 
         {/* Call to Action */}

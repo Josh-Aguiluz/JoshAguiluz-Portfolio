@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { motion } from 'framer-motion';
-import logo from './assets/logo.png';
+import logo from './assets/logo.webp';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ProjectsPage from './pages/ProjectsPage';
@@ -60,11 +60,34 @@ export default function App() {
     };
   }, []);
 
+  // Sync activeSection to URL Hash (SEO Requirement: Meaningful URLs)
+  useEffect(() => {
+    if (activeSection === 'home') {
+      window.history.replaceState(null, '', window.location.pathname);
+    } else {
+      window.history.replaceState(null, '', `#${activeSection}`);
+    }
+  }, [activeSection]);
+
+  // Sync section to Browser Title (SEO Requirement)
+  useEffect(() => {
+    const formattedSection = activeSection.charAt(0).toUpperCase() + activeSection.slice(1);
+    const baseTitle = "Josh Andrei Aguiluz | Backend Engineer";
+    
+    if (activeSection === 'home') {
+      document.title = baseTitle;
+    } else {
+      document.title = `${formattedSection} | ${baseTitle}`;
+    }
+  }, [activeSection]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' });
       setMobileMenuOpen(false);
+      // Update hash immediately on click
+      window.history.pushState(null, '', sectionId === 'home' ? window.location.pathname : `#${sectionId}`);
     }
   };
 
@@ -106,13 +129,13 @@ export default function App() {
             </MagneticButton>
 
             {/* Desktop Navigation with Magnetic Buttons */}
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden md:flex items-center gap-4 lg:gap-8">
               {navLinks.map((link) => (
                 <MagneticButton
                   key={link.id}
                   onClick={() => scrollToSection(link.id)}
                   style={{ fontFamily: 'Michroma, sans-serif' }}
-                  className={`px-4 py-2 text-[14px] md:text-[16px] font-black uppercase transition-all rounded-full border-none ${activeSection === link.id
+                  className={`nav-link-item px-4 lg:px-6 py-2 text-[16px] font-black uppercase transition-all rounded-full border-none ${activeSection === link.id
                     ? 'bg-[#A47A2D] dark:bg-[#A47A2D] text-white dark:text-[#1A1715]'
                     : 'bg-transparent text-[#521D07] dark:text-[#E2E8F0] hover:bg-[#A47A2D]/20 hover:text-[#FFA51F]'
                     }`}
@@ -121,6 +144,20 @@ export default function App() {
                 </MagneticButton>
               ))}
             </div>
+
+            <style dangerouslySetInnerHTML={{ __html: `
+              /* STRICT TABLET FIX: 768px to 1024px ONLY */
+              @media (min-width: 768px) and (max-width: 1024px) {
+                .nav-link-item {
+                  padding-left: 10px !important;
+                  padding-right: 10px !important;
+                  font-size: 11px !important;
+                }
+                .md\\:flex.gap-4 {
+                  gap: 8px !important;
+                }
+              }
+            `}} />
 
             {/* Mobile Menu Button */}
             <button
@@ -132,45 +169,6 @@ export default function App() {
           </div>
         </div>
       </motion.nav>
-
-      {/* Mobile Menu Overlay */}
-      <motion.div
-        initial={false}
-        animate={mobileMenuOpen ? "open" : "closed"}
-        variants={{
-          open: {
-            clipPath: "circle(150% at calc(100% - 40px) 40px)",
-            transition: { type: "spring", stiffness: 20, restDelta: 2 }
-          },
-          closed: {
-            clipPath: "circle(0% at calc(100% - 40px) 40px)",
-            transition: { delay: 0.5, type: "spring", stiffness: 400, damping: 40 }
-          }
-        }}
-        className="fixed inset-0 z-40 md:hidden bg-[#FDF5E7] dark:bg-[#1A1715]"
-      >
-        <div className="h-full flex flex-col justify-center items-center p-6 space-y-6">
-          <div className="px-4 sm:px-6 py-8 space-y-3">
-            {navLinks.map((link, index) => (
-              <motion.button
-                key={link.id}
-                variants={{
-                  open: { y: 0, opacity: 1, transition: { delay: 0.2 + index * 0.1 } },
-                  closed: { y: 50, opacity: 0 }
-                }}
-                onClick={() => scrollToSection(link.id)}
-                style={{ fontFamily: 'Michroma, sans-serif' }}
-                className={`block w-full text-center px-6 py-4 text-[24px] sm:text-[32px] font-black uppercase rounded-[20px] transition-all ${activeSection === link.id
-                  ? 'text-[#A47A2D]'
-                  : 'text-[#521D07] dark:text-[#E2E8F0]'
-                  }`}
-              >
-                {link.name}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-      </motion.div>
 
       {/* Theme Toggle */}
       <ThemeToggle />
@@ -229,6 +227,82 @@ export default function App() {
       </section>
 
       <Footer />
+
+      {/* Redesigned Premium Mobile Menu Overlay - Moved to bottom for max visibility */}
+      <motion.div
+        initial="closed"
+        animate={mobileMenuOpen ? "open" : "closed"}
+        variants={{
+          open: {
+            x: 0,
+            opacity: 1,
+            transition: {
+              type: "spring",
+              stiffness: 100,
+              damping: 20
+            }
+          },
+          closed: {
+            x: "100%",
+            opacity: 0,
+            transition: {
+              type: "spring",
+              stiffness: 100,
+              damping: 20,
+              delay: 0.1
+            }
+          }
+        }}
+        className="fixed inset-0 z-[9999] md:hidden bg-[#FDF5E7] dark:bg-[#1A1715] flex flex-col items-center"
+      >
+        {/* Mobile Menu Close Button - High visibility */}
+        <div className="w-full flex justify-end p-8">
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-4 rounded-full bg-[#A47A2D] text-white dark:text-[#1A1715] shadow-2xl"
+          >
+            <X className="w-8 h-8" />
+          </button>
+        </div>
+
+        {/* Menu Links Area */}
+        <div className="flex-1 w-full flex flex-col justify-center items-center px-6">
+          <div className="space-y-4 w-full max-w-[320px]">
+            {navLinks.map((link, index) => (
+              <motion.button
+                key={link.id}
+                variants={{
+                  open: { 
+                    x: 0, 
+                    opacity: 1, 
+                    transition: { delay: 0.4 + index * 0.1 } 
+                  },
+                  closed: { x: 50, opacity: 0 }
+                }}
+                onClick={() => scrollToSection(link.id)}
+                className={`group relative w-full py-4 px-2 rounded-2xl transition-all ${activeSection === link.id
+                  ? 'text-[#A47A2D]'
+                  : 'text-[#521D07] dark:text-[#FDF5E7]'
+                  }`}
+              >
+                <div 
+                  className="relative z-10 text-[28px] sm:text-[36px] font-black uppercase tracking-tighter text-center"
+                  style={{ fontFamily: 'Michroma, sans-serif' }}
+                >
+                  {link.name}
+                  {activeSection === link.id && (
+                    <motion.div 
+                      layoutId="mobileNavUnderline"
+                      className="h-1 bg-[#A47A2D] mt-2 mx-auto w-16 rounded-full" 
+                    />
+                  )}
+                </div>
+              </motion.button>
+            ))}
+          </div>
+        </div>
+
+      </motion.div>
 
       {/* Global Scroll Progress Bar */}
       <ScrollProgress />
