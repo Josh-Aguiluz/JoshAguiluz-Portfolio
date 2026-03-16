@@ -16,6 +16,15 @@ import Scene3D from './components/Scene3D';
 import ScrollProgress from './components/ScrollProgress';
 import Footer from './components/Footer';
 
+// Memoize page sections to prevent re-renders on every scroll tick
+const MemoizedHomePage = React.memo(HomePage);
+const MemoizedAboutPage = React.memo(AboutPage);
+const MemoizedProjectsPage = React.memo(ProjectsPage);
+const MemoizedResumePage = React.memo(ResumePage);
+const MemoizedBlogPage = React.memo(BlogPage);
+const MemoizedContactPage = React.memo(ContactPage);
+const MemoizedFooter = React.memo(Footer);
+
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -103,7 +112,7 @@ export default function App() {
   return (
     <div className="relative overflow-x-hidden w-full bg-[#FDF5E7] dark:bg-[#1A1715]">
       {/* 3D Bouncing Sphere */}
-      <Scene3D scrollY={scrollYValue} scrollYProgress={scrollYProgressValue} />
+      <Scene3D />
 
       {/* Fixed Navigation - ALWAYS ON TOP */}
       <motion.nav
@@ -180,7 +189,7 @@ export default function App() {
         id="home"
         className="relative w-full min-h-screen py-20 bg-transparent"
       >
-        <HomePage />
+        <MemoizedHomePage />
       </section>
 
       {/* 2. ABOUT SECTION */}
@@ -188,7 +197,7 @@ export default function App() {
         id="about"
         className="relative w-full min-h-screen py-20 bg-transparent"
       >
-        <AboutPage />
+        <MemoizedAboutPage />
       </section>
 
       {/* SCROLL VELOCITY PARALLAX STRIP */}
@@ -199,7 +208,7 @@ export default function App() {
         id="projects"
         className="relative w-full min-h-screen py-20 bg-transparent"
       >
-        <ProjectsPage />
+        <MemoizedProjectsPage />
       </section>
 
       {/* 4. RESUME SECTION */}
@@ -207,7 +216,7 @@ export default function App() {
         id="resume"
         className="relative w-full min-h-screen bg-transparent"
       >
-        <ResumePage />
+        <MemoizedResumePage />
       </section>
 
       {/* 5. BLOG SECTION */}
@@ -215,7 +224,7 @@ export default function App() {
         id="blog"
         className="relative w-full min-h-screen py-20 bg-transparent"
       >
-        <BlogPage />
+        <MemoizedBlogPage />
       </section>
 
       {/* 6. CONTACT SECTION */}
@@ -223,10 +232,10 @@ export default function App() {
         id="contact"
         className="relative w-full min-h-screen py-20 bg-transparent"
       >
-        <ContactPage />
+        <MemoizedContactPage />
       </section>
 
-      <Footer />
+      <MemoizedFooter />
 
       {/* Redesigned Premium Mobile Menu Overlay - Moved to bottom for max visibility */}
       <motion.div
@@ -282,7 +291,7 @@ export default function App() {
                 onClick={() => scrollToSection(link.id)}
                 className={`group relative w-full py-4 px-2 rounded-2xl transition-all ${activeSection === link.id
                   ? 'text-[#A47A2D]'
-                  : 'text-[#521D07] dark:text-[#FDF5E7]'
+                  : 'text-[#521D07] dark:text-white'
                   }`}
               >
                 <div 

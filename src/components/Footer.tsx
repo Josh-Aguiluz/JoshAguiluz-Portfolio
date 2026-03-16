@@ -179,7 +179,7 @@ export default function Footer() {
                             <a href="https://www.linkedin.com/in/josh-aguiluz-0a150a350/" className="pf-social-icon" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
                                 <Linkedin size={18} />
                             </a>
-                            <a href="mailto:josh.dizon.aguiluz25@gmail.com" className="pf-social-icon" target="_blank" rel="noopener noreferrer" aria-label="Email">
+                            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=josh.dizon.aguiluz25@gmail.com" className="pf-social-icon" target="_blank" rel="noopener noreferrer" aria-label="Email">
                                 <Mail size={18} />
                             </a>
                         </div>
@@ -202,7 +202,7 @@ export default function Footer() {
                         <h3 className="!font-['Michroma'] !uppercase !tracking-widest !font-bold !mb-6">Contact Me</h3>
                         <ul>
                             <li>
-                                <a href="mailto:josh.dizon.aguiluz25@gmail.com" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">
+                                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=josh.dizon.aguiluz25@gmail.com" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">
                                     <Mail size={14} /> josh.dizon.aguiluz25@gmail.com
                                 </a>
                             </li>

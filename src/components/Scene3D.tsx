@@ -2,17 +2,16 @@ import React, { useRef, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Float, Icosahedron } from '@react-three/drei';
 import * as THREE from 'three';
+import { useScroll } from 'framer-motion';
 
-interface Scene3DProps {
-  scrollY: number;
-  scrollYProgress: number;
-}
-
-function ScrollingSphere({ scrollY, scrollYProgress }: Scene3DProps) {
+function ScrollingSphere() {
   const meshRef = useRef<THREE.Mesh>(null);
   const lightRef = useRef<THREE.PointLight>(null);
   const mouse = useRef({ x: 0, y: 0 });
   const lastScroll = useRef(0);
+  
+  // Use scroll monitoring directly inside the 3D component
+  const { scrollY, scrollYProgress } = useScroll();
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -26,12 +25,15 @@ function ScrollingSphere({ scrollY, scrollYProgress }: Scene3DProps) {
     };
   }, []);
 
-  useFrame((state) => {
+  useFrame(() => {
     if (!meshRef.current) return;
 
+    const currentYValue = scrollY.get();
+    const currentProgress = scrollYProgress.get();
+
     // Calculate velocity for wind effect
-    const scrollVelocity = scrollY - lastScroll.current;
-    lastScroll.current = scrollY;
+    const scrollVelocity = currentYValue - lastScroll.current;
+    lastScroll.current = currentYValue;
 
     // Mouse Lighting Interaction
     if (lightRef.current) {
@@ -44,38 +46,32 @@ function ScrollingSphere({ scrollY, scrollYProgress }: Scene3DProps) {
     let targetY = 0.5;
     let targetScale = 2.2;
 
-    if (scrollYProgress < 0.05) {
-      // 0% (Top) -> 5% (Down-Left)
-      const t = scrollYProgress / 0.05;
+    if (currentProgress < 0.05) {
+      const t = currentProgress / 0.05;
       targetX = THREE.MathUtils.lerp(3.5, -3.5, t);
       targetY = THREE.MathUtils.lerp(2.0, 0, t);
       targetScale = 2.2;
-    } else if (scrollYProgress < 0.12) {
-      // 5% -> 12% (Down-Right)
-      const t = (scrollYProgress - 0.05) / 0.07;
+    } else if (currentProgress < 0.12) {
+      const t = (currentProgress - 0.05) / 0.07;
       targetX = THREE.MathUtils.lerp(-3.5, 3.5, t);
       targetY = THREE.MathUtils.lerp(0, -1.5, t);
       targetScale = 2.2;
-    } else if (scrollYProgress < 0.30) {
-      // 12% -> 30% (Transition to About: Left)
-      const t = (scrollYProgress - 0.12) / 0.18;
+    } else if (currentProgress < 0.30) {
+      const t = (currentProgress - 0.12) / 0.18;
       targetX = THREE.MathUtils.lerp(3.5, -2.5, t);
       targetY = THREE.MathUtils.lerp(-1.5, 0.5, t);
       targetScale = THREE.MathUtils.lerp(2.2, 2.0, t);
-    } else if (scrollYProgress < 0.60) {
-      // About (30%) -> Projects (60%)
-      const t = (scrollYProgress - 0.30) / 0.30;
+    } else if (currentProgress < 0.60) {
+      const t = (currentProgress - 0.30) / 0.30;
       targetX = THREE.MathUtils.lerp(-2.5, 2.5, t);
       targetY = 0.5;
       targetScale = THREE.MathUtils.lerp(2.0, 1.8, t);
-    } else if (scrollYProgress < 0.90) {
-      // Projects (60%) -> Contact (90%)
-      const t = (scrollYProgress - 0.60) / 0.30;
+    } else if (currentProgress < 0.90) {
+      const t = (currentProgress - 0.60) / 0.30;
       targetX = THREE.MathUtils.lerp(2.5, 0, t);
       targetY = 0.5;
       targetScale = THREE.MathUtils.lerp(1.8, 2.2, t);
     } else {
-      // Contact (90%+)
       targetX = 0;
       targetY = 0.5;
       targetScale = 2.2;
@@ -117,7 +113,7 @@ function ScrollingSphere({ scrollY, scrollYProgress }: Scene3DProps) {
   );
 }
 
-export default function Scene3D({ scrollY, scrollYProgress }: Scene3DProps) {
+export default function Scene3D() {
   return (
     <div className="fixed inset-0 z-0 pointer-events-none">
       <Canvas
@@ -126,7 +122,7 @@ export default function Scene3D({ scrollY, scrollYProgress }: Scene3DProps) {
       >
         <ambientLight intensity={1} />
         <directionalLight position={[5, 5, 5]} intensity={2} />
-        <ScrollingSphere scrollY={scrollY} scrollYProgress={scrollYProgress} />
+        <ScrollingSphere />
       </Canvas>
     </div>
   );

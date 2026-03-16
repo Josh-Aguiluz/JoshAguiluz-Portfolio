@@ -164,10 +164,6 @@ export default function AboutPage() {
                 whileHover={{ y: -5, boxShadow: '0 15px 30px -10px rgba(82, 29, 7, 0.3)' }}
                 className="sticker-card bg-white dark:bg-[#252220] p-8 border-4 border-[#A47A2D] dark:border-[#A47A2D] transition-all relative overflow-hidden group"
               >
-                {/* Watermark Icon */}
-                <div className="absolute -right-6 -bottom-6 w-32 h-32 opacity-5 dark:opacity-10 transition-transform group-hover:scale-110 duration-500 rotate-12 text-[#521D07] dark:text-[#E2E8F0]">
-                  {React.cloneElement(tech.icon as React.ReactElement, { className: "w-full h-full" })}
-                </div>
 
                 <div className="flex items-center gap-6 relative z-10 block">
                   <div className="icon-placeholder flex-shrink-0">

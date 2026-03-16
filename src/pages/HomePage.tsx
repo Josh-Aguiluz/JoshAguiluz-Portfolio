@@ -1,7 +1,7 @@
 import React from 'react';
 import TypewriterTerminal from '../components/TypewriterTerminal';
 import { motion } from 'framer-motion';
-import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp, ArrowRight, ExternalLink, Calendar, Mail, MousePointer2, Lock, ChevronDown } from 'lucide-react';
+import { Award, Code2, Globe, Sparkles, Terminal, FileText, Download, Layers, TrendingUp, ArrowRight, ExternalLink, Calendar, Mail, MousePointer2, Lock, ChevronDown, Database } from 'lucide-react';
 import homeBGHD from '../assets/homeBGHD.webp';
 import resumePdf from '../assets/resume.pdf';
 import GlassCardDeck from '../components/GlassCardDeck';
@@ -96,7 +96,7 @@ export default function HomePage() {
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center relative px-8 sm:px-10 py-2.5 mb-8 rounded-full bg-[#521D07] dark:bg-[#1A1715]/80 border border-[#A47A2D]/40 dark:border-[#D4AF37]/50 backdrop-blur-md shadow-lg"
+              className="inline-flex items-center relative px-8 sm:px-10 py-2.5 mb-8 rounded-full bg-[#521D07] dark:bg-[#3D2B1F]/90 border border-[#A47A2D]/40 dark:border-[#D4AF37]/50 backdrop-blur-md shadow-lg"
             >
               <div className="absolute left-3 sm:left-4 h-2 w-2 rounded-full bg-green-400 animate-pulse shadow-[0_0_6px_rgba(74,222,128,0.6)]" />
               <p className="font-mono text-[10px] sm:text-xs md:text-sm font-bold text-white uppercase tracking-widest whitespace-nowrap">
@@ -379,9 +379,7 @@ export default function HomePage() {
                   borderLight: '#4479A1',
                   borderDark: '#365F80',
                   iconSimple: (
-                    <svg viewBox="0 0 24 24" className="w-16 h-16 md:w-20 md:h-20" fill="#4479A1">
-                      <path d="M16.405 5.501c-.115 0-.193.014-.274.033v.013h.014c.054.104.146.18.214.273.054.107.1.214.154.32l.014-.015c.094-.066.14-.172.14-.333-.04-.047-.046-.094-.08-.14-.04-.067-.126-.1-.18-.153zM5.77 18.695h-.927a50.854 50.854 0 0 0-.27-4.41h-.008l-1.41 4.41H2.45l-1.4-4.41h-.01a72.892 72.892 0 0 0-.195 4.41H0c.055-1.966.192-3.81.41-5.53h1.15l1.335 4.064h.008l1.347-4.064h1.095c.242 2.015.384 3.86.428 5.53zm4.017-4.08c-.378 2.045-.876 3.533-1.492 4.46-.482.72-1.01 1.08-1.583 1.08-.16 0-.36-.04-.6-.12v-.48c.104.013.22.02.35.02.265 0 .478-.07.64-.213.193-.17.29-.376.29-.628 0-.158-.062-.467-.186-.93L6.32 14.615h.85l.833 3.27c.18.71.264 1.17.254 1.376.39-.83.695-1.78.915-2.852l.21-1.793h.823zm14.267 4.08h-2.883v-5.53h.854v4.8h2.03v.73zm-3.834.073c-.322.106-.742.16-1.26.16-1.14 0-1.706-.47-1.706-1.417V14.62h.84v2.768c0 .534.262.8.784.8.203 0 .39-.025.563-.076v-3.492h.78v4.15zm-4.443-.074h-.841v-3.376c-.404.16-.807.247-1.21.26v-.7c.608-.022 1.16-.2 1.654-.53h.397v4.346zm-2.757-5.378c-.255-.147-.544-.22-.865-.22-.377 0-.673.11-.893.334-.22.223-.33.524-.33.9v.205c0 .4.11.717.333.95.22.234.528.35.924.35.12 0 .27-.014.45-.04v.665c-.17.04-.38.06-.63.06-.594 0-1.077-.19-1.45-.567-.372-.378-.558-.86-.558-1.452v-.29c0-.576.2-1.043.6-1.403.4-.36.906-.54 1.52-.54.29 0 .552.047.79.14l-.14.655zm-4.14.143c-.463-.18-.866-.37-1.207-.57v1.96c.403-.018.73-.147.98-.385.25-.238.375-.568.375-.99l-.148-.015z" />
-                    </svg>
+                    <Database className="w-16 h-16 md:w-20 md:h-20" color="#4479A1" strokeWidth={1.5} />
                   ),
                 },
               ].map((tech, index) => (

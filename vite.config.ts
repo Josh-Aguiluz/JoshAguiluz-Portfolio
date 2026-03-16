@@ -55,6 +55,28 @@
     build: {
       target: 'esnext',
       outDir: 'build',
+      chunkSizeWarningLimit: 1000,
+      rollupOptions: {
+        output: {
+          manualChunks(id) {
+            if (id.includes('node_modules')) {
+              if (id.includes('three') || id.includes('@react-three')) {
+                return 'vendor-3d';
+              }
+              if (id.includes('framer-motion')) {
+                return 'vendor-motion';
+              }
+              if (id.includes('recharts')) {
+                return 'vendor-charts';
+              }
+              if (id.includes('lucide-react') || id.includes('@radix-ui')) {
+                return 'vendor-ui';
+              }
+              return 'vendor'; // all other dependencies
+            }
+          }
+        }
+      }
     },
     server: {
       port: 3000,

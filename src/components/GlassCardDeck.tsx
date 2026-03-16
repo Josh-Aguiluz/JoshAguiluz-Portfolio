@@ -257,10 +257,13 @@ export default function GlassCardDeck({ projects }: GlassCardDeckProps) {
                         >
                             {/* Hero Image */}
                             <div className="blog-modal-hero">
-                                <img 
-                                    src={selectedProject.image} 
-                                    alt={selectedProject.alt || `Preview of ${selectedProject.title} project`} 
-                                />
+                                {selectedProject.image && (
+                                    <img 
+                                        src={selectedProject.image} 
+                                        alt={selectedProject.alt || `Preview of ${selectedProject.title} project`} 
+                                        key={selectedProject.title}
+                                    />
+                                )}
                                 <div className="blog-modal-hero-overlay" />
                             </div>
 
