@@ -3135,6 +3135,39 @@ html {
   transform: scale(1.05);
 }
 
+/* Specific overrides for CertCoverflow – Integrated Full-Section Style */
+.certification-image-container {
+  background: white !important;
+  /* Clean white backdrop for the paper effect */
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 200px !important;
+  /* Take up the top section of the card */
+  width: 100% !important;
+  overflow: hidden !important;
+  border-bottom: 1px solid rgba(164, 122, 45, 0.1);
+}
+
+.certification-image-container img {
+  object-fit: contain !important;
+  /* Full picture, no cropping */
+  width: auto !important;
+  height: auto !important;
+  max-width: 85% !important;
+  /* Leave a nice margin around the certificate */
+  max-height: 85% !important;
+  /* Ensure vertical uniformity */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  /* Subtle paper depth */
+  transition: transform 0.4s ease !important;
+}
+
+/* Remove the gradient overlay that was 'cutting' the bottom of certificates */
+.certification-image-container+.glass-card-image-overlay {
+  display: none !important;
+}
+
 .glass-card-image-overlay {
   position: absolute;
   inset: 0;

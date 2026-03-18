@@ -44,7 +44,7 @@ const PROJECTS = [
     description: 'As the Project Leader & Full-Stack Developer, I led the team and built a complete e-commerce application.',
     role: 'Project Leader & Full-Stack Developer',
     tags: ['PHP', 'MYSQL', 'BOOTSTRAP', 'E-COMMERCE'],
-    github: 'https://github.com/Josh-Aguiluz',
+    github: 'https://github.com/gabewebd/the-wellness-apparel',
     live: 'http://the-wellness-apparel.onlinewebshop.net',
     image: wellnessWebp,
     details: [

@@ -143,7 +143,7 @@ export default function CertCoverflow({ certifications }: CertCoverflowProps) {
 
                 {/* Card Image */}
                 <div
-                  className={`glass-card-image ${isActive ? 'group cursor-pointer' : ''}`}
+                  className={`glass-card-image certification-image-container ${isActive ? 'group cursor-pointer' : ''}`}
                   onClick={(e) => {
                     if (isActive) {
                       e.stopPropagation();
@@ -269,40 +269,43 @@ export default function CertCoverflow({ certifications }: CertCoverflowProps) {
             onClick={() => setSelectedCert(null)}
           >
             <motion.div
-              className="relative w-full max-w-5xl bg-[#1A1715] rounded-xl sm:rounded-2xl flex flex-col overflow-hidden shadow-2xl border border-[#A47A2D]/20"
+              className="relative w-full max-w-5xl bg-[#1A1715] rounded-xl sm:rounded-2xl flex flex-col shadow-2xl border border-[#A47A2D]/20 mt-32 mb-12"
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ type: 'spring', damping: 25, stiffness: 300 }}
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Premium Glowy Orange Close Button (No Text) */}
+              {/* GLOWY RED CLOSE BUTTON - Definitive Upper Right Position with Inline Styles */}
               <motion.button
-                onClick={() => setSelectedCert(null)}
-                whileHover={{ 
-                  scale: 1.15,
-                  backgroundColor: '#E65100', // Darker Premium Orange
-                  boxShadow: '0 0 60px rgba(255, 69, 0, 1)' 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setSelectedCert(null);
                 }}
+                whileHover={{ scale: 1.1, backgroundColor: '#FF0000', boxShadow: '0 0 50px rgba(255, 0, 0, 1)' }}
                 whileTap={{ scale: 0.9 }}
-                transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-                style={{ 
-                  backgroundColor: '#FF4500', 
-                  boxShadow: '0 0 40px rgba(255, 69, 0, 0.8)',
-                  zIndex: 100002 
+                style={{
+                  position: 'absolute',
+                  top: '24px',
+                  right: '24px',
+                  backgroundColor: '#FF0000',
+                  border: '4px solid white',
+                  boxShadow: '0 0 35px rgba(255, 0, 0, 0.9)',
+                  color: 'white',
+                  zIndex: 999999
                 }}
-                className="absolute -top-3 -right-3 sm:-top-5 sm:-right-5 w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center text-white rounded-full cursor-pointer border-2 border-white/50 group"
+                className="w-14 h-14 sm:w-16 sm:h-16 flex items-center justify-center rounded-full cursor-pointer"
                 aria-label="Close preview"
               >
-                <X className="w-7 h-7 sm:w-8 sm:h-8 stroke-[3.5px] drop-shadow-md" />
+                <X className="w-8 h-8 sm:w-10 sm:h-10 stroke-[5px]" />
               </motion.button>
 
               {/* Image Container */}
-              <div className="p-4 pt-16 sm:p-8 sm:pt-20 md:p-12 md:pt-24 flex items-center justify-center bg-[#1A1715] max-h-[85vh]">
+              <div className="p-4 sm:p-10 flex items-center justify-center bg-[#1A1715] min-h-[300px]">
                 <img
                   src={selectedCert.image}
                   alt={selectedCert.alt || `Full preview of ${selectedCert.title} certification`}
-                  className="max-w-full h-auto max-h-[75vh] object-contain drop-shadow-[0_10px_30px_rgba(0,0,0,0.8)] rounded-sm"
+                  className="max-w-full max-h-[70vh] object-contain drop-shadow-[0_10px_40px_rgba(0,0,0,0.9)] rounded-md border-4 border-white/10"
                   draggable={false}
                 />
               </div>
