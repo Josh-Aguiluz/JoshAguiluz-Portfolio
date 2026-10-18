@@ -207,7 +207,7 @@ export default function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="https://maps.app.goo.gl/" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">
+                                <a href="https://www.google.com/maps/search/?api=1&query=Magalang%2C+Pampanga" target="_blank" rel="noopener noreferrer" className="!font-['Michroma'] !text-[13px]">
                                     <MapPin size={14} /> Magalang, Pampanga
                                 </a>
                             </li>
